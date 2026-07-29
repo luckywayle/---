@@ -1,0 +1,2555 @@
+<!DOCTYPE html>
+<!-- saved from url=(0347)https://static.coze.site/3383616303019031_0-data_volume/7645137179320172835-files/%E6%89%80%E6%9C%89%E5%AF%B9%E8%AF%9D/%E4%B8%BB%E5%AF%B9%E8%AF%9D/%E5%8F%A4%E8%AF%97%E6%96%87%E6%B6%88%E6%B6%88%E4%B9%90-%E4%B8%AD%E8%80%83%E7%89%88/github-pages/index.html?sign=1787835943-e3797c599b-0-f44a4143b6efe83dae761cc920bb2e3a0f3724e9d996206534ea35d05ad8b776 -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>古诗文消消乐 - 中考版</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-color: #f5f0e8;
+      --text-color: #2c2c2c;
+      --accent-color: #c0392b;
+      --success-color: #27ae60;
+      --card-bg: #faf8f5;
+      --gold-color: #d4a017;
+      --purple-color: #8e44ad;
+    }
+    body {
+      font-family: "STKaiti", "KaiTi", "楷体", "SimSun", "宋体", serif;
+      background-color: var(--bg-color);
+      background-image: radial-gradient(ellipse at 20% 30%, rgba(200,180,150,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(200,180,150,0.1) 0%, transparent 50%);
+      min-height: 100vh;
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* Screen visibility */
+    .screen { display: none; min-height: 100vh; }
+    .screen.active { display: flex; flex-direction: column; }
+    
+    /* Welcome Screen */
+    #welcomeScreen { align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.8s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .title { font-size: 2.8rem; color: var(--text-color); margin-bottom: 10px; letter-spacing: 0.3em; }
+    .title::before, .title::after { content: '『'; font-size: 2rem; color: var(--accent-color); opacity: 0.6; }
+    .title::after { content: '』'; }
+    .subtitle { font-size: 1.1rem; color: #666; margin-bottom: 40px; }
+    .welcome-box { background: rgba(255,255,255,0.7); padding: 40px; border-radius: 20px; backdrop-filter: blur(5px); max-width: 400px; width: 100%; }
+    .welcome-box h2 { margin-bottom: 20px; color: var(--accent-color); }
+    .input-group { margin-bottom: 20px; text-align: left; }
+    .input-group label { display: block; margin-bottom: 8px; color: #555; font-size: 1rem; }
+    .input-group input { width: 100%; padding: 12px 15px; font-size: 1.1rem; font-family: inherit; border: 2px solid #e0dcd5; border-radius: 10px; background: white; }
+    .input-group input:focus { outline: none; border-color: var(--accent-color); }
+    .btn { padding: 15px 40px; font-size: 1.2rem; font-family: inherit; background: linear-gradient(135deg, var(--accent-color) 0%, #a93226 100%); color: white; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(192,57,43,0.3); letter-spacing: 0.15em; }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(192,57,43,0.4); }
+    .btn:active { transform: translateY(0); }
+    .btn-secondary { background: linear-gradient(135deg, #7f8c8d 0%, #636e72 100%); box-shadow: 0 4px 15px rgba(127,140,141,0.3); }
+    .btn-small { padding: 10px 25px; font-size: 1rem; }
+    .btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; transform: none; }
+    .user-list { margin-top: 30px; text-align: left; }
+    .user-list h3 { margin-bottom: 15px; color: #555; font-size: 1rem; }
+    .user-item { display: flex; align-items: center; padding: 12px 15px; background: white; border: 1px solid #e0dcd5; border-radius: 10px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s ease; }
+    .user-item:hover { border-color: var(--accent-color); transform: translateX(5px); }
+    .user-avatar { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-color), #e67e22); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 15px; }
+    .user-name { flex: 1; font-size: 1.1rem; }
+    .user-stats { color: #888; font-size: 0.9rem; }
+    .switch-user { font-size: 0.85rem; color: var(--accent-color); margin-top: 15px; cursor: pointer; }
+    
+    /* Home Screen */
+    #homeScreen { animation: fadeIn 0.8s ease; padding-top: 30px; }
+    .home-header { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.7); padding: 20px; border-radius: 15px; margin-bottom: 20px; backdrop-filter: blur(5px); }
+    .user-info { display: flex; align-items: center; gap: 15px; }
+    .user-info .user-avatar { width: 50px; height: 50px; font-size: 1.5rem; }
+    .user-welcome h2 { font-size: 1.3rem; color: var(--accent-color); }
+    .user-welcome p { color: #888; font-size: 0.95rem; margin-top: 3px; }
+    .total-stat { text-align: center; padding: 15px 25px; background: linear-gradient(135deg, var(--gold-color) 0%, #f39c12 100%); border-radius: 12px; color: white; }
+    .total-stat .number { font-size: 2rem; font-weight: bold; }
+    .total-stat .label { font-size: 0.9rem; opacity: 0.9; }
+    .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
+    .nav-card { background: rgba(255,255,255,0.7); padding: 25px 20px; border-radius: 15px; text-align: center; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(5px); border: 2px solid transparent; }
+    .nav-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: var(--accent-color); }
+    .nav-card .icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .nav-card .title { font-size: 1.2rem; color: var(--text-color); margin-bottom: 5px; }
+    .nav-card .desc { font-size: 0.85rem; color: #888; }
+    .nav-card .badge { position: absolute; top: -8px; right: -8px; min-width: 22px; height: 22px; background: var(--accent-color); color: white; font-size: 0.8rem; border-radius: 11px; display: flex; align-items: center; justify-content: center; padding: 0 5px; }
+    .nav-card { position: relative; }
+    
+    /* Leaderboard Mini */
+    .leaderboard-mini { background: rgba(255,255,255,0.7); padding: 20px; border-radius: 15px; backdrop-filter: blur(5px); margin-bottom: 20px; }
+    .leaderboard-mini h3 { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; color: var(--text-color); }
+    .leaderboard-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px dashed #e0dcd5; }
+    .leaderboard-item:last-child { border-bottom: none; }
+    .rank { width: 30px; height: 30px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; }
+    .rank.gold { background: linear-gradient(135deg, #f1c40f, #f39c12); color: white; }
+    .rank.silver { background: linear-gradient(135deg, #bdc3c7, #95a5a6); color: white; }
+    .rank.bronze { background: linear-gradient(135deg, #e67e22, #d35400); color: white; }
+    .leaderboard-name { flex: 1; }
+    .leaderboard-score { color: var(--gold-color); font-weight: bold; }
+    
+    /* Lesson Selection Screen */
+    #lessonScreen { animation: fadeIn 0.8s ease; padding-top: 20px; }
+    .screen-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+    .back-btn { width: 40px; height: 40px; background: rgba(255,255,255,0.7); border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; transition: all 0.3s ease; }
+    .back-btn:hover { background: var(--accent-color); color: white; }
+    .screen-title { font-size: 1.5rem; color: var(--text-color); }
+    .book-section { margin-bottom: 25px; }
+    .book-title { display: flex; align-items: center; gap: 10px; padding: 12px 15px; background: linear-gradient(135deg, var(--accent-color) 0%, #a93226 100%); color: white; border-radius: 10px; margin-bottom: 15px; font-size: 1.1rem; }
+    .lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+    .lesson-card { background: rgba(255,255,255,0.8); padding: 15px; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; }
+    .lesson-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: var(--accent-color); }
+    .lesson-card.locked { opacity: 0.5; cursor: not-allowed; }
+    .lesson-card.played { border-color: var(--gold-color); }
+    .lesson-name { font-size: 1.1rem; color: var(--text-color); margin-bottom: 5px; }
+    .lesson-author { font-size: 0.85rem; color: #888; margin-bottom: 8px; }
+    .lesson-status { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+    .lesson-stars { color: var(--gold-color); }
+    .lesson-rate { color: #888; }
+    .lesson-unplayed { color: #bbb; }
+    
+    /* Game Screen */
+    #gameScreen { padding: 20px 0; display: flex; flex-direction: column; }
+    .game-content { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+    .game-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: rgba(255,255,255,0.6); border-radius: 15px; margin-bottom: 20px; backdrop-filter: blur(5px); }
+    .progress-info { display: flex; align-items: center; gap: 10px; }
+    .progress-text { font-size: 1rem; color: #555; }
+    .progress-bar { width: 150px; height: 8px; background: #ddd; border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-color), #e74c3c); border-radius: 4px; transition: width 0.5s ease; }
+    .stats { display: flex; gap: 25px; font-size: 0.95rem; }
+    .stat-item { display: flex; align-items: center; gap: 5px; }
+    .stat-value { font-weight: bold; color: var(--accent-color); }
+    .combo-popup { position: fixed; top: 80px; right: 20px; font-size: 1.5rem; font-weight: bold; color: var(--gold-color); text-shadow: 2px 2px 4px rgba(0,0,0,0.2); opacity: 0; transform: scale(0.5) translateY(-20px); transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 100; pointer-events: none; }
+    .combo-popup.show { opacity: 1; transform: scale(1) translateY(0); }
+    .poem-section { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; min-height: 0; }
+    .poem-text { font-size: 1.8rem; line-height: 2.2; text-align: center; margin-bottom: 30px; letter-spacing: 0.1em; }
+    .marked-word { display: inline; position: relative; cursor: default; }
+    .marked-word.normal { background: linear-gradient(to bottom, transparent 70%, rgba(230,126,34,0.25) 70%); padding: 0 2px; }
+    .marked-word.current { background: var(--accent-color); color: white; padding: 2px 6px; border-radius: 4px; box-shadow: 0 0 0 3px rgba(192,57,43,0.3); animation: currentPulse 1.5s ease-in-out infinite; }
+    @keyframes currentPulse { 0%, 100% { box-shadow: 0 0 0 3px rgba(192,57,43,0.3); transform: scale(1); } 50% { box-shadow: 0 0 0 6px rgba(192,57,43,0.2); transform: scale(1.02); } }
+    .marked-word.matched { background: rgba(39,174,96,0.2); color: var(--success-color); padding: 0 2px; }
+    .marked-word.matched::after { content: ' ✓'; font-size: 0.8em; }
+    .marked-word.answered-wrong { background: rgba(192,57,43,0.15); color: var(--danger-color); padding: 0 2px; text-decoration: line-through; }
+    .marked-word.answered-wrong::after { content: ' ✗'; font-size: 0.8em; text-decoration: none; }
+    .marked-word.wrong { animation: shake 0.5s ease; }
+    .marked-word.non-error { background: transparent; color: var(--text-color); padding: 0; font-weight: normal; }
+    .marked-word.non-error::after { content: none; }
+    .placeholder-word { display: inline-block; min-width: 0.9em; color: #b5b0a8; margin: 0 1px; font-weight: normal; }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+    .hint-area { min-height: 40px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .hint-text { padding: 8px 20px; border-radius: 20px; font-size: 1rem; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; }
+    .hint-text.show { opacity: 1; transform: translateY(0); }
+    .hint-text.error { background: rgba(192,57,43,0.15); color: var(--accent-color); border: 1px solid var(--accent-color); }
+    .hint-text.success { background: rgba(39,174,96,0.15); color: var(--success-color); border: 1px solid var(--success-color); }
+    .cards-section { padding: 15px; padding-bottom: 140px; }
+    .cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 700px; margin: 0 auto; }
+    
+    /* 宽屏左右布局 */
+    @media (min-width: 900px) {
+      .game-content { flex-direction: row !important; }
+      .poem-section { flex: 1; padding: 30px; max-width: 60%; overflow-y: auto; }
+      .poem-text { font-size: 1.7rem; line-height: 2.4; margin-bottom: 20px; }
+      .cards-section { flex: 1; padding: 20px; padding-bottom: 40px; max-width: 40%; }
+      .cards-container { max-width: none; justify-content: flex-start; }
+      .note-card { font-size: 1.2rem; }
+    }
+    .note-card { padding: 12px 25px; background: var(--card-bg); border: 2px solid #e0dcd5; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 3px 10px rgba(0,0,0,0.1); user-select: none; }
+    .note-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); border-color: var(--accent-color); }
+    .note-card.correct { animation: cardCorrect 0.5s ease forwards; }
+    @keyframes cardCorrect { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; background: rgba(39,174,96,0.2); } 100% { transform: scale(0.8); opacity: 0; height: 0; padding: 0; margin: 0; border-width: 0; } }
+    .note-card.wrong { animation: cardShake 0.5s ease; border-color: var(--accent-color); }
+    @keyframes cardShake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+    .particles-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 150; overflow: hidden; }
+
+    /* ==================== 双人对战模式 ==================== */
+    #battleSetupScreen { align-items: center; justify-content: flex-start; padding: 15px 20px; animation: fadeIn 0.8s ease; min-height: auto; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 500; background: var(--bg-color); overflow-y: auto; }
+    .battle-setup-box { background: rgba(255,255,255,0.8); border-radius: 20px; padding: 30px; max-width: 500px; width: 100%; backdrop-filter: blur(5px); }
+    .battle-setup-box h2 { text-align: center; margin-bottom: 25px; color: var(--text-color); }
+    .player-input-group { margin-bottom: 20px; }
+    .player-input-group label { display: block; font-size: 1.1rem; margin-bottom: 8px; font-weight: bold; }
+    .player-input-group.p1 label { color: #c0392b; }
+    .player-input-group.p2 label { color: #2471a3; }
+    .player-input-group input { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1.1rem; box-sizing: border-box; }
+    .player-input-group.p1 input { border-color: #e6b0aa; }
+    .player-input-group.p2 input { border-color: #a9cce3; }
+    .player-input-group input:focus { outline: none; border-color: var(--accent-color); }
+    .battle-lesson-select { margin-top: 20px; }
+    .battle-lesson-select select { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; box-sizing: border-box; background: white; }
+
+    #battleScreen { padding: 0; flex-direction: column; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 500; background: var(--bg-color); }
+    .battle-score-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(255,255,255,0.9); border-bottom: 2px solid #e0dcd5; flex-shrink: 0; }
+    .battle-player-score { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: bold; }
+    .battle-player-score.p1 { color: #c0392b; }
+    .battle-player-score.p2 { color: #2471a3; }
+    .battle-score-num { font-size: 2rem; min-width: 40px; text-align: center; }
+    .battle-center-info { text-align: center; font-size: 0.9rem; color: #888; }
+    .battle-center-info .word-count { font-size: 1.1rem; color: var(--text-color); font-weight: bold; }
+
+    .battle-arena { display: flex; flex: 1; overflow: hidden; }
+    .battle-side { flex: 1; display: flex; flex-direction: column; padding: 15px; overflow-y: auto; }
+    .battle-side.p1 { border-right: 3px solid #e6b0aa; background: rgba(192,57,43,0.03); }
+    .battle-side.p2 { border-left: 3px solid #a9cce3; background: rgba(36,113,163,0.03); }
+    .battle-side.locked { opacity: 0.5; pointer-events: none; }
+    .battle-side.winner-flash { animation: battleWin 0.6s ease; }
+    @keyframes battleWin { 0%,100% { background-color: transparent; } 50% { background-color: rgba(39,174,96,0.15); } }
+    .battle-poem { font-size: 1.5rem; line-height: 2.2; text-align: center; margin-bottom: 15px; letter-spacing: 0.08em; }
+    .battle-hint { min-height: 35px; text-align: center; margin-bottom: 10px; font-size: 0.95rem; }
+    .battle-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .battle-card { padding: 10px 20px; background: var(--card-bg); border: 2px solid #e0dcd5; border-radius: 10px; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.08); user-select: none; }
+    .battle-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.12); }
+    .battle-card.p1-correct { background: rgba(192,57,43,0.2); border-color: #c0392b; animation: cardCorrect 0.4s ease forwards; }
+    .battle-card.p2-correct { background: rgba(36,113,163,0.2); border-color: #2471a3; animation: cardCorrect 0.4s ease forwards; }
+    .battle-card.wrong { animation: cardShake 0.4s ease; border-color: var(--accent-color); opacity: 0.5; }
+    .battle-card.disabled { opacity: 0.3; pointer-events: none; }
+
+    #battleResultScreen { align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.8s ease; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 500; background: var(--bg-color); }
+    .battle-result-title { font-size: 2.5rem; margin-bottom: 20px; }
+    .battle-result-scores { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; }
+    .battle-result-player { padding: 20px 30px; border-radius: 15px; background: rgba(255,255,255,0.8); }
+    .battle-result-player.p1 { border: 3px solid #c0392b; }
+    .battle-result-player.p2 { border: 3px solid #2471a3; }
+    .battle-result-player .name { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; }
+    .battle-result-player .score { font-size: 3rem; font-weight: bold; }
+    .battle-result-player.winner { box-shadow: 0 0 20px rgba(39,174,96,0.4); }
+    .battle-exit-btn { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ddd; background: rgba(255,255,255,0.95); cursor: pointer; font-size: 1rem; z-index: 600; color: #666; line-height: 1; padding: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .battle-exit-btn:hover { background: var(--accent-color); color: white; border-color: var(--accent-color); }
+    .battle-result-errors-wrap { margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ccc; text-align: left; max-width: 280px; }
+    .battle-result-errors-wrap .errors-title { font-size: 0.9rem; color: #888; margin-bottom: 6px; text-align: center; }
+    .battle-result-errors-wrap .err-line { font-size: 0.85rem; color: #444; margin: 3px 0; line-height: 1.4; }
+    .battle-result-errors-wrap .err-w { color: var(--accent-color); font-weight: bold; }
+    .battle-result-errors-wrap .err-more { font-size: 0.75rem; color: #aaa; margin-top: 4px; text-align: center; }
+    .battle-result-errors-wrap .err-empty { font-size: 0.85rem; color: #27ae60; text-align: center; }
+
+    /* 手机端对战提示 */
+    @media (max-width: 899px) {
+      .battle-arena { flex-direction: column; }
+      .battle-side.p1 { border-right: none; border-bottom: 3px solid #e6b0aa; }
+      .battle-side.p2 { border-left: none; border-top: 3px solid #a9cce3; }
+      .battle-poem { font-size: 1.2rem; line-height: 1.8; }
+      .battle-card { font-size: 0.9rem; padding: 8px 14px; }
+      .battle-score-bar { font-size: 0.9rem; }
+      .battle-score-num { font-size: 1.5rem; }
+    }
+    .particle { position: absolute; border-radius: 50%; animation: particleFly 1s ease-out forwards; }
+    @keyframes particleFly { 0% { opacity: 1; transform: scale(1) translate(0, 0); } 100% { opacity: 0; transform: scale(0.5) translate(var(--tx), var(--ty)); } }
+    .transition-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+    .transition-overlay.show { opacity: 1; pointer-events: auto; }
+    .transition-text { font-size: 2rem; color: var(--accent-color); animation: transitionBounce 0.6s ease; }
+    .transition-sub { font-size: 1.2rem; color: #666; margin-top: 10px; }
+    @keyframes transitionBounce { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+    .exit-btn { position: absolute; top: 15px; right: 15px; padding: 8px 16px; font-size: 0.9rem; font-family: inherit; background: rgba(127, 140, 141, 0.2); color: #666; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; }
+    .exit-btn:hover { background: rgba(192, 57, 43, 0.15); border-color: var(--accent-color); color: var(--accent-color); }
+    
+    /* Result Screen */
+    #resultScreen { align-items: center; justify-content: flex-start; text-align: center; animation: fadeIn 0.8s ease; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 200; background: var(--bg-color); padding-top: 10vh !important; overflow-y: auto; }
+    .result-title { display: none; }
+    .stars-container { display: flex; justify-content: center; align-items: center; gap: 0.4em; margin-bottom: 10px; }
+    .star { width: 2.8rem; height: 2.8rem; display: flex; align-items: center; justify-content: center; opacity: 0.2; transition: all 0.5s ease; font-size: 2.8rem; line-height: 1; transform: none !important; }
+    .star.earned { opacity: 1; color: var(--gold-color); animation: starEarned 0.5s ease forwards; }
+    @keyframes starEarned { 0% { transform: scale(0) rotate(-180deg); } 50% { transform: scale(1.3) rotate(0deg); } 100% { transform: none; } }
+    .result-stats { background: rgba(255,255,255,0.6); padding: 12px 24px; border-radius: 12px; margin-bottom: 14px; backdrop-filter: blur(5px); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px; max-width: 600px; }
+    .result-stat { font-size: 1rem; margin: 2px 0; color: #555; white-space: nowrap; }
+    .result-stat span { color: var(--accent-color); font-weight: bold; }
+    .result-stat.best { color: var(--gold-color); font-size: 0.95rem; }
+    .error-collected { color: var(--success-color); font-size: 0.9rem; margin-top: 4px; }
+    .btn-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    
+    /* Error Book Screen */
+    #errorBookScreen { align-items: center; padding: 20px; animation: fadeIn 0.8s ease; }
+    .error-book-title { font-size: 2rem; color: var(--text-color); margin-bottom: 20px; text-align: center; }
+    .error-book-empty { text-align: center; padding: 60px 20px; color: #888; font-size: 1.2rem; }
+    .error-book-empty::before { content: '📚'; display: block; font-size: 3rem; margin-bottom: 15px; }
+    .error-book-list { width: 100%; max-width: 700px; max-height: 50vh; overflow-y: auto; padding: 10px; }
+    .error-lesson-group { background: rgba(255,255,255,0.7); border-radius: 12px; padding: 15px; margin-bottom: 15px; backdrop-filter: blur(5px); }
+    .error-lesson-name { font-size: 1.2rem; color: var(--accent-color); font-weight: bold; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #ddd; display: flex; justify-content: space-between; align-items: center; }
+    .error-lesson-stats { font-size: 0.85rem; color: #888; font-weight: normal; }
+    .error-item { display: flex; align-items: flex-start; padding: 8px 0; font-size: 1.05rem; }
+    .error-word { color: var(--accent-color); font-weight: bold; min-width: 50px; }
+    .error-arrow { color: #888; margin: 0 10px; }
+    .error-note { color: var(--text-color); flex: 1; }
+    .error-book-actions { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 20px; padding: 20px; }
+    .btn-danger { background: linear-gradient(135deg, #c0392b 0%, #96281b 100%); box-shadow: 0 4px 15px rgba(192,57,43,0.3); }
+    .error-mode-banner { background: linear-gradient(135deg, #c0392b 0%, #96281b 100%); color: white; text-align: center; padding: 12px; font-size: 1.1rem; font-weight: bold; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(192,57,43,0.3); }
+    .disabled-hint { font-size: 0.85rem; color: #888; margin-top: 5px; }
+    
+    /* Leaderboard Screen */
+    #leaderboardScreen { align-items: center; padding: 20px; animation: fadeIn 0.8s ease; }
+    .leaderboard-full { width: 100%; max-width: 500px; }
+    .leaderboard-header { text-align: center; margin-bottom: 30px; }
+    .leaderboard-header h2 { font-size: 2rem; color: var(--text-color); margin-bottom: 10px; }
+    .leaderboard-header p { color: #888; }
+    .leaderboard-list { background: rgba(255,255,255,0.7); border-radius: 15px; padding: 20px; backdrop-filter: blur(5px); }
+    .leaderboard-row { display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #e0dcd5; }
+    .leaderboard-row:last-child { border-bottom: none; }
+    .leaderboard-row.top-1 { background: linear-gradient(90deg, rgba(241,196,15,0.1) 0%, transparent 100%); border-radius: 10px; padding: 15px; margin: -5px 0; }
+    .lb-rank { width: 40px; height: 40px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; margin-right: 15px; }
+    .lb-rank.gold { background: linear-gradient(135deg, #f1c40f, #f39c12); color: white; }
+    .lb-rank.silver { background: linear-gradient(135deg, #bdc3c7, #95a5a6); color: white; }
+    .lb-rank.bronze { background: linear-gradient(135deg, #e67e22, #d35400); color: white; }
+    .lb-avatar { width: 45px; height: 45px; background: linear-gradient(135deg, var(--accent-color), #e67e22); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 15px; }
+    .lb-info { flex: 1; }
+    .lb-name { font-size: 1.1rem; color: var(--text-color); }
+    .lb-detail { font-size: 0.85rem; color: #888; }
+    .lb-score { text-align: right; }
+    .lb-score .number { font-size: 1.5rem; font-weight: bold; color: var(--gold-color); }
+    .lb-score .label { font-size: 0.8rem; color: #888; }
+    
+    @media (max-width: 600px) {
+      .title { font-size: 2rem; }
+      .nav-grid { grid-template-columns: 1fr; }
+      .poem-text { font-size: 1.4rem; line-height: 2.2; }
+      .game-header { flex-direction: column; gap: 10px; }
+      .stats { gap: 15px; }
+      .note-card { padding: 10px 18px; font-size: 1rem; }
+      .btn { padding: 12px 30px; font-size: 1rem; }
+      /* 结算页手机端适配 */
+      #resultScreen { padding-top: 6vh !important; }
+      .stars-container { margin-bottom: 8px; margin-top: 4vh; }
+      .star { width: 2.2rem; height: 2.2rem; font-size: 2.2rem; }
+      .result-stats { flex-wrap: wrap; padding: 10px 16px; gap: 6px 12px; justify-content: center; width: 90%; max-width: 360px; margin: 0 auto 12px; }
+      .result-stat { font-size: 0.9rem; }
+      .result-stat.best { font-size: 0.85rem; }
+      .error-collected { width: 100%; text-align: center; font-size: 0.85rem; }
+      .btn-group { gap: 10px; padding: 0 10px; }
+      .btn-group .btn { padding: 12px 24px; font-size: 0.95rem; flex: 1 1 auto; min-width: 120px; max-width: 180px; }
+    }
+  </style>
+  <!-- Supabase SDK -->
+  <script src="./古诗文消消乐 - 中考版_files/supabase-js@2"></script>
+  <!-- 云端同步补丁（内嵌） -->
+  <script>
+// ========================================
+// 古诗文消消乐 · 云端同步补丁 v1
+// Supabase 数据存储
+// ========================================
+
+const SUPABASE_URL = 'https://kudxzsmwggrwsveerizp.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1ZHh6c213Z2dyd3N2ZWVyaXpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyMTQ1NjYsImV4cCI6MjEwMDc5MDU2Nn0.Hm5c-lTUJHh1VTgLpkT3ZzYY4_Lvt_uNOgKssY0cCRM';
+
+// 初始化 Supabase
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// 全局状态
+window._cloudStudentId = localStorage.getItem('cloud_student_id') || '';
+window._cloudStudentName = localStorage.getItem('cloud_student_name') || '';
+window._cloudClassName = localStorage.getItem('cloud_class_name') || '';
+window._cloudSessionErrors = []; // 本局错词 {word, note}
+window._cloudSessionTotal = 0;
+window._cloudSessionCorrect = 0;
+window._cloudSessionDuration = 0;
+window._cloudSessionLesson = '';
+
+console.log('[Cloud] 补丁已加载，Supabase 已连接');
+
+// ==================== 学生登录 ====================
+
+// 重写 startGameBtn 点击事件
+document.addEventListener('DOMContentLoaded', function() {
+  // 如果已有登录信息，自动填入
+  if (window._cloudStudentId) {
+    setTimeout(function() {
+      const sidEl = document.getElementById('studentIdInput');
+      const snameEl = document.getElementById('studentNameInput');
+      const clsEl = document.getElementById('classInput');
+      if (sidEl) sidEl.value = window._cloudStudentId;
+      if (snameEl) snameEl.value = window._cloudStudentName;
+      if (clsEl) clsEl.value = window._cloudClassName;
+    }, 100);
+  }
+});
+
+// 学生登录（在原有 startGameBtn 逻辑之前拦截）
+function cloudLoginStudent() {
+  const studentId = document.getElementById('studentIdInput').value.trim();
+  const studentName = document.getElementById('studentNameInput').value.trim();
+  const className = document.getElementById('classInput').value;
+  
+  if (!studentId || !studentName) {
+    alert('请输入账号和姓名');
+    return null;
+  }
+  if (!className) {
+    alert('请选择你的班级');
+    return null;
+  }
+  
+  window._cloudStudentId = studentId;
+  window._cloudStudentName = studentName;
+  window._cloudClassName = className;
+  
+  localStorage.setItem('cloud_student_id', studentId);
+  localStorage.setItem('cloud_student_name', studentName);
+  localStorage.setItem('cloud_class_name', className);
+  
+  // 异步注册到云端
+  sb.from('students').upsert([{
+    student_id: studentId,
+    name: studentName,
+    class_name: className
+  }]).then(function(res) {
+    if (res.error) {
+      console.warn('[Cloud] 注册失败（不影响游戏）:', res.error.message);
+    } else {
+      console.log('[Cloud] 学生已同步:', studentName);
+    }
+  });
+  
+  return { studentId: studentId, name: studentName, className: className };
+}
+
+// ==================== 游戏数据上报 ====================
+
+// 游戏开始 - 记录开始时间
+function cloudOnGameStart(lessonName, totalWords) {
+  window._cloudSessionLesson = lessonName;
+  window._cloudSessionTotal = totalWords;
+  window._cloudSessionCorrect = 0;
+  window._cloudSessionErrors = [];
+  window._cloudSessionStartTime = Date.now();
+  console.log('[Cloud] 游戏开始:', lessonName, '总词数:', totalWords);
+}
+
+// 记录一个错词（在 handleWrong 中调用）
+function cloudRecordError(word, note) {
+  window._cloudSessionErrors.push({ word: word, note: note });
+}
+
+// 游戏结束 - 上报数据
+function cloudOnGameEnd() {
+  if (!window._cloudStudentId) {
+    console.log('[Cloud] 未登录学生，跳过上报');
+    return;
+  }
+  if (!window._cloudSessionLesson) {
+    console.log('[Cloud] 无游戏数据，跳过上报');
+    return;
+  }
+  
+  const duration = Math.round((Date.now() - window._cloudSessionStartTime) / 1000);
+  const wrongCount = window._cloudSessionErrors.length;
+  const correctWords = Math.max(0, window._cloudSessionTotal - wrongCount);
+  const score = window._cloudSessionTotal > 0 ? Math.round((correctWords / window._cloudSessionTotal) * 100) : 0;
+  
+  // 上报对局
+  sb.from('game_sessions').insert([{
+    student_id: window._cloudStudentId,
+    student_name: window._cloudStudentName,
+    lesson_name: window._cloudSessionLesson,
+    score: score,
+    total_blanks: window._cloudSessionTotal,
+    wrong_count: wrongCount,
+    duration_seconds: duration
+  }]).then(function(res) {
+    if (res.error) {
+      console.error('[Cloud] 对局上报失败:', res.error.message);
+    } else {
+      console.log('[Cloud] 对局已上报:', window._cloudSessionLesson, score + '分');
+    }
+  });
+  
+  // 上报错题
+  if (window._cloudSessionErrors.length > 0) {
+    const errorRecords = window._cloudSessionErrors.map(function(e) {
+      return {
+        student_id: window._cloudStudentId,
+        lesson_name: window._cloudSessionLesson,
+        word: e.word,
+        note: e.note
+      };
+    });
+    sb.from('game_errors').insert(errorRecords).then(function(res) {
+      if (res.error) {
+        console.error('[Cloud] 错题上报失败:', res.error.message);
+      } else {
+        console.log('[Cloud] 错题已上报:', window._cloudSessionErrors.length, '个');
+      }
+    });
+  }
+}
+
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- 欢迎页 -->
+    <div id="welcomeScreen" class="screen active">
+      <h1 class="title">古诗文消消乐</h1>
+      <p class="subtitle">诗词配对，趣学经典</p>
+      <div class="welcome-box">
+        <h2>👋 欢迎来到古诗文消消乐</h2>
+        <div class="input-group">
+          <label>请输入你的账号</label>
+          <input type="text" id="studentIdInput" placeholder="例：6001" maxlength="20">
+        </div>
+        <div class="input-group">
+          <label>请输入你的姓名</label>
+          <input type="text" id="studentNameInput" placeholder="输入姓名后开始游戏" maxlength="10">
+        </div>
+        <div class="input-group">
+          <label>选择你的班级 *</label>
+          <select id="classInput" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid #c9b99a;font-size:1rem;background:#fff;font-family:inherit;">
+            <option value="">请选择班级</option>
+            <option value="初三（8）班">初三（8）班</option>
+          </select>
+        </div>
+        <button class="btn" id="startGameBtn">开始游戏</button>
+        <div class="user-list" id="userList"><h3>或选择已有用户：</h3><div class="user-item" data-name="1">
+      <div class="user-avatar">1</div>
+      <div class="user-name">1</div>
+      <div class="user-stats">0词</div>
+    </div><div class="user-item" data-name="2">
+      <div class="user-avatar">2</div>
+      <div class="user-name">2</div>
+      <div class="user-stats">0词</div>
+    </div><div class="user-item" data-name="111">
+      <div class="user-avatar">1</div>
+      <div class="user-name">111</div>
+      <div class="user-stats">0词</div>
+    </div><div class="user-item" data-name="测试账号">
+      <div class="user-avatar">测</div>
+      <div class="user-name">测试账号</div>
+      <div class="user-stats">110词</div>
+    </div></div>
+      </div>
+      <p style="margin-top:24px;font-size:12px;color:#8b7355;opacity:0.7;">©2026 曈曈阁戴草帽的荪老师</p>
+    </div>
+
+    <!-- 首页 -->
+    <div id="homeScreen" class="screen">
+      <div class="home-header">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">名</div>
+          <div class="user-welcome">
+            <h2 id="welcomeName">小明</h2>
+            <p>继续加油！</p>
+          </div>
+        </div>
+        <div class="total-stat">
+          <div class="number" id="totalCorrect">0</div>
+          <div class="label">累计掌握词语</div>
+        </div>
+      </div>
+      
+      <div class="nav-grid">
+        <div class="nav-card" id="navLessons">
+          <div class="icon">📖</div>
+          <div class="title">选择篇目</div>
+          <div class="desc">开始新的挑战</div>
+        </div>
+        <div class="nav-card" id="navErrorBook">
+          <div class="icon">📝</div>
+          <div class="title">错题本</div>
+          <div class="desc">复习易错词语</div>
+          <div class="badge" id="errorBadge" style="display:none;">0</div>
+        </div>
+        <div class="nav-card" id="navLeaderboard">
+          <div class="icon">🏆</div>
+          <div class="title">排行榜</div>
+          <div class="desc">查看排名</div>
+        </div>
+        <div class="nav-card" id="navBattle">
+          <div class="icon">⚔️</div>
+          <div class="title">双人对战</div>
+          <div class="desc">分屏抢答PK</div>
+        </div>
+        <div class="nav-card" id="navSwitchUser">
+          <div class="icon">🔄</div>
+          <div class="title">切换用户</div>
+          <div class="desc">重新登录</div>
+        </div>
+      </div>
+      
+      <div class="leaderboard-mini">
+        <h3>🏆 排行榜 TOP 3</h3>
+        <div id="miniLeaderboard"></div>
+      </div>
+    </div>
+
+    <!-- 篇目选择页 -->
+    <div id="lessonScreen" class="screen">
+      <div class="screen-header">
+        <button class="back-btn" id="backToHome">←</button>
+        <h2 class="screen-title">选择篇目</h2>
+      </div>
+      <div id="lessonList"></div>
+    </div>
+
+    <!-- 游戏页 -->
+    <div id="gameScreen" class="screen">
+      <button class="exit-btn" id="exitBtn">退出</button>
+      <div class="game-header">
+        <div class="progress-info">
+          <span class="progress-text" id="progressText">第 1 联 / 共 3 联</span>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+        <div class="stats">
+          <div class="stat-item"><span>⛔ 错误</span><span class="stat-value" id="errorCount">0</span></div>
+          <div class="stat-item"><span>🔥 连击</span><span class="stat-value" id="comboCount">0</span></div>
+        </div>
+      </div>
+      <div class="game-content">
+      <div class="poem-section">
+        <div class="poem-text" id="poemText"></div>
+      </div>
+      <div class="cards-section">
+        <div class="hint-area"><div class="hint-text" id="hintText"></div></div>
+        <div class="cards-container" id="cardsContainer"></div>
+      </div>
+      </div>
+    </div>
+
+    <!-- 结算页 -->
+    <div id="resultScreen" class="screen">
+      <h2 class="result-title" style="display:none;"></h2>
+      <div class="stars-container" id="starsContainer">
+        <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+      </div>
+      <div class="result-stats">
+        <p class="result-stat">用时：<span id="resultTime">0</span></p>
+        <p class="result-stat">正确率：<span id="resultRate">0</span>%</p>
+        <p class="result-stat">掌握词语：<span id="resultCorrect">0</span> / <span id="resultTotal">0</span></p>
+        <p class="error-collected" id="errorCollected" style="display:none;">📝 错词已搜集到错题本</p>
+        <p class="result-stat best" id="bestRecord"></p>
+      </div>
+      <div class="btn-group">
+        <button class="btn" id="replayBtn">再玩一次</button>
+        <button class="btn btn-secondary" id="resultErrorBookBtn">错题本</button>
+        <button class="btn btn-secondary" id="homeBtn">返回首页</button>
+      </div>
+    </div>
+
+    <!-- 错题本页 -->
+    <div id="errorBookScreen" class="screen">
+      <div class="screen-header">
+        <button class="back-btn" id="backFromError">←</button>
+        <h2 class="screen-title">📖 错题本</h2>
+      </div>
+      <div class="error-book-list" id="errorBookList"></div>
+      <div class="error-book-actions">
+        <button class="btn" id="startErrorModeBtn">错题消消乐</button>
+        <p class="disabled-hint" id="errorModeHint" style="display:none;">错题太少，再玩几关积累更多</p>
+        <button class="btn btn-danger" id="clearErrorBookBtn">清空错题本</button>
+      </div>
+    </div>
+
+    <!-- 排行榜页 -->
+    <div id="leaderboardScreen" class="screen">
+      <div class="screen-header">
+        <button class="back-btn" id="backFromLeaderboard">←</button>
+        <h2 class="screen-title">🏆 排行榜</h2>
+      </div>
+      <div class="leaderboard-full">
+        <div class="leaderboard-header">
+          <h2>本机排行榜</h2>
+          <p>按累计掌握词语数排名</p>
+        </div>
+        <div class="leaderboard-list" id="fullLeaderboard"></div>
+      </div>
+    </div>
+  </div>
+
+    <!-- 双人对战设置页 -->
+    <div id="battleSetupScreen" class="screen">
+      <div class="screen-header">
+        <button class="back-btn" id="backFromBattleSetup">←</button>
+        <h2 class="screen-title">⚔️ 双人对战</h2>
+      </div>
+      <div class="battle-setup-box">
+        <h2>🎮 选择选手与篇目</h2>
+        <div class="player-input-group p1">
+          <label>🔴 选手一</label>
+          <input type="text" id="battleP1Name" placeholder="输入选手一昵称" maxlength="8">
+        </div>
+        <div class="player-input-group p2">
+          <label>🔵 选手二</label>
+          <input type="text" id="battleP2Name" placeholder="输入选手二昵称" maxlength="8">
+        </div>
+        <div class="battle-lesson-select">
+          <select id="battleLessonSelect"></select>
+        </div>
+        <button class="btn" id="startBattleBtn" style="margin-top:25px;width:100%;font-size:1.2rem;">⚔️ 开战！</button>
+      </div>
+    </div>
+
+    <!-- 双人对战游戏页 -->
+    <div id="battleScreen" class="screen">
+      <button class="battle-exit-btn" id="battleExitBtn" title="退出对战">✕</button>
+      <div class="battle-score-bar">
+        <div class="battle-player-score p1">🔴 <span id="battleP1Label">选手一</span> <span class="battle-score-num" id="battleP1Score">0</span></div>
+        <div class="battle-center-info"><span class="word-count" id="battleWordCount">0/0</span><br><span id="battleLessonName"></span></div>
+        <div class="battle-player-score p2"><span class="battle-score-num" id="battleP2Score">0</span> <span id="battleP2Label">选手二</span> 🔵</div>
+      </div>
+      <div class="battle-arena">
+        <div class="battle-side p1" id="battleSide1">
+          <div class="battle-poem" id="battlePoem1"></div>
+          <div class="battle-hint" id="battleHint1"></div>
+          <div class="battle-cards" id="battleCards1"></div>
+        </div>
+        <div class="battle-side p2" id="battleSide2">
+          <div class="battle-poem" id="battlePoem2"></div>
+          <div class="battle-hint" id="battleHint2"></div>
+          <div class="battle-cards" id="battleCards2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 双人对战结果页 -->
+    <div id="battleResultScreen" class="screen">
+      <h2 class="battle-result-title" id="battleResultTitle">🎉 对战结束</h2>
+      <div class="battle-result-scores">
+        <div class="battle-result-player p1" id="battleResultP1">
+          <div class="name">🔴 <span id="battleResultP1Name">选手一</span></div>
+          <div class="score" id="battleResultP1Score">0</div>
+          <div id="battleResultP1Stars" style="font-size:1.8rem;margin-top:8px;"></div>
+          <div class="battle-result-errors-wrap" id="battleResultP1Errors"></div>
+        </div>
+        <div class="battle-result-player p2" id="battleResultP2">
+          <div class="name"><span id="battleResultP2Name">选手二</span> 🔵</div>
+          <div class="score" id="battleResultP2Score">0</div>
+          <div id="battleResultP2Stars" style="font-size:1.8rem;margin-top:8px;"></div>
+          <div class="battle-result-errors-wrap" id="battleResultP2Errors"></div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn" id="battleReplayBtn">⚔️ 再来一局</button>
+        <button class="btn btn-secondary" id="battleHomeBtn">返回首页</button>
+      </div>
+    </div>
+
+  <!-- 特效 -->
+  <div class="combo-popup" id="comboPopup"></div>
+  <div class="particles-container" id="particlesContainer"></div>
+  <div class="transition-overlay" id="transitionOverlay">
+    <p class="transition-text" id="transitionText"></p>
+    <p class="transition-sub" id="transitionSub"></p>
+  </div>
+
+<script>
+// ==================== 游戏数据 ====================
+const ALL_LESSONS = [
+  {
+    name: "咏雪", author: "刘义庆", book: "七年级上册",
+    groups: [
+      { text: "谢太傅寒雪日【0】 ，与【1】 讲论【2】 。【3】 【4】 ，公【5】 曰：\"白雪纷纷何所似？\"兄子胡儿曰：\"撒盐空中【6】 。\"兄女曰：\"【7】 柳絮【8】 起。\"公大笑乐。【9】 公大兄无奕女 ，左将军王凝之 妻也。", words: [{word:"内集",note:"把家里人聚集在一起"}, {word:"儿女",note:"子女，这里泛指小辈，包括侄儿侄女"}, {word:"文义",note:"文章的义理"}, {word:"俄而",note:"不久，一会儿"}, {word:"雪骤",note:"雪下得急（骤，急）"}, {word:"欣然",note:"高兴的样子"}, {word:"差可拟",note:"大体可以相比（差，大体；拟，相比）"}, {word:"未若",note:"不如，不及"}, {word:"因风",note:"乘风（因，趁、乘）"}, {word:"即",note:"就是"}] },
+      { text: "即 公大兄【0】 ，左将军【1】 妻也。", words: [{word:"无奕女",note:"指谢道韫，东晋有名的才女，以聪明有才著称"}, {word:"王凝之",note:"字叔平，大书法家王羲之的次子，曾任左将军、会稽内史"}] },
+    ]
+  },
+
+  {
+    name: "爱莲说", author: "周敦颐", book: "七年级上册",
+    groups: [
+      { text: "【0】 【1】 【2】 【3】 ，【4】 【5】 【6】 【7】 。【8】 【9】 独 爱 菊 。", words: [{word:"水陆",note:"水上、陆地上"}, {word:"草木",note:"草本、木本"}, {word:"之",note:"的"}, {word:"花",note:"花"}, {word:"可爱",note:"值得喜爱"}, {word:"者",note:"…… 的花"}, {word:"甚",note:"很，非常"}, {word:"蕃",note:"多"}, {word:"晋",note:"东晋"}, {word:"陶渊明",note:"一名陶潜，字元亮，东晋诗人，喜爱菊花"}] },
+      { text: "晋 陶渊明 【0】 【1】 【2】 。【3】 【4】 【5】 ，【6】 【7】 【8】 【9】 。", words: [{word:"独",note:"只"}, {word:"爱",note:"喜爱"}, {word:"菊",note:"菊花"}, {word:"自",note:"自从"}, {word:"李唐",note:"指唐朝，唐朝的皇帝姓李，所以称为 “李唐”"}, {word:"来",note:"以来"}, {word:"世人",note:"世上的人"}, {word:"甚",note:"很，非常"}, {word:"爱",note:"喜爱"}, {word:"牡丹",note:"牡丹"}] },
+      { text: "【0】 【1】 【2】 【3】 【4】 【5】 【6】 【7】 【8】 ，【9】 清涟 而 不妖 ，中通 外直 ，不蔓不枝 ，香远益清 ，亭亭 净植 ，可 远观 而 不可 亵玩 焉 。", words: [{word:"予",note:"我"}, {word:"独",note:"只"}, {word:"爱",note:"喜爱"}, {word:"莲",note:"莲花"}, {word:"之",note:"用于主谓之间，取消句子独立性，无实义"}, {word:"出",note:"长出"}, {word:"淤泥",note:"河沟、池塘里积存的污泥"}, {word:"而",note:"连词，表转折，但是"}, {word:"不染",note:"不沾染（污秽）"}, {word:"濯",note:"洗"}] },
+      { text: "予 独 爱 莲 之 出 淤泥 而 不染 ，濯 【0】 【1】 【2】 ，【3】 【4】 ，【5】 ，【6】 ，【7】 【8】 ，【9】 远观 而 不可 亵玩 焉 。", words: [{word:"清涟",note:"水清而有微波，这里指清水"}, {word:"而",note:"连词，表转折，但是"}, {word:"不妖",note:"不艳丽（妖，艳丽）"}, {word:"中通",note:"（茎）中间贯通"}, {word:"外直",note:"外形挺直"}, {word:"不蔓不枝",note:"不横生藤蔓，不旁生枝茎（蔓，生藤蔓；枝，生枝茎，均为名词作动词）"}, {word:"香远益清",note:"香气远闻更加清芬（远，远播；益，更加；清，清芬）"}, {word:"亭亭",note:"耸立的样子"}, {word:"净植",note:"洁净地挺立（植，竖立）"}, {word:"可",note:"可以"}] },
+      { text: "予 独 爱 莲 之 出 淤泥 而 不染 ，濯 清涟 而 不妖 ，中通 外直 ，不蔓不枝 ，香远益清 ，亭亭 净植 ，可 【0】 【1】 【2】 【3】 【4】 。", words: [{word:"远观",note:"远远地观赏"}, {word:"而",note:"连词，表转折，却"}, {word:"不可",note:"不可以"}, {word:"亵玩",note:"靠近赏玩（亵，亲近而不庄重）"}, {word:"焉",note:"语气词"}] },
+      { text: "【0】 【1】 【2】 【3】 【4】 【5】 也；【6】 【7】 【8】 【9】 也；莲 之 君子 者 也。", words: [{word:"予",note:"我"}, {word:"谓",note:"认为"}, {word:"菊",note:"菊花"}, {word:"之",note:"的"}, {word:"隐逸",note:"隐居避世，这里指菊花不与别的花争奇斗艳"}, {word:"者",note:"…… 的花"}, {word:"牡丹",note:"牡丹"}, {word:"之",note:"的"}, {word:"富贵",note:"指牡丹花色艳丽，象征富贵"}, {word:"者",note:"…… 的花"}] },
+      { text: "予 谓 菊 之 隐逸 者 也；牡丹 之 富贵 者 也；【0】 【1】 【2】 【3】 也。【4】 ！【5】 【6】 【7】 ，陶后【8】 。【9】 之 爱 ，同予者何人 ？", words: [{word:"莲",note:"莲花"}, {word:"之",note:"的"}, {word:"君子",note:"指品德高尚的人"}, {word:"者",note:"…… 的花"}, {word:"噫",note:"叹词，表示感慨"}, {word:"菊",note:"菊花"}, {word:"之",note:"的"}, {word:"爱",note:"喜爱"}, {word:"鲜有闻",note:"很少有传闻（鲜，少；闻，传闻、听到）"}, {word:"莲",note:"莲花"}] },
+      { text: "莲 【0】 【1】 ，【2】 ？【3】 【4】 【5】 ，【6】 。", words: [{word:"之",note:"的"}, {word:"爱",note:"喜爱"}, {word:"同予者何人",note:"像我一样的还有什么人呢（同，像…… 一样；予，我；者，…… 的人；何，什么）"}, {word:"牡丹",note:"牡丹"}, {word:"之",note:"的"}, {word:"爱",note:"喜爱"}, {word:"宜乎众矣",note:"应当人很多了（宜乎，当然；众，多；矣，语气词）"}] },
+    ]
+  },
+
+  {
+    name: "狼", author: "蒲松龄", book: "七年级上册",
+    groups: [
+      { text: "一【0】 晚归，担中肉尽，【1】 有剩骨。途中两狼，【2】 。\n屠【3】 ，【4】 。一狼得骨止【1】 ，一狼仍【5】 。【6】 投之，后狼止而前狼又至。骨已尽矣，而两狼之【7】 驱【8】 。", words: [{word:"屠",note:"屠户"}, {word:"止",note:"仅，只"}, {word:"缀行甚远",note:"紧跟着走了很远（缀，连接、紧跟）"}, {word:"惧",note:"害怕"}, {word:"投以骨",note:"把骨头投给狼（以，介词，把）"}, {word:"从",note:"跟从"}, {word:"复",note:"又，再"}, {word:"并",note:"一起"}, {word:"如故",note:"跟原来一样"}] },
+      { text: "顾野有麦场，场主【0】 其中，【1】 。屠【2】 【3】 倚其下，【4】 担【5】 刀。狼不敢前，【6】 。", words: [{word:"积薪",note:"堆积柴草（薪，柴草）"}, {word:"苫蔽成丘",note:"覆盖成小山一样（苫蔽，覆盖、遮盖；丘，小山）"}, {word:"乃",note:"于是，就"}, {word:"奔",note:"跑"}, {word:"弛",note:"解除，卸下"}, {word:"持",note:"拿"}, {word:"眈眈相向",note:"瞪眼朝着屠户（眈眈，凶狠注视的样子）"}] },
+      { text: "【0】 ，一狼【1】 ，其一【2】 。久之，目似【3】 ，【4】 【5】 甚。屠【6】 【7】 ，【8】 刀【9】 狼首，又数刀毙 之。", words: [{word:"少时",note:"一会儿"}, {word:"径去",note:"径直离开（径，径直）"}, {word:"犬坐于前",note:"像狗似的蹲坐在前面（犬，名词作状语，像狗一样）"}, {word:"瞑",note:"闭上眼睛"}, {word:"意",note:"神情，态度"}, {word:"暇",note:"从容，悠闲"}, {word:"暴",note:"突然"}, {word:"起",note:"站起来"}, {word:"以",note:"用"}, {word:"劈",note:"砍"}] },
+      { text: "屠暴 起 ，以 刀劈 狼首，又数刀【0】 之。【1】 【2】 【3】 ，【4】 【5】 积薪后，一狼【6】 【7】 ，意将【8】 以攻其后也。身已半入，止露【9】 尾。", words: [{word:"毙",note:"杀死"}, {word:"方",note:"正"}, {word:"欲",note:"想要"}, {word:"行",note:"走"}, {word:"转",note:"转身"}, {word:"视",note:"看见"}, {word:"洞",note:"洞穴，这里用作动词，指挖洞"}, {word:"其中",note:"指柴草堆中"}, {word:"隧入",note:"从通道进入（隧，通道，这里用作状语，“从通道” 的意思）"}, {word:"尻",note:"屁股"}] },
+      { text: "乃悟前狼【0】 ，【1】 以诱敌。", words: [{word:"假寐",note:"假装睡觉（寐，睡觉）"}, {word:"盖",note:"表示推测，大概，原来是"}] },
+      { text: "狼亦【0】 矣，而【1】 两毙，禽兽之【2】 【3】 哉？【4】 。", words: [{word:"黠",note:"狡猾"}, {word:"顷刻",note:"一会儿"}, {word:"变诈",note:"巧变诡诈"}, {word:"几何",note:"多少，意思是能有多少"}, {word:"止增笑耳",note:"只是增加笑料罢了（耳，罢了）"}] },
+    ]
+  },
+
+  {
+    name: "穿井得一人", author: "吕不韦", book: "七年级上册",
+    groups: [
+      { text: "【0】 之【1】 ，家无井而出【2】 ，【3】 【4】 【5】 。【6】 其【7】 【8】 ，【9】 人 曰：\"吾 穿井 得 一人 。", words: [{word:"宋",note:"西周及春秋战国时期诸侯国，在今河南商丘一带"}, {word:"丁氏",note:"姓丁的人"}, {word:"溉汲",note:"打水浇田（溉，浇灌、灌溉；汲，从井里取水）"}, {word:"常",note:"经常"}, {word:"一人",note:"一个人"}, {word:"居外",note:"在外面"}, {word:"及",note:"待，等到"}, {word:"家",note:"家里"}, {word:"穿井",note:"挖掘水井"}, {word:"告",note:"告诉"}] },
+      { text: "及 其家 穿井 ，告 【0】 曰：\"【1】 【2】 【3】 【4】 。\"有【5】 而【6】 之者：\"丁氏穿井得一人。\"【7】 【8】 之，【9】 。", words: [{word:"人",note:"别人"}, {word:"吾",note:"我"}, {word:"穿井",note:"挖井"}, {word:"得",note:"得到"}, {word:"一人",note:"一个人"}, {word:"闻",note:"听说"}, {word:"传",note:"传播"}, {word:"国人",note:"指居住在国都中的人"}, {word:"道",note:"讲述"}, {word:"闻之于宋君",note:"使宋国的国君知道这件事（闻，知道、听说，这里是 “使知道” 的意思；于，介词，当 “被” 讲，引进主动者）"}] },
+      { text: "【0】 【1】 人【2】 【3】 丁氏，丁氏【4】 曰：\"【5】 ，【6】 。\"【7】 ，【8】 。", words: [{word:"宋君",note:"宋国国君"}, {word:"令",note:"派"}, {word:"问",note:"询问"}, {word:"于",note:"向"}, {word:"对",note:"应答，回答"}, {word:"得一人之使",note:"得到一个人使唤，指得到一个人的劳力（使，使唤，劳力）"}, {word:"非得一人于井中也",note:"不是在井中得到一个人呀（于，在）"}, {word:"求闻之若此",note:"寻到的消息如此"}, {word:"不若无闻也",note:"不如不知道"}] },
+    ]
+  },
+
+  {
+    name: "论语十二章", author: "孔子及其弟子", book: "七年级上册",
+    groups: [
+      { text: "【0】 曰：\"学而【1】 之，不亦【2】 乎？有朋自远方来，不亦乐乎？人不知而不【3】 ，不亦【4】 乎？", words: [{word:"子",note:"古代对男子的尊称，这里指孔子"}, {word:"时习",note:"按时温习（时，按时）"}, {word:"说",note:"同 “悦”，愉快"}, {word:"愠",note:"生气，恼怒"}, {word:"君子",note:"指有才德的人"}] },
+      { text: "曾子【0】 曰：\"【0】 【1】 【2】 吾【0】 身：【3】 而不【4】 乎？与朋友交而不【5】 乎？【6】 不习乎？", words: [{word:"吾",note:"人称代词，我"}, {word:"日",note:"每天"}, {word:"三省",note:"多次进行自我检查（三，泛指多次；省，自我检查、反省）"}, {word:"为人谋",note:"替人谋划事情"}, {word:"忠",note:"竭尽自己的心力"}, {word:"信",note:"诚信"}, {word:"传",note:"传授，这里指老师传授的知识"}] },
+      { text: "子曰：\"吾【0】 而志于学，三十而【1】 ，四十而不【2】 ，五十而知【3】 ，六十而【4】 ，七十而【5】 ，不【6】 。\n子曰：\"【7】 ，可以为师矣。\n子曰：\"学而不思则【8】 ，思而不学则【9】 。", words: [{word:"十有五",note:"十五岁（有，同 “又”，用于整数和零数之间）"}, {word:"立",note:"立身，指能有所成就"}, {word:"惑",note:"迷惑，疑惑"}, {word:"天命",note:"上天的意旨"}, {word:"耳顺",note:"能听得进不同的意见"}, {word:"从心所欲",note:"顺从意愿"}, {word:"逾矩",note:"越过法度（逾，越过；矩，法度）"}, {word:"温故而知新",note:"温习学过的知识，得到新的理解和体会（故，学过的知识）"}, {word:"罔",note:"迷惑，意思是感到迷茫而无所适从"}, {word:"殆",note:"疑惑"}] },
+      { text: "一【0】 食，一瓢饮，在陋巷，人不【1】 其忧，回也不改其乐。\n子曰：\"知【2】 者不如好之【2】 者，好之【2】 者不如【3】 之【4】 。\n子曰：\"饭疏食，饮水【5】 ，【6】 而枕之，乐亦在其中矣。不义而富且贵，【7】 我如【8】 。", words: [{word:"箪",note:"古代盛饭用的圆形竹器"}, {word:"堪",note:"能忍受"}, {word:"之",note:"代词，它，指学问和事业"}, {word:"乐",note:"以…… 为快乐"}, {word:"者",note:"…… 的人"}, {word:"饭疏食",note:"吃粗粮（饭，吃；疏食，粗粮）"}, {word:"曲肱",note:"弯着胳膊（肱，胳膊）"}, {word:"于",note:"对，对于"}, {word:"浮云",note:"比喻不值得关心的事物"}] },
+      { text: "子曰：\"【0】 【1】 ，必有我师【2】 。择其【3】 【4】 之，其不善者而【5】 之。", words: [{word:"三人",note:"几个人（三，泛指多个）"}, {word:"行",note:"行走"}, {word:"焉",note:"于此，意思是在其中"}, {word:"善者",note:"好的方面，优点"}, {word:"从",note:"跟从，学习"}, {word:"改",note:"改正"}] },
+      { text: "子在川上曰：\"【0】 【1】 【2】 ，不【3】 昼夜【4】 。\n子曰：\"【5】 可【6】 帅也，【7】 不可夺志也。", words: [{word:"逝者",note:"流逝的时光"}, {word:"如斯",note:"这，指河水"}, {word:"夫",note:"语气词，用于句首，表示感叹"}, {word:"舍",note:"舍弃"}, {word:"昼",note:"白天"}, {word:"三军",note:"指军队"}, {word:"夺",note:"改变"}, {word:"匹夫",note:"指平民中的男子，这里泛指平民百姓"}] },
+      { text: "子夏曰：\"博学而【0】 ，【1】 而【2】 ，【3】 在其中矣。", words: [{word:"笃志",note:"坚定志向（笃，坚定）"}, {word:"切问",note:"恳切地提问"}, {word:"近思",note:"多思考当前的事情"}, {word:"仁",note:"仁德"}] },
+    ]
+  },
+
+  {
+    name: "诫子书", author: "诸葛亮", book: "七年级上册",
+    groups: [
+      { text: "【0】 【1】 之【2】 ，【3】 【4】 【5】 ，俭以【6】 。非【7】 【8】 【9】 ，非宁静 无以【8】 致远 。", words: [{word:"夫",note:"语气词，用于句首，表示发端"}, {word:"君子",note:"品德高尚的人"}, {word:"行",note:"品行"}, {word:"静",note:"屏除杂念和干扰，宁静专一"}, {word:"以",note:"连词，表示后者是前者的目的"}, {word:"修身",note:"修养身心"}, {word:"养德",note:"培养品德"}, {word:"淡泊",note:"内心恬淡，不慕名利"}, {word:"无以",note:"没有什么可以拿来，没办法"}, {word:"明志",note:"明确志向（明，明确、坚定）"}] },
+      { text: "非淡泊 无以 明志 ，非【0】 无以 【1】 。夫学须静也，才须学也，非学无以【2】 ，非志无以成学。【3】 则不能【4】 ，【5】 则不能【6】 。【7】 ，【8】 ，【9】 成枯落 ，多不接世 ，悲守穷庐 ，将复何及 ！", words: [{word:"宁静",note:"这里指安静，集中精神，不分散精力"}, {word:"致远",note:"达到远大目标（致，达到）"}, {word:"广才",note:"增长才干（广，增长）"}, {word:"淫慢",note:"放纵懈怠（淫，放纵；慢，懈怠）"}, {word:"励精",note:"振奋精神（励，振奋）"}, {word:"险躁",note:"轻薄浮躁（险，轻薄）"}, {word:"治性",note:"修养性情（治，修养）"}, {word:"年与时驰",note:"年纪随同时光而疾速逝去（驰，疾行，指迅速逝去）"}, {word:"意与日去",note:"意志随同岁月而丧失（日，岁月；去，丧失）"}, {word:"遂",note:"最终"}] },
+      { text: "年与时驰 ，意与日去 ，遂 成【0】 ，【1】 ，【2】 ，【3】 ！", words: [{word:"枯落",note:"凋落，衰残，比喻人年老志衰，没有用处"}, {word:"多不接世",note:"大多对社会没有任何贡献"}, {word:"悲守穷庐",note:"悲哀地困守在自己的穷家破舍里（穷庐，穷困潦倒之人住的陋室）"}, {word:"将复何及",note:"又怎么来得及"}] },
+    ]
+  },
+
+  {
+    name: "陈太丘与友期行", author: "刘义庆", book: "七年级上册",
+    groups: [
+      { text: "【0】 与友【1】 ，期【2】 。过中不至，太丘【3】 ，去后【4】 至。【5】 【6】 七岁，【7】 戏。客【8】 元方：\"【9】 不 ？", words: [{word:"陈太丘",note:"陈寔（shí），字仲弓，东汉颍川许（今河南许昌）人，曾任太丘县令"}, {word:"期行",note:"相约同行（期，约定）"}, {word:"日中",note:"正午时分"}, {word:"舍去",note:"丢下（他）而离开（舍，舍弃；去，离开）"}, {word:"乃",note:"才"}, {word:"元方",note:"陈纪，字元方，陈寔的长子"}, {word:"时年",note:"当时的年龄"}, {word:"门外",note:"在门外"}, {word:"问",note:"询问"}, {word:"尊君",note:"对别人父亲的尊称"}] },
+      { text: "客问 元方：\"尊君 【0】 ？\"答曰：\"【1】 君久不【2】 ，已去。\"友人便怒曰：\"非人哉！与人期行，相委而去。\"元方曰：\"【3】 与【4】 期日中。日中【5】 ，则是无信；对子骂父，则是无礼。\"友人【6】 ，下车【7】 之。元方入门不【8】 。", words: [{word:"不",note:"同 “否”"}, {word:"待",note:"等待"}, {word:"至",note:"到"}, {word:"君",note:"对对方的尊称"}, {word:"家君",note:"对人谦称自己的父亲"}, {word:"不至",note:"没有到"}, {word:"惭",note:"感到惭愧"}, {word:"引",note:"拉，牵拉"}, {word:"顾",note:"回头看"}] },
+    ]
+  },
+
+  {
+    name: "卖油翁", author: "欧阳修", book: "七年级下册",
+    groups: [
+      { text: "【0】 【1】 【2】 ，【3】 【4】 ，【5】 【6】 【7】 【8】 。【9】 射 于 家圃 ，有 卖油翁 释 担 而立，睨 之久而不去 。", words: [{word:"陈康肃公",note:"陈尧咨，谥号康肃，北宋人"}, {word:"善",note:"擅长"}, {word:"射",note:"射箭"}, {word:"当世",note:"在当时"}, {word:"无双",note:"没有第二个"}, {word:"公",note:"对男子的尊称"}, {word:"亦",note:"也"}, {word:"以此",note:"凭借这个（指射箭技术）"}, {word:"自矜",note:"自夸（矜，夸耀）"}, {word:"尝",note:"曾经"}] },
+      { text: "尝 【0】 【1】 【2】 ，【3】 【4】 【5】 【6】 而立，【7】 之久而不去【8】 。【9】 其 发矢 十中八九 ，但 微 颔 之 。", words: [{word:"射",note:"射箭"}, {word:"于",note:"在"}, {word:"家圃",note:"家里（射箭的）场地（圃，园子，这里指场地）"}, {word:"有",note:"有个"}, {word:"卖油翁",note:"卖油的老翁"}, {word:"释",note:"放下"}, {word:"担",note:"担子"}, {word:"睨",note:"斜着眼看，这里形容不在意的样子"}, {word:"久而",note:"很久"}, {word:"见",note:"看见"}] },
+      { text: "见 【0】 【1】 【2】 ，【3】 【4】 【5】 【6】 。", words: [{word:"其",note:"他，指陈尧咨"}, {word:"发矢",note:"射箭（矢，箭）"}, {word:"十中八九",note:"十支射中八九支（中，射中）"}, {word:"但",note:"只"}, {word:"微",note:"微微"}, {word:"颔",note:"点头"}, {word:"之",note:"代词，指陈尧咨射箭十中八九这一情况"}] },
+      { text: "【0】 【1】 【2】 ：\"【3】 【4】 【5】 【6】 【7】 ？【8】 【9】 不亦 精 乎 ？", words: [{word:"康肃",note:"陈尧咨"}, {word:"问",note:"询问"}, {word:"曰",note:"说"}, {word:"汝",note:"你"}, {word:"亦",note:"也"}, {word:"知",note:"懂得"}, {word:"射",note:"射箭"}, {word:"乎",note:"吗"}, {word:"吾",note:"我"}, {word:"射",note:"射箭的技术"}] },
+      { text: "吾 射 【0】 【1】 【2】 ？\"【3】 【4】 ：\"【5】 ，【6】 【7】 【8】 。\"康肃【9】 曰 ：\"尔 安 敢 轻 吾 射 ！", words: [{word:"不亦",note:"不也"}, {word:"精",note:"精湛"}, {word:"乎",note:"吗"}, {word:"翁",note:"老翁"}, {word:"曰",note:"说"}, {word:"无他",note:"没有别的（奥妙）"}, {word:"但",note:"只"}, {word:"手熟",note:"手法熟练"}, {word:"尔",note:"同 “耳”，罢了"}, {word:"忿然",note:"气愤的样子（然，…… 的样子）"}] },
+      { text: "\"康肃忿然 【0】 ：\"【1】 【2】 【3】 【4】 【5】 【6】 ！\"【7】 【8】 ：\"【9】 我酌 油 知之 。", words: [{word:"曰",note:"说"}, {word:"尔",note:"你"}, {word:"安",note:"怎么"}, {word:"敢",note:"敢于"}, {word:"轻",note:"轻视"}, {word:"吾",note:"我"}, {word:"射",note:"射箭的技术"}, {word:"翁",note:"老翁"}, {word:"曰",note:"说"}, {word:"以",note:"凭、靠"}] },
+      { text: "\"翁 曰 ：\"以 我【0】 【1】 【2】 。\"【3】 【4】 【5】 【6】 【7】 【8】 【9】 ，以 钱 覆 其 口 ，徐 以 杓 酌 油 沥 之 ，自 钱孔 入 ，而 钱 不 湿 。", words: [{word:"酌",note:"舀取，这里指倒入"}, {word:"油",note:"油"}, {word:"知之",note:"知道这个（道理）"}, {word:"乃",note:"于是，就"}, {word:"取",note:"拿"}, {word:"一",note:"一个"}, {word:"葫芦",note:"葫芦，一种植物果实，可做容器"}, {word:"置",note:"放"}, {word:"于",note:"在"}, {word:"地",note:"地上"}] },
+      { text: "\"乃 取 一 葫芦 置 于 地 ，【0】 【1】 【2】 【3】 【4】 ，【5】 【6】 【7】 【8】 【9】 沥 之 ，自 钱孔 入 ，而 钱 不 湿 。", words: [{word:"以",note:"用"}, {word:"钱",note:"铜钱"}, {word:"覆",note:"盖"}, {word:"其",note:"它，指葫芦"}, {word:"口",note:"口"}, {word:"徐",note:"慢慢地"}, {word:"以",note:"用"}, {word:"杓",note:"同 “勺”，勺子"}, {word:"酌",note:"舀取，这里指倒入"}, {word:"油",note:"油"}] },
+      { text: "\"乃 取 一 葫芦 置 于 地 ，以 钱 覆 其 口 ，徐 以 杓 酌 油 【0】 【1】 ，【2】 【3】 【4】 ，【5】 【6】 【7】 【8】 。【9】 曰 ：\"我 亦 无他 ，但 手熟 尔 。", words: [{word:"沥",note:"下滴"}, {word:"之",note:"代词，指葫芦"}, {word:"自",note:"从"}, {word:"钱孔",note:"铜钱的孔"}, {word:"入",note:"进入"}, {word:"而",note:"连词，表转折，但是"}, {word:"钱",note:"铜钱"}, {word:"不",note:"没有"}, {word:"湿",note:"沾湿"}, {word:"因",note:"于是"}] },
+      { text: "因 【0】 ：\"【1】 【2】 【3】 ，【4】 【5】 【6】 。\"康肃【7】 【8】 【9】 之 。", words: [{word:"曰",note:"说"}, {word:"我",note:"我"}, {word:"亦",note:"也"}, {word:"无他",note:"没有别的（奥妙）"}, {word:"但",note:"只"}, {word:"手熟",note:"手法熟练"}, {word:"尔",note:"同 “耳”，罢了"}, {word:"笑",note:"笑着"}, {word:"而",note:"连词，表修饰，…… 地"}, {word:"遣",note:"打发"}] },
+      { text: "\"康肃笑 而 遣 【0】 。", words: [{word:"之",note:"代词，他，指卖油翁"}] },
+    ]
+  },
+
+  {
+    name: "孙权劝学", author: "司马光", book: "七年级下册",
+    groups: [
+      { text: "初，权【0】 谓【1】 吕蒙曰：\"卿今【2】 【3】 ，【4】 【5】 ！\"蒙【6】 【7】 【8】 。权曰：\"【9】 岂 欲 卿治经 为 博士 邪 ！", words: [{word:"孙权",note:"字仲谋，三国时吴国的创建者"}, {word:"劝",note:"劝说"}, {word:"当涂",note:"当道，当权"}, {word:"掌事",note:"掌管事务"}, {word:"不可",note:"不能"}, {word:"不学",note:"不学习"}, {word:"辞",note:"推托"}, {word:"以",note:"用"}, {word:"军中多务",note:"军中事务繁多（务，事务）"}, {word:"孤",note:"古时王侯的自称"}] },
+      { text: "权曰：\"孤 【0】 【1】 卿【2】 【3】 【4】 邪【4】 ！【5】 当【6】 ，【7】 【8】 耳【4】 。卿言多务，【9】 若 孤 ？", words: [{word:"岂",note:"难道"}, {word:"欲",note:"想要"}, {word:"治经",note:"研究儒家经典（经，指《易》《书》《诗》《礼》《春秋》等书）"}, {word:"为",note:"成为"}, {word:"博士",note:"专掌经学传授的学官"}, {word:"但",note:"只，只是"}, {word:"涉猎",note:"粗略地阅读"}, {word:"见",note:"了解"}, {word:"往事",note:"指历史"}, {word:"孰",note:"谁"}] },
+      { text: "卿言多务，孰 【0】 【1】 ？孤【1】 【2】 【3】 ，【4】 【5】 。\"蒙【6】 【7】 【8】 。【9】 鲁肃过寻阳，与蒙论议 ，大惊 曰 ：\"卿 今者 才略 ，非 复 吴下阿蒙 ！", words: [{word:"若",note:"比得上"}, {word:"孤",note:"我"}, {word:"常",note:"经常"}, {word:"读书",note:"读书"}, {word:"自以为",note:"自己认为"}, {word:"大有所益",note:"有很大的好处（益，好处）"}, {word:"乃",note:"于是，就"}, {word:"始",note:"开始"}, {word:"就学",note:"从事学习"}, {word:"及",note:"到，等到"}] },
+      { text: "及 鲁肃过寻阳，与蒙【0】 ，【1】 【2】 ：\"【3】 【4】 【5】 ，【6】 【7】 【8】 ！\"【9】 曰 ：\"士别三日 ，即 更 刮目相待 ，大兄 何 见事 之 晚 乎！", words: [{word:"论议",note:"谈论，商议"}, {word:"大惊",note:"非常惊讶"}, {word:"曰",note:"说"}, {word:"卿",note:"你"}, {word:"今者",note:"如今，现在"}, {word:"才略",note:"才干和谋略"}, {word:"非",note:"不是"}, {word:"复",note:"再"}, {word:"吴下阿蒙",note:"指吴县的吕蒙，比喻人学识尚浅（吴下，指吴县，今江苏苏州；阿蒙，吕蒙的小名）"}, {word:"蒙",note:"吕蒙，字子明，三国时吴国名将"}] },
+      { text: "\"蒙 【0】 ：\"【1】 ，【2】 【3】 【4】 ，【5】 【6】 【7】 【8】 【9】 乎！", words: [{word:"曰",note:"说"}, {word:"士别三日",note:"读书人分别几天（士，读书人）"}, {word:"即",note:"就"}, {word:"更",note:"重新"}, {word:"刮目相待",note:"拭目相看，用新的眼光看待（刮目，擦擦眼；待，看待）"}, {word:"大兄",note:"长兄，这里是对同辈年长者的尊称"}, {word:"何",note:"为什么"}, {word:"见事",note:"知晓事情"}, {word:"之",note:"这么，那么"}, {word:"晚",note:"迟"}] },
+      { text: "\"肃【0】 【1】 【2】 ，【3】 【4】 【5】 。", words: [{word:"遂",note:"于是，就"}, {word:"拜",note:"拜见"}, {word:"蒙母",note:"吕蒙的母亲"}, {word:"结友",note:"结为朋友"}, {word:"而",note:"连词，表顺承，然后"}, {word:"别",note:"告别"}] },
+    ]
+  },
+
+  {
+    name: "木兰诗", author: "佚名", book: "七年级下册",
+    groups: [
+      { text: "【0】 复唧唧，木兰【1】 【2】 。不闻【3】 ，【4】 【5】 【6】 【7】 。", words: [{word:"唧唧",note:"叹息声"}, {word:"当户",note:"对着门"}, {word:"织",note:"织布"}, {word:"机杼声",note:"织布机发出的声音（杼，织布的梭子）"}, {word:"惟",note:"只"}, {word:"闻",note:"听见"}, {word:"女",note:"女子，这里指木兰"}, {word:"叹息",note:"叹气"}] },
+      { text: "【0】 【1】 【2】 ，问女【3】 。【4】 【5】 【6】 ，女【4】 亦【5】 【7】 。【8】 【9】 军帖 ，可汗 大点兵 ，军书 十二卷 ，卷卷 有 爷 名 。", words: [{word:"问",note:"询问"}, {word:"女",note:"木兰"}, {word:"何所思",note:"想什么"}, {word:"何所忆",note:"思念什么"}, {word:"女",note:"木兰"}, {word:"亦",note:"也"}, {word:"无所思",note:"没有想什么"}, {word:"无所忆",note:"没有思念什么"}, {word:"昨夜",note:"昨天夜里"}, {word:"见",note:"看见"}] },
+      { text: "昨夜 见 【0】 ，【1】 【2】 ，【3】 【4】 ，【5】 【6】 【7】 【8】 。【9】 无 大儿 ，木兰 无 长兄 ，愿 为 市 鞍马 ，从此替爷征。", words: [{word:"军帖",note:"军中的文告"}, {word:"可汗",note:"我国古代西北地区民族对最高统治者的称呼"}, {word:"大点兵",note:"大规模征兵"}, {word:"军书",note:"征兵的名册"}, {word:"十二卷",note:"很多卷（十二，表示多数，不是确指）"}, {word:"卷卷",note:"每一卷"}, {word:"有",note:"有"}, {word:"爷",note:"父亲"}, {word:"名",note:"名字"}, {word:"阿爷",note:"父亲"}] },
+      { text: "阿爷 【0】 【1】 ，【2】 【3】 【4】 ，【5】 【6】 【7】 【8】 ，从此替爷征。", words: [{word:"无",note:"没有"}, {word:"大儿",note:"大儿子"}, {word:"木兰",note:"木兰"}, {word:"无",note:"没有"}, {word:"长兄",note:"大哥"}, {word:"愿",note:"愿意"}, {word:"为",note:"为此"}, {word:"市",note:"买"}, {word:"鞍马",note:"泛指马和马具"}] },
+      { text: "【0】 【1】 【2】 ，【3】 【4】 【5】 ，【6】 【7】 【8】 ，【9】 买 长鞭 。", words: [{word:"东市",note:"东边的集市"}, {word:"买",note:"买"}, {word:"骏马",note:"好马"}, {word:"西市",note:"西边的集市"}, {word:"买",note:"买"}, {word:"鞍鞯",note:"马鞍和马鞍下面的垫子"}, {word:"南市",note:"南边的集市"}, {word:"买",note:"买"}, {word:"辔头",note:"驾驭牲口用的嚼子和缰绳"}, {word:"北市",note:"北边的集市"}] },
+      { text: "东市 买 骏马 ，西市 买 鞍鞯 ，南市 买 辔头 ，北市 【0】 【1】 。【2】 【3】 【4】 【5】 ，【6】 【7】 【8】 ，【9】 爷娘 唤 女 声 ，但 闻 黄河 流水 鸣溅溅 。", words: [{word:"买",note:"买"}, {word:"长鞭",note:"长鞭子"}, {word:"旦",note:"早晨"}, {word:"辞",note:"辞别"}, {word:"爷娘",note:"父母"}, {word:"去",note:"离开"}, {word:"暮",note:"傍晚"}, {word:"宿",note:"住宿"}, {word:"黄河边",note:"黄河边"}, {word:"不闻",note:"听不见"}] },
+      { text: "旦 辞 爷娘 去 ，暮 宿 黄河边 ，不闻 【0】 【1】 【2】 【3】 ，【4】 【5】 【6】 【7】 鸣【8】 。【9】 辞 黄河 去 ，暮 宿 黑山头 ，不闻 爷娘【0】 唤【1】 女【2】 声【3】 ，但 闻 燕山 胡骑 鸣啾啾 。", words: [{word:"爷娘",note:"父母"}, {word:"唤",note:"呼唤"}, {word:"女",note:"木兰"}, {word:"声",note:"声音"}, {word:"但",note:"只"}, {word:"闻",note:"听见"}, {word:"黄河",note:"黄河"}, {word:"流水",note:"流水"}, {word:"溅溅",note:"水流声"}, {word:"旦",note:"早晨"}] },
+      { text: "旦 【0】 【1】 【2】 ，【3】 【4】 【5】 ，【6】 爷娘 唤 女 声 ，【7】 【8】 【9】 胡骑 鸣啾啾 。", words: [{word:"辞",note:"辞别"}, {word:"黄河",note:"黄河"}, {word:"去",note:"离开"}, {word:"暮",note:"傍晚"}, {word:"宿",note:"住宿"}, {word:"黑山头",note:"黑山，今北京昌平境内"}, {word:"不闻",note:"听不见"}, {word:"但",note:"只"}, {word:"闻",note:"听见"}, {word:"燕山",note:"今蒙古国境内杭爱山，一说为今河北境内的燕山山脉"}] },
+      { text: "旦 辞 黄河 去 ，暮 宿 黑山头 ，不闻 爷娘 唤 女 声 ，但 闻 燕山 【0】 鸣【1】 。", words: [{word:"胡骑",note:"胡人的战马（胡，古代对北方少数民族的称呼）"}, {word:"啾啾",note:"马叫的声音"}] },
+      { text: "【0】 【1】 【2】 ，【3】 【4】 【5】 【6】 。【7】 【8】 【9】 ，寒光 照 铁衣 。", words: [{word:"万里",note:"远行万里"}, {word:"赴",note:"奔赴"}, {word:"戎机",note:"战事"}, {word:"关山",note:"关塞和山岭"}, {word:"度",note:"越过"}, {word:"若",note:"像"}, {word:"飞",note:"飞一样"}, {word:"朔气",note:"北方的寒气"}, {word:"传",note:"传送"}, {word:"金柝",note:"古时军中白天用来烧饭、夜里用来打更的器具"}] },
+      { text: "朔气 传 金柝 ，【0】 【1】 【2】 。【3】 【4】 【5】 ，【6】 【7】 【8】 。", words: [{word:"寒光",note:"清冷的月光"}, {word:"照",note:"照耀"}, {word:"铁衣",note:"铠甲，古代军人穿的护身服装"}, {word:"将军",note:"将军"}, {word:"百战",note:"身经百战"}, {word:"死",note:"战死"}, {word:"壮士",note:"壮士"}, {word:"十年",note:"多年（十，表示多数，不是确指）"}, {word:"归",note:"归来"}] },
+      { text: "归来见天子【0】 ，【1】 【2】 【3】 。【4】 【5】 ，【6】 【7】 【8】 。【9】 问 所欲 ，木兰 不用 尚书郎 ，愿 驰 千里 足 ，送 儿 还 故乡 。", words: [{word:"见",note:"拜见"}, {word:"天子",note:"指可汗"}, {word:"坐",note:"坐在"}, {word:"明堂",note:"古代帝王举行大典的朝堂"}, {word:"策勋",note:"记功（策，记；勋，功劳）"}, {word:"十二转",note:"很多次（十二，表示多数，不是确指；转，勋位每升一级叫一转）"}, {word:"赏赐",note:"赏赐"}, {word:"百千",note:"很多（百千，表示多数，不是确指）"}, {word:"强",note:"有余"}, {word:"可汗",note:"天子"}] },
+      { text: "可汗 【0】 【1】 ，【2】 【3】 【4】 ，【5】 【6】 【7】 【8】 ，【9】 儿 还 故乡 。", words: [{word:"问",note:"询问"}, {word:"所欲",note:"想要什么"}, {word:"木兰",note:"木兰"}, {word:"不用",note:"不愿做"}, {word:"尚书郎",note:"尚书省的官，尚书省是古代朝廷中管理国家政事的机关"}, {word:"愿",note:"希望"}, {word:"驰",note:"赶马快跑"}, {word:"千里",note:"千里"}, {word:"足",note:"脚"}, {word:"送",note:"送"}] },
+      { text: "可汗 问 所欲 ，木兰 不用 尚书郎 ，愿 驰 千里 足 ，送 【0】 【1】 【2】 。", words: [{word:"儿",note:"木兰"}, {word:"还",note:"回"}, {word:"故乡",note:"故乡"}] },
+      { text: "【0】 【1】 【2】 【3】 ，【4】 【5】 【6】 ；【7】 【8】 【9】 来 ，当 户 理 红妆 ；小弟 闻 姊 来 ，磨刀霍霍向猪羊。", words: [{word:"爷娘",note:"父母"}, {word:"闻",note:"听说"}, {word:"女",note:"木兰"}, {word:"来",note:"回来"}, {word:"出",note:"走出"}, {word:"郭",note:"外城"}, {word:"相扶将",note:"互相搀扶着"}, {word:"阿姊",note:"姐姐"}, {word:"闻",note:"听说"}, {word:"妹",note:"木兰"}] },
+      { text: "爷娘 闻 女 来 ，出 郭 相扶将 ；阿姊 闻 妹 【0】 ，【1】 【2】 【3】 【4】 ；【5】 【6】 【7】 【8】 ，磨刀霍霍向猪羊。开【9】 我东阁【9】 门【9】 ，坐 我西床 ，脱 我战时袍 ，著我旧时裳。当窗 理【3】 云鬓 ，对镜 帖 花黄 。", words: [{word:"来",note:"回来"}, {word:"当",note:"对着"}, {word:"户",note:"门"}, {word:"理",note:"梳理"}, {word:"红妆",note:"指女子的艳丽装束"}, {word:"小弟",note:"弟弟"}, {word:"闻",note:"听说"}, {word:"姊",note:"木兰"}, {word:"来",note:"回来磨：打磨刀：刀向："}, {word:"打开东阁",note:"东屋的门坐：坐在西床：西屋的床脱："}] },
+      { text: "开 我东阁 门 ，坐【0】 我西床【0】 ，脱【1】 我战时袍【1】 ，著我旧时裳。当窗【2】 理 云鬓【3】 ，对镜【2】 帖【4】 花黄【4】 。出门【5】 看【6】 火伴【7】 ，火伴【7】 皆【8】 惊忙【9】 ：同行 十二年 ，不知木兰是女郎。", words: [{word:"脱下战时",note:"打仗时穿的袍"}, {word:"云鬓",note:"像云那样的鬓发，形容好看的头发"}, {word:"对着霍霍",note:"磨刀的声音开："}, {word:"帖",note:"同 “贴”，粘贴花黄：古代妇女的一种面部装饰物出门"}, {word:"走出家门看",note:"看望火伴：同伍的士兵（火，同 “伙”，古代军队编制，若干人共一灶为一 “火”）"}, {word:"皆",note:"都"}, {word:"惊忙",note:"惊慌同行："}, {word:"十二年",note:"多年（十二，表示多数，不是确指）"}, {word:"迷离",note:"眯着眼"}, {word:"傍",note:"靠近、临近地走：在地上跑"}] },
+      { text: "出门 看 火伴 ，火伴 皆 惊忙 ：同行【0】 十二年【1】 ，不知木兰是女郎。", words: [{word:"安",note:"怎么"}, {word:"雄",note:"雄性"}] },
+      { text: "雄兔【0】 脚扑朔，雌兔【1】 眼迷离【2】 ；双兔傍地走【0】 ，安【1】 能辨我是雄雌？", words: [{word:"注158",note:""}, {word:"注159",note:""}, {word:"雌",note:"雌性"}] },
+    ]
+  },
+  {
+    name: "杞人忧天", author: "列子", book: "七年级下册",
+    groups: [
+      { text: "杞国【0】 有人【1】 【2】 天地【3】 ，【4】 ，【5】 寝【6】【7】 者。", words: [{word:"杞",note:"周朝诸侯国，在今河南杞县一带"}, {word:"杞人",note:"杞国人"}, {word:"忧",note:"担忧"}, {word:"崩坠",note:"崩塌，坠落"}, {word:"身亡所寄",note:"自己无处容身（亡，无，没有；寄，依附，依托）"}, {word:"废",note:"停止"}, {word:"食",note:"吃饭"}, {word:"寝",note:"睡觉"}] },
+      { text: "又有忧彼之所忧者，因往【0】 【1】 ，曰：\"天，【2】 【3】 ，亡处亡气。【4】 【5】 【6】 ，【7】 【8】 ，【9】 忧 崩坠 乎？\"其人曰：\"天果 积气，日月星宿，不当坠耶？\"晓之者曰：\"日月星宿，亦积气中之有光耀者，只使坠，亦不能有所中伤。\"其人曰：\"奈地坏何 ？\"晓之者曰：\"地 ，积块 耳【3】 ，充塞 四虚 ，无处 无 块 。", words: [{word:"晓",note:"告知，开导"}, {word:"之",note:"代词，他，指杞人"}, {word:"积气",note:"聚积的气体"}, {word:"耳",note:"罢了"}, {word:"若",note:"你"}, {word:"屈伸",note:"身体四肢的活动"}, {word:"呼吸",note:"喘气"}, {word:"终日",note:"整天"}, {word:"在天中行止",note:"在天空里活动（行止，行动，活动）"}, {word:"奈何",note:"为何，为什么"}] },
+      { text: "若 屈伸 呼吸 ，终日 在天中行止 ，奈何 【0】 【1】 乎？\"其人曰：\"天【2】 积气，日月星宿，不当坠耶？\"晓之者曰：\"日月星宿，亦积气中之有光耀者，只使坠，亦不能有所中伤。\"其人曰：\"【3】 ？\"晓之者曰：\"【4】 ，【5】 耳 ，【6】 【7】 ，无处【8】 【8】 块【5】 。【9】 躇步跐蹈 ，终日 在地上行止 ，奈何 忧 其 坏 ？", words: [{word:"忧",note:"担忧"}, {word:"崩坠",note:"崩塌，坠落"}, {word:"果",note:"果然，果真"}, {word:"奈地坏何",note:"地陷下去怎么办（奈…… 何，拿…… 怎么办）"}, {word:"地",note:"大地"}, {word:"积块",note:"聚积的土块"}, {word:"充塞",note:"填满，塞满"}, {word:"四虚",note:"四方"}, {word:"无",note:"没有"}, {word:"若",note:"你"}] },
+      { text: "若 【0】 ，【1】 【2】 ，【3】 【4】 【5】 【6】 ？\"其人【7】 【8】 ，【9】 亦 舍然 大喜【8】 。", words: [{word:"躇步跐蹈",note:"踩、踏"}, {word:"终日",note:"整天"}, {word:"在地上行止",note:"在地上活动"}, {word:"奈何",note:"为何，为什么"}, {word:"忧",note:"担忧"}, {word:"其",note:"那"}, {word:"坏",note:"毁坏"}, {word:"舍然",note:"消除疑虑的样子（舍，同 “释”，解除、消除）"}, {word:"大喜",note:"非常高兴"}, {word:"晓之者",note:"开导他的人"}] },
+      { text: "\"其人舍然 大喜 ，晓之者 【0】 【1】 大喜 。", words: [{word:"亦",note:"也"}, {word:"舍然",note:"消除疑虑的样子"}] },
+    ]
+  },
+
+  {
+    name: "活板", author: "沈括", book: "七年级下册",
+    groups: [
+      { text: "【0】 【1】 ，【2】 【3】 【4】 【5】 【6】 。【7】 【8】 始印【9】 ，已后 典籍 皆 为 板本 。", words: [{word:"板印",note:"指雕版印刷（板，同 “版”）"}, {word:"书籍",note:"书籍"}, {word:"唐人",note:"唐朝人"}, {word:"尚未",note:"还没有"}, {word:"盛",note:"大规模地"}, {word:"为",note:"做，这里指印刷"}, {word:"之",note:"代词，指板印书籍"}, {word:"自",note:"从"}, {word:"冯瀛王",note:"冯道，五代时人，曾倡议国子监校定 “九经”，雕版印刷"}, {word:"五经",note:"儒家经典《诗》《书》《礼》《易》《春秋》"}] },
+      { text: "自 冯瀛王 始印五经 ，【0】 【1】 【2】 【3】 【4】 。", words: [{word:"已后",note:"以后（已，同 “以”）"}, {word:"典籍",note:"重要的文献书籍"}, {word:"皆",note:"都"}, {word:"为",note:"是"}, {word:"板本",note:"雕版印刷的本子"}] },
+      { text: "【0】 【1】 ，【2】 【3】 【4】 ，【5】 【6】 【7】 。【8】 【9】 ：用 胶泥 刻 字 ，薄 如 钱唇 ，每 字 为 一印 ，火 烧 令 坚 。", words: [{word:"庆历",note:"宋仁宗年号（1041—1048）"}, {word:"中",note:"年间"}, {word:"有",note:"有个"}, {word:"布衣",note:"平民"}, {word:"毕昇",note:"人名，活字印刷术的发明者"}, {word:"又",note:"又"}, {word:"为",note:"发明"}, {word:"活板",note:"活字版（活，活字；板，同 “版”）"}, {word:"其",note:"它的"}, {word:"法",note:"方法"}] },
+      { text: "其 法 ：【0】 【1】 【2】 【3】 ，【4】 【5】 【6】 ，【7】 【8】 【9】 一印 ，火 烧 令 坚 。", words: [{word:"用",note:"用"}, {word:"胶泥",note:"黏土"}, {word:"刻",note:"雕刻"}, {word:"字",note:"文字"}, {word:"薄",note:"薄"}, {word:"如",note:"像"}, {word:"钱唇",note:"铜钱的边缘"}, {word:"每",note:"每个"}, {word:"字",note:"文字"}, {word:"为",note:"刻成"}] },
+      { text: "其 法 ：用 胶泥 刻 字 ，薄 如 钱唇 ，每 字 为 【0】 ，【1】 【2】 【3】 【4】 。【5】 【6】 【7】 【8】 【9】 ，以 松脂 、蜡 和 纸灰 之类 冒 之 。", words: [{word:"一印",note:"一个字模"}, {word:"火",note:"用火"}, {word:"烧",note:"烧"}, {word:"令",note:"使"}, {word:"坚",note:"坚硬"}, {word:"先",note:"先"}, {word:"设",note:"设置"}, {word:"一",note:"一个"}, {word:"铁板",note:"铁板"}, {word:"上",note:"上面"}] },
+      { text: "先 设 一 铁板 上 ，【0】 【1】 、【2】 【3】 【4】 【5】 【6】 【7】 。【8】 【9】 ，则 以 一 铁范 置 铁板上 ，乃 密布 字印 ，满 铁范 为 一 板 ，持 就 火 炀 之 ，药 稍 融 ，则 以 一 平板 按 之 ，其 面 平 如 砥 。", words: [{word:"以",note:"用"}, {word:"松脂",note:"松脂"}, {word:"蜡",note:"蜡"}, {word:"和",note:"混合"}, {word:"纸灰",note:"纸灰"}, {word:"之类",note:"之类的东西"}, {word:"冒",note:"覆盖"}, {word:"之",note:"代词，指铁板"}, {word:"欲",note:"想要"}, {word:"印",note:"印刷"}] },
+      { text: "欲 印 ，【0】 【1】 【2】 【3】 【4】 【5】 ，【6】 【7】 【8】 ，【9】 铁范 为 一 板 ，持 就 火 炀 之 ，药 稍 融 ，则 以 一 平板 按 之 ，其 面 平 如 砥 。", words: [{word:"则",note:"就"}, {word:"以",note:"用"}, {word:"一",note:"一个"}, {word:"铁范",note:"铁框子"}, {word:"置",note:"放"}, {word:"铁板上",note:"铁板上面"}, {word:"乃",note:"于是，就"}, {word:"密布",note:"密密地排满"}, {word:"字印",note:"字模"}, {word:"满",note:"满"}] },
+      { text: "欲 印 ，则 以 一 铁范 置 铁板上 ，乃 密布 字印 ，满 【0】 【1】 【2】 【3】 ，【4】 【5】 【6】 【7】 【8】 ，【9】 稍 融 ，则 以 一 平板 按 之 ，其 面 平 如 砥 。", words: [{word:"铁范",note:"铁框子"}, {word:"为",note:"成为"}, {word:"一",note:"一"}, {word:"板",note:"板"}, {word:"持",note:"拿"}, {word:"就",note:"靠近"}, {word:"火",note:"火"}, {word:"炀",note:"烘烤"}, {word:"之",note:"代词，指铁板"}, {word:"药",note:"指松脂、蜡等混合物"}] },
+      { text: "欲 印 ，则 以 一 铁范 置 铁板上 ，乃 密布 字印 ，满 铁范 为 一 板 ，持 就 火 炀 之 ，药 【0】 【1】 ，【2】 【3】 【4】 【5】 【6】 【7】 ，【8】 【9】 平 如 砥 。", words: [{word:"稍",note:"稍微"}, {word:"融",note:"熔化"}, {word:"则",note:"就"}, {word:"以",note:"用"}, {word:"一",note:"一"}, {word:"平板",note:"平板"}, {word:"按",note:"按压"}, {word:"之",note:"代词，指字模"}, {word:"其",note:"它的"}, {word:"面",note:"表面"}] },
+      { text: "欲 印 ，则 以 一 铁范 置 铁板上 ，乃 密布 字印 ，满 铁范 为 一 板 ，持 就 火 炀 之 ，药 稍 融 ，则 以 一 平板 按 之 ，其 面 【0】 【1】 【2】 。若止印三二本【3】 ，未为简易【4】 ；若印数十百千本【5】 ，则极为神速【6】 。【7】 【8】 【9】 铁板 ，一 板 自 布 字 ，一 板 已 自 布 字 ，更互 用 之 ，瞬息 可 就 。", words: [{word:"平",note:"平坦"}, {word:"如",note:"像"}, {word:"砥",note:"磨刀石"}, {word:"止",note:"只"}, {word:"未",note:"不"}, {word:"若",note:"如果"}, {word:"则",note:"就"}, {word:"常",note:"平常"}, {word:"作",note:"制作"}, {word:"二",note:"二"}] },
+      { text: "常 作 二 【0】 ，【1】 【2】 【3】 【4】 【5】 ，【6】 【7】 【8】 【9】 布 字 ，更互 用 之 ，瞬息 可 就 。", words: [{word:"铁板",note:"铁板"}, {word:"一",note:"一"}, {word:"板",note:"板"}, {word:"自",note:"自"}, {word:"布",note:"排"}, {word:"字",note:"字"}, {word:"一",note:"一"}, {word:"板",note:"板"}, {word:"已",note:"已经"}, {word:"自",note:"自"}] },
+      { text: "常 作 二 铁板 ，一 板 自 布 字 ，一 板 已 自 【0】 【1】 ，【2】 【3】 【4】 ，【5】 【6】 【7】 。【8】 【9】 皆 有 数 印 ，如 \"之\"\"也\" 等字，各 有 二十 余 印 ，以 备 一 板 内 有 重复 者 。", words: [{word:"布",note:"排"}, {word:"字",note:"字"}, {word:"更互",note:"交替，轮流"}, {word:"用",note:"使用"}, {word:"之",note:"代词，指铁板"}, {word:"瞬息",note:"一眨眼"}, {word:"可",note:"可以"}, {word:"就",note:"完成"}, {word:"每",note:"每"}, {word:"一字",note:"一个字"}] },
+      { text: "每 一字 【0】 【1】 【2】 【3】 ，【4】 \"之\"\"也【5】\" 等字，【6】 【7】 【8】 【9】 印 ，以 备 一 板 内 有 重复 者 。", words: [{word:"皆",note:"都"}, {word:"有",note:"有"}, {word:"数",note:"几个"}, {word:"印",note:"字模"}, {word:"如",note:"像"}, {word:"“之”“也”",note:"“之”“也” 等字"}, {word:"各",note:"各"}, {word:"有",note:"有"}, {word:"二十",note:"二十"}, {word:"余",note:"多"}] },
+      { text: "每 一字 皆 有 数 印 ，如 \"之\"\"也\" 等字，各 有 二十 余 【0】 ，【1】 【2】 【3】 【4】 【5】 【6】 【7】 【8】 。【9】 ，则 以 纸 帖 之 ，每 一 韵 为 一 帖 ，木格 贮 之 。", words: [{word:"印",note:"字模"}, {word:"以",note:"用来"}, {word:"备",note:"准备"}, {word:"一",note:"一"}, {word:"板",note:"板"}, {word:"内",note:"里面"}, {word:"有",note:"有"}, {word:"重复",note:"重复"}, {word:"者",note:"…… 的字"}, {word:"不用",note:"不用"}] },
+      { text: "不用 ，【0】 【1】 【2】 【3】 【4】 ，【5】 【6】 【7】 【8】 【9】 帖 ，木格 贮 之 。", words: [{word:"则",note:"就"}, {word:"以",note:"用"}, {word:"纸",note:"纸"}, {word:"帖",note:"标签"}, {word:"之",note:"代词，指活字"}, {word:"每",note:"每"}, {word:"一",note:"一"}, {word:"韵",note:"韵部"}, {word:"为",note:"做"}, {word:"一",note:"一"}] },
+      { text: "不用 ，则 以 纸 帖 之 ，每 一 韵 为 一 【0】 ，【1】 【2】 【3】 。【4】 【5】 【6】 【7】 【8】 【9】 ，旋 刻 之 ，以 草火 烧 之 ，瞬息 可 成 。", words: [{word:"帖",note:"标签"}, {word:"木格",note:"木格"}, {word:"贮",note:"贮存"}, {word:"之",note:"代词，指活字"}, {word:"有",note:"有"}, {word:"奇字",note:"生僻字"}, {word:"素",note:"平时"}, {word:"无",note:"没有"}, {word:"备",note:"准备"}, {word:"者",note:"…… 的字"}] },
+      { text: "有 奇字 素 无 备 者 ，【0】 【1】 【2】 ，【3】 【4】 【5】 【6】 ，【7】 【8】 【9】 。", words: [{word:"旋",note:"随即，立刻"}, {word:"刻",note:"雕刻"}, {word:"之",note:"代词，指奇字"}, {word:"以",note:"用"}, {word:"草火",note:"草火"}, {word:"烧",note:"烧"}, {word:"之",note:"代词，指奇字"}, {word:"瞬息",note:"一眨眼"}, {word:"可",note:"可以"}, {word:"成",note:"完成"}] },
+      { text: "【0】 【1】 【2】 【3】 【4】 ，木理【5】 【6】 【7】 ，沾【8】 则【9】 高下 不平 ，兼 与 药 相粘 ，不可 取 ；不若 燔土 ，用 讫 再 火 烧 令 药 融 ，以 手 拂 之 ，其印 自 落 ，殊 不 沾污 。", words: [{word:"不以",note:"不用"}, {word:"木",note:"木头"}, {word:"为",note:"做"}, {word:"之",note:"代词，指活字"}, {word:"者",note:"…… 的原因"}, {word:"文理",note:"纹理"}, {word:"有",note:"有"}, {word:"疏密",note:"疏密"}, {word:"水",note:"水"}, {word:"沾",note:"沾湿"}] },
+      { text: "不以 木 为 之 者 ，木理 有 疏密 ，沾水 则 高下【0】 不平【1】 ，兼【2】 与【3】 药【4】 相粘【5】 ，不可【6】 取【7】 ；不若【8】 燔土【9】 ，用 讫 再 火 烧 令 药 融 ，以 手 拂 之 ，其印 自 落 ，殊 不 沾污 。", words: [{word:"则",note:"就"}, {word:"高下",note:"高低"}, {word:"不平",note:"不平"}, {word:"兼",note:"又"}, {word:"与",note:"和"}, {word:"药",note:"指松脂、蜡等混合物"}, {word:"相粘",note:"互相粘连"}, {word:"不可",note:"不可以"}, {word:"取",note:"拿"}, {word:"不若",note:"不如"}] },
+      { text: "不以 木 为 之 者 ，木理 有 疏密 ，沾水 则 高下 不平 ，兼 与 药 相粘 ，不可 取 ；不若 燔土 ，用【0】 讫【1】 再【2】 火【3】 烧【4】 令【5】 药【6】 融【7】 ，以【8】 手【9】 拂 之 ，其印 自 落 ，殊 不 沾污 。", words: [{word:"燔土",note:"烧过的黏土（燔，烧）"}, {word:"用",note:"使用"}, {word:"讫",note:"完毕"}, {word:"再",note:"再"}, {word:"火",note:"用火"}, {word:"烧",note:"烧"}, {word:"令",note:"使"}, {word:"药",note:"指松脂、蜡等混合物"}, {word:"融",note:"熔化"}, {word:"以",note:"用"}] },
+      { text: "不以 木 为 之 者 ，木理 有 疏密 ，沾水 则 高下 不平 ，兼 与 药 相粘 ，不可 取 ；不若 燔土 ，用 讫 再 火 烧 令 药 融 ，以 手 拂【0】 之【1】 ，其印【2】 自【3】 落【4】 ，殊【5】 不【6】 沾污【7】 。", words: [{word:"手",note:"手"}, {word:"拂",note:"擦拭"}, {word:"之",note:"代词，指活字"}, {word:"印",note:"字模"}, {word:"自",note:"自然"}, {word:"落",note:"落下"}, {word:"殊",note:"根本"}, {word:"不",note:"不"}] },
+      { text: "【0】 【1】 ，【2】 【3】 【4】 余群从所得，【5】 【6】 【7】 【8】 【9】 。", words: [{word:"昇",note:"毕昇"}, {word:"死",note:"死亡"}, {word:"其",note:"他的"}, {word:"印",note:"字模"}, {word:"为",note:"被"}, {word:"至今",note:"到现在"}, {word:"尚",note:"还"}, {word:"宝",note:"珍藏（宝，名词作动词）"}, {word:"藏",note:"收藏"}, {word:"之",note:"代词，指活字"}] },
+    ]
+  },
+
+  {
+    name: "陋室铭", author: "刘禹锡", book: "七年级下册",
+    groups: [
+      { text: "【0】 不在【1】 高【2】 ，【3】 。【4】 不【5】 【6】 ，【7】 。【8】 【9】 陋室 ，惟 吾 德 馨 。", words: [{word:"山",note:"山"}, {word:"不",note:"不"}, {word:"在",note:"在于"}, {word:"有仙则名",note:"有了神仙就出名（名，出名，有名）"}, {word:"水",note:"水"}, {word:"在",note:"在于"}, {word:"深",note:"深"}, {word:"有龙则灵",note:"有了龙就显得神异（灵，神异）"}, {word:"斯",note:"这"}, {word:"是",note:"判断动词，是"}] },
+      { text: "斯 是 【0】 ，【1】 【2】 【3】 【4】 。【5】 【6】 阶【7】 ，【8】 【9】 帘青 。", words: [{word:"陋室",note:"简陋的屋子"}, {word:"惟",note:"只"}, {word:"吾",note:"我"}, {word:"德",note:"品德"}, {word:"馨",note:"能散布很远的香气，这里指德行美好"}, {word:"苔痕",note:"苔藓的痕迹"}, {word:"上",note:"长到"}, {word:"绿",note:"碧绿"}, {word:"草色",note:"草的颜色"}, {word:"入",note:"映入"}] },
+      { text: "苔痕 上 阶绿 ，草色 入 帘【0】 。【1】 【2】 【3】 ，【4】 【5】 【6】 。【7】 【8】 【9】 ，阅 金经 。", words: [{word:"青",note:"青色"}, {word:"谈笑",note:"谈笑风生"}, {word:"有",note:"有"}, {word:"鸿儒",note:"博学的人（鸿，大；儒，旧指读书人）"}, {word:"往来",note:"交往"}, {word:"无",note:"没有"}, {word:"白丁",note:"平民，指没有功名的人"}, {word:"可以",note:"可以"}, {word:"调",note:"调弄"}, {word:"素琴",note:"不加装饰的琴"}] },
+      { text: "可以 调 素琴 ，【0】 【1】 。【2】 【3】 【4】 ，【5】 【6】 之【7】 。【8】 【9】 ，西蜀 子云亭 。", words: [{word:"阅",note:"阅读"}, {word:"金经",note:"指佛经（佛经用泥金书写）"}, {word:"无",note:"没有"}, {word:"丝竹",note:"指弦乐器和管乐器，这里指世俗的乐曲"}, {word:"之乱耳",note:"扰乱耳朵（之，用于主谓之间，取消句子独立性，无实义；乱，扰乱）"}, {word:"无",note:"没有"}, {word:"案牍",note:"指官府文书"}, {word:"劳形",note:"使身体劳累（劳，使…… 劳累；形，形体、身体）"}, {word:"南阳",note:"地名，今河南南阳"}, {word:"诸葛庐",note:"诸葛亮隐居时的草庐"}] },
+      { text: "南阳 诸葛庐 ，【0】 【1】 。【2】 【3】 ：【4】 ？", words: [{word:"西蜀",note:"地名，今四川"}, {word:"子云亭",note:"扬雄，字子云，西汉文学家，其宅旁有亭，名 “子云亭”"}, {word:"孔子",note:"春秋时期思想家、教育家，儒家学派创始人"}, {word:"云",note:"说"}, {word:"何陋之有",note:"有什么简陋的呢（之，宾语前置的标志，无实义）"}] },
+    ]
+  },
+
+  {
+    name: "三峡", author: "郦道元", book: "八年级上册",
+    groups: [
+      { text: "【0】 三峡七百里中，两岸连山，【1】 阙【1】 处。重岩叠【2】 ，隐天蔽日，【3】 亭午【3】 夜分【3】 ，不见【4】 月。\n至于夏水【5】 陵，【6】 溯【6】 阻绝。【7】 王命急宣【7】 ，有时朝发白帝，暮到江陵，其间千二百里，虽乘【8】 御风，【9】 。", words: [{word:"自",note:"在。"}, {word:"略无",note:"完全没有。阙：同 “缺”，空隙、缺口。"}, {word:"嶂",note:"直立如屏障的山峰。"}, {word:"自非",note:"如果不是。亭午：正午。夜分：半夜。"}, {word:"曦",note:"日光，这里指太阳。"}, {word:"襄",note:"冲上、漫上。"}, {word:"沿",note:"顺流而下。溯：逆流而上。"}, {word:"或",note:"有时。王命：皇帝的命令。宣：宣布，传达。"}, {word:"奔",note:"这里指飞奔的马。"}, {word:"不以疾也",note:"没有这么快。"}] },
+      { text: "春冬之时，则【0】 绿潭，【1】 倒影，【2】 多生怪柏，悬泉瀑布，【3】 其间，【4】 ，【5】 多趣味。", words: [{word:"素湍",note:"激起白色浪花的急流。素，白色。湍，急流。"}, {word:"回清",note:"回旋的清波。"}, {word:"绝巘",note:"极高的山峰。"}, {word:"飞漱",note:"飞速地往下冲荡。"}, {word:"清荣峻茂",note:"水清树荣，山高草盛。"}, {word:"良",note:"甚，很。"}] },
+      { text: "每至【0】 霜旦【0】 ，林寒涧肃，常有高猿长啸，【1】 【2】 ，空谷传响，【3】 。故渔者歌曰：\"【4】 三峡巫峡长，猿鸣三声泪【5】 。", words: [{word:"晴初",note:"天刚放晴。霜旦：下霜的早晨。"}, {word:"属引",note:"接连不断。属，连接。引，延长。"}, {word:"凄异",note:"凄惨悲凉。"}, {word:"哀转久绝",note:"悲哀婉转，很久才消失。绝，消失。"}, {word:"巴东",note:"古郡名，今重庆东部云阳、奉节、巫山一带。"}, {word:"沾裳",note:"打湿衣裳。"}] },
+    ]
+  },
+
+  {
+    name: "与朱元思书", author: "吴均", book: "八年级上册",
+    groups: [
+      { text: "【0】 ，天山共色。【1】 ，任意东西。自富阳至桐庐一百许里，奇山异水，【2】 。\n【3】 ，【4】 。【5】 ，【6】 。【7】 ，【8】 。", words: [{word:"风烟俱净",note:"风；烟；都；消散。俱，全，都。"}, {word:"从流飘荡",note:"随着；江流；漂浮；移动。从流，随着江流。"}, {word:"天下独绝",note:"天下；独一无二。绝，独一无二。"}, {word:"水皆缥碧",note:"水；都；浅青色。缥（piǎo）碧，浅青色。"}, {word:"千丈见底",note:"千丈；深；能；看见；水底。"}, {word:"游鱼细石",note:"游动；的；鱼；细小；的；石头。"}, {word:"直视无碍",note:"一直；看；下去；没有；障碍。"}, {word:"急湍甚箭",note:"湍急；的；水流；比；箭；还；快。甚，超过。"}, {word:"猛浪若奔",note:"凶猛；的；浪；像；飞奔；的；马。奔，这里指飞奔的马。"}] },
+      { text: "【0】 ，【1】 ，【2】 ，【3】 ，【4】 ，【5】 。【6】 ，【7】 ；【8】 ，【9】 。", words: [{word:"夹岸高山",note:"夹；在；两岸；的；高；山。"}, {word:"皆生寒树",note:"都；生长；着；使人；看；了；有；寒意；的；树。寒树，这里形容树密而绿，让人感到寒意。"}, {word:"负势竞上",note:"凭借；山势；争着；向上。负，凭借。竞，争着。"}, {word:"互相轩邈",note:"互相；争着；往；高处；远处；伸展。轩，高。邈，远。这里均作动词用。"}, {word:"争高直指",note:"争着；向；高；处；笔直；地；向上。指，直。"}, {word:"千百成峰",note:"成；百；上；千；地；形成；山峰。"}, {word:"泉水激石",note:"泉水；冲击；岩石。激，冲击，撞击。"}, {word:"泠泠作响",note:"泠泠（形容水声清越）；发出；声响。泠（líng）泠，拟声词，形容水声清越。"}, {word:"好鸟相鸣",note:"美丽；的；鸟；互相；和鸣。好，美丽。"}, {word:"嘤嘤成韵",note:"嘤嘤（鸟鸣声）；形成；和谐；的；声音。嘤（yīng）嘤，鸟鸣声。韵，和谐的声音。"}] },
+      { text: "【0】 ，【1】 。【2】 ，【3】 ；【4】 ，【5】 。【6】 ，【7】 ；【8】 ，【9】 。", words: [{word:"蝉则千转不穷",note:"蝉；就；长久；不断；地；叫；个；不停。转，同 “啭”，鸟鸣，这里指蝉鸣。穷，尽。"}, {word:"猿则百叫无绝",note:"猿；就；长久；不断；地；叫；个；不停。绝，停止。"}, {word:"鸢飞戾天者",note:"鸢（一种凶猛的鸟）；飞；到；天上；的；人（指极力追求名利的人）。鸢（yuān），俗称老鹰，凶猛的鸟。戾（lì），至，到达。"}, {word:"望峰息心",note:"望见；山峰；平息；热衷于；功名利禄；的；心。息，平息。"}, {word:"经纶世务者",note:"治理；社会；事务；的；人（指治理政务的人）。经纶，筹划、治理。"}, {word:"窥谷忘反",note:"看到；这些；山谷；忘记；返回。反，同 “返”，返回。"}, {word:"横柯上蔽",note:"横；斜；的；树枝；在；上面；遮蔽。柯，树木的枝干。蔽，遮蔽。"}, {word:"在昼犹昏",note:"在；白天；也；像；黄昏；一样。犹，好像。"}, {word:"疏条交映",note:"稀疏；的；枝条；互相；掩映。"}, {word:"有时见日",note:"有时；能；看见；阳光。"}] },
+    ]
+  },
+
+  {
+    name: "周亚夫军细柳", author: "司马迁", book: "八年级上册",
+    groups: [
+      { text: "【0】 ，【1】 。【2】 ；【3】 ；【4】 ：以备胡。", words: [{word:"文帝之后六年",note:"汉文帝后元六年（前 158）。文帝，汉高祖刘邦之子刘恒，前 180— 前 157 年在位。后六年，汉文帝改元后元，后元六年为前 158 年。"}, {word:"匈奴大入边",note:"匈奴大规模侵入边境。匈奴，古代北方游牧民族。入边，侵入边境。"}, {word:"乃以宗正刘礼为将军，军霸上",note:"于是任命宗正刘礼为将军，驻军霸上。宗正，官名，掌管皇族事务。军，驻军、驻扎。霸上，古地名，在今陕西西安东。"}, {word:"祝兹侯徐厉为将军，军棘门",note:"祝兹侯徐厉为将军，驻军棘门。棘门，古地名，在今陕西咸阳东北。"}, {word:"河内守亚夫为将军，军细柳",note:"河内郡太守周亚夫为将军，驻军细柳。河内守，河内郡的郡守。细柳，古地名，在今陕西咸阳西南。"}] },
+      { text: "【0】 。【1】 ，【2】 。【3】 ，【4】 。【5】 。先驱曰：\"天子且至！\"【6】 军门都尉曰：\"将军令曰：'军中闻将军令，不闻天子之诏。'\"【7】 【8】 。【9】 ：\"吾欲入劳军。", words: [{word:"上自劳军",note:"皇帝亲自去慰问军队。上，特指皇帝。劳（lào），慰问。"}, {word:"至霸上及棘门军，直驰入",note:"到了霸上和棘门的军营，直接驱车而入。"}, {word:"将以下骑送迎",note:"将军及其属下都骑着马迎送。"}, {word:"已而之细柳军",note:"不久来到了细柳军营。已而，不久。之，到，往。"}, {word:"军士吏被甲，锐兵刃，彀弓弩，持满",note:"军中官兵都穿戴盔甲，刀出鞘，张开弓弩，把弓拉满。被（pī），同 “披”，穿着。锐兵刃，这里指刀出鞘。彀（gòu），张开。弩（nǔ），用机械发箭的弓。持满，把弓拉满。"}, {word:"天子先驱至，不得入",note:"皇上的先行卫队到了营前，不准进入。先驱，先行引导的人员。"}, {word:"先驱曰",note:"“天子且至！”：先行官说：“天子将要驾到！” 且，将要。"}, {word:"军门都尉曰",note:"“将军令曰：‘军中闻将军令，不闻天子之诏。’”：守卫军营的将官说：“将军有令：‘军中只听从将军的命令，不听从天子的诏令。’” 都尉，掌管防卫的军官。诏（zhào），皇帝发布的命令。"}, {word:"居无何，上至，又不得入",note:"过了不久，皇上驾到，也不让入军营。居无何，过了不久。"}, {word:"于是上乃使使持节诏将军",note:"于是皇上就派使者手持符节去告诉将军。使使，派使者。节，符节，皇帝派遣使者或调动军队的凭证。"}] },
+      { text: "\"【0】 。壁门士吏谓从属车骑曰：\"将军约，军中不得驱驰。\"【1】 【2】 。至营，将军亚夫持兵揖曰：\"介胄之士不拜，请以军礼见。\"【3】 【4】 。【5】 ：\"【6】 。\"【7】 。", words: [{word:"亚夫乃传言开壁门",note:"周亚夫这才传令打开军营大门。壁门，营门。"}, {word:"壁门士吏谓从属车骑曰",note:"“将军约，军中不得驱驰。”：守卫营门的官兵对跟从皇上的车马随从说：“将军规定，军营中不准驱车奔驰。” 从属车骑，跟随皇帝的车马。约，规定。驱驰，策马疾驰。"}, {word:"于是天子乃按辔徐行",note:"于是皇上的车队也只好拉住缰绳，慢慢前行。按辔（pèi），控制住车马。辔，马缰绳。徐，慢慢地。"}, {word:"至营，将军亚夫持兵揖曰",note:"“介胄之士不拜，请以军礼见。”：到了大营前，将军周亚夫手持兵器，双手抱拳行礼说：“穿戴着盔甲之将不行跪拜礼，请允许我按照军礼参见。” 持兵揖（yī），手持兵器行礼。揖，拱手行礼。介胄（zhòu），铠甲和头盔，这里用作动词，指披甲戴盔。士，将领。"}, {word:"天子为动，改容式车",note:"皇上因此而感动，脸上的神情也改变了，俯身扶着车前的横木，表示敬意。为动，被感动。改容，改变神情。式，同 “轼”，车前横木，这里用作动词，指扶轼。"}, {word:"使人称谢",note:"派人致意。称谢，向人致意，表示问候。"}, {word:"皇帝敬劳将军",note:"皇帝敬重地慰劳将军。"}, {word:"成礼而去",note:"劳军礼仪完毕后辞去。"}] },
+      { text: "【0】 。文帝曰：\"嗟乎，此真将军矣！\"【1】 【2】 ，【3】 。【4】 ！\"【5】 。", words: [{word:"既出军门，群臣皆惊",note:"出了细柳军营的大门，许多大臣都深感惊诧。"}, {word:"文帝曰",note:"“嗟乎，此真将军矣！”：文帝说：“啊，这才是真正的将军啊！” 嗟（jiē）乎，叹词，表示慨叹。"}, {word:"曩者霸上、棘门军，若儿戏耳",note:"先前霸上、棘门的军营，简直就像儿戏一样。曩（nǎng），先前。"}, {word:"其将固可袭而虏也",note:"那里的将军是完全可以通过偷袭而俘虏的。固，必，一定。袭，偷袭。虏，俘虏。"}, {word:"至于亚夫，可得而犯邪",note:"至于周亚夫，岂是能够侵犯的吗？邪（yé），语气词，表示反问。"}, {word:"称善者久之",note:"长时间对周亚夫赞叹不已。"}] },
+    ]
+  },
+
+  {
+    name: "大道之行也", author: "戴圣", book: "八年级上册",
+    groups: [
+      { text: "【0】 之行也，天下为公。选贤与能【1】 ，讲信【2】 。故人不独【3】 ，不独【4】 ，使老有所【5】 ，壮有所用，幼有所长，【6】 、【7】 、【8】 、【9】 、废疾 者皆有所养，男有分 ，女有归 。", words: [{word:"大道",note:"指儒家推崇的上古时代的政治制度"}, {word:"与",note:"同 “举”，推举"}, {word:"修睦",note:"培养和睦气氛"}, {word:"亲其亲",note:"以…… 为亲（第一个 “亲”）"}, {word:"子其子",note:"以…… 为子（第一个 “子”）"}, {word:"终",note:"终老的保障"}, {word:"矜",note:"同 “鳏”，老而无妻的人"}, {word:"寡",note:"老而无夫的人"}, {word:"孤",note:"幼而无父的人"}, {word:"独",note:"老而无子的人"}] },
+      { text: "故人不独亲其亲 ，不独子其子 ，使老有所终 ，壮有所用，幼有所长，矜 、寡 、孤 、独 、【0】 者皆有所养，男有【1】 ，女有【2】 。货【3】 其弃于地也，不必藏于己；力恶其不出于身也，不必为己。是故【4】 而不兴，盗窃【5】 而不【6】 ，故【7】 而不闭，是谓【8】 。", words: [{word:"废疾",note:"有残疾而不能做事"}, {word:"分",note:"职分，职守"}, {word:"归",note:"女子出嫁"}, {word:"恶",note:"厌恶"}, {word:"谋闭",note:"图谋之心闭塞"}, {word:"乱贼",note:"造反、害人的事"}, {word:"作",note:"兴起"}, {word:"外户",note:"从外面把门带上"}, {word:"大同",note:"指理想社会"}] },
+    ]
+  },
+
+  {
+    name: "富贵不能淫", author: "孟子", book: "八年级上册",
+    groups: [
+      { text: "【0】 ？【1】 ，【2】 。", words: [{word:"公孙衍、张仪岂不诚大丈夫哉",note:"公孙衍、张仪（战国时期著名的纵横家）；难道；不；真正；是；有大志、有作为、有气节；的；男子；吗？诚，真正，确实。大丈夫，指有大志、有作为、有气节的男子。"}, {word:"一怒而诸侯惧",note:"一；发怒；就；诸侯；害怕。惧，害怕。"}, {word:"安居而天下熄",note:"安静；居住；就；天下；太平。熄，指战争停息，天下太平。"}] },
+      { text: "孟子曰：\"【0】 ？【1】 ？【2】 ，【3】 ；【4】 ，【5】 ，往送之门，戒之曰：'【6】 ，【7】 ，【8】 ！'【9】 ，妾妇之道也 。", words: [{word:"是焉得为大丈夫乎",note:"这；怎么；能；称为；大丈夫；呢？焉，怎么，哪里。"}, {word:"子未学礼乎",note:"你；没有；学；过；礼；吗？子，你。"}, {word:"丈夫之冠也",note:"男子；行；加冠；礼；的；时候。冠（guàn），行冠礼。古代男子二十岁行冠礼，表示成年。"}, {word:"父命之",note:"父亲；训导；他。命，教导、训诲。"}, {word:"女子之嫁也",note:"女子；出嫁；的；时候。"}, {word:"母命之",note:"母亲；训导；她。"}, {word:"往之女家",note:"到；你；的；夫家；去。女（rǔ），同 “汝”，你。"}, {word:"必敬必戒",note:"一定；恭敬；一定；谨慎。戒，谨慎。"}, {word:"无违夫子",note:"不要；违背；丈夫。夫子，这里指丈夫。"}, {word:"以顺为正者",note:"把；顺从；作为；准则；的；人。顺，顺从。正，准则，标准。"}] },
+      { text: "'以顺为正者 ，【0】 。【1】 ，【2】 ，【3】 。【4】 ；【5】 。【6】 ，【7】 ，【8】 ，【9】 。", words: [{word:"妾妇之道也",note:"妾妇；的；行为；准则；了。道，方法，准则。"}, {word:"居天下之广居",note:"居住；在；天下；最；宽广；的；住宅（指 “仁”）。广居，指 “仁”。"}, {word:"立天下之正位",note:"站立；在；天下；最；正确；的；位置（指 “礼”）。正位，指 “礼”。"}, {word:"行天下之大道",note:"行走；在；天下；最；光明；的；道路（指 “义”）。大道，指 “义”。"}, {word:"得志，与民由之",note:"实现；志向；和；百姓；一同；遵循；正道。由，遵循。"}, {word:"不得志，独行其道",note:"不能；实现；志向；独自；走；自己；的；道路。道，这里指原则。"}, {word:"富贵不能淫",note:"富贵；不能；使；他；迷惑。淫，惑乱，迷惑。这里是使动用法。"}, {word:"贫贱不能移",note:"贫贱；不能；使；他；动摇。移，改变，动摇。这里是使动用法。"}, {word:"威武不能屈",note:"威武；不能；使；他；屈服。屈，屈服。这里是使动用法。"}, {word:"此之谓大丈夫",note:"这；才；叫做；大丈夫。"}] },
+    ]
+  },
+
+  {
+    name: "小石潭记", author: "柳宗元", book: "八年级上册",
+    groups: [
+      { text: "从小丘西行百二十步，隔【0】 ，闻水声，如鸣【1】 ，心乐之。伐竹取道，下见小潭，水尤【2】 。全石以为底，近岸，卷石底以出，为【3】 ，为【4】 ，为【5】 ，为岩。青树【6】 ，【7】 ，【8】 披拂。", words: [{word:"篁竹",note:"竹林"}, {word:"珮环",note:"玉饰"}, {word:"清冽",note:"清凉"}, {word:"坻",note:"水中高地"}, {word:"屿",note:"小岛"}, {word:"嵁",note:"不平的岩石"}, {word:"翠蔓",note:"翠绿的藤蔓"}, {word:"蒙络摇缀",note:"蒙盖缠绕，摇曳牵连"}, {word:"参差",note:"长短、高低不齐"}] },
+      { text: "潭中鱼【0】 百【1】 头，皆若【2】 无所依，日光下【3】 ，影布石上。【4】 不动，【5】 远逝，往来【6】 ，似与游者相乐。\n潭西南而望，【7】 【8】 ，明灭可见。其岸势【9】 ，不可知其源。", words: [{word:"可",note:"大约"}, {word:"许",note:"表示约数"}, {word:"空游",note:"在空中游动"}, {word:"澈",note:"穿透"}, {word:"佁然",note:"静止不动的样子"}, {word:"俶尔",note:"忽然"}, {word:"翕忽",note:"轻快敏捷的样子"}, {word:"斗折",note:"像北斗星那样曲折"}, {word:"蛇行",note:"像蛇那样蜿蜒前行"}, {word:"犬牙差互",note:"像狗的牙齿那样交错不齐"}] },
+      { text: "坐潭上，四面竹树【0】 ，寂寥无人，【1】 ，【2】 幽【3】 。以其境过【4】 ，不可久【5】 ，乃记之而去。\n【6】 ，崔氏二小生，曰恕己，曰奉壹。", words: [{word:"环合",note:"围绕、环抱"}, {word:"凄神寒骨",note:"使人心神凄凉，使骨头寒冷"}, {word:"悄怆",note:"忧伤"}, {word:"邃",note:"深"}, {word:"清",note:"凄清"}, {word:"居",note:"停留"}, {word:"隶而从者",note:"跟着同去的人"}] },
+    ]
+  },
+
+  {
+    name: "愚公移山", author: "列子", book: "八年级上册",
+    groups: [
+      { text: "【0】 ，【1】 ，【2】 ，【3】 。", words: [{word:"太行、王屋二山",note:"两座山的名字，在今山西、河南一带。"}, {word:"方七百里",note:"方圆七百里。方，古代计量面积用语。"}, {word:"高万仞",note:"高七八千丈。仞，古代长度单位，以七尺或八尺为一仞。"}, {word:"本在冀州之南，河阳之北",note:"本来在冀州的南边，河阳的北边。冀州，古地名，包括今河北、山西、河南黄河以北、辽宁辽河以西等地区。河阳，古地名，今河南孟州一带。"}] },
+      { text: "【0】 ，【1】 。【2】 ，【3】 ：\"【4】 ，【5】 ，可乎？\"【6】 。【7】 ：\"【8】 ，【9】 ？", words: [{word:"北山愚公者，年且九十",note:"北山下面有个名叫愚公的人，年纪将近九十岁。且，将近。"}, {word:"面山而居",note:"面对着山居住。"}, {word:"惩山北之塞，出入之迂也",note:"苦于山北路途阻塞，出来进去都要绕远路。惩，苦于。塞，阻塞。迂，曲折，绕远。"}, {word:"聚室而谋曰",note:"集合全家来商量说。室，家人。"}, {word:"吾与汝毕力平险",note:"我跟你们尽全力铲除险峻的大山。汝，你，你们。毕，尽、全。险，险峻的大山。"}, {word:"指通豫南，达于汉阴",note:"一直通向豫州南部，到达汉水南岸。指，直。豫南，豫州南部。汉阴，汉水南岸。阴，指山的北面、水的南面，与 “阳” 相对。"}, {word:"杂然相许",note:"纷纷表示赞同。杂然，纷纷地。许，赞同。"}, {word:"其妻献疑曰",note:"他的妻子提出疑问说。献疑，提出疑问。"}, {word:"以君之力，曾不能损魁父之丘",note:"凭您的力气，连魁父这样的小山丘都不能削减。以，凭、靠。曾，用在 “不” 前，加强否定语气，可译为 “连…… 都……”。损，削减。魁父，小山名。丘，土山。"}, {word:"如太行、王屋何",note:"能把太行山、王屋山怎么样呢？“如…… 何”，把…… 怎么样。"}] },
+      { text: "【0】 ？\"杂曰：\"【1】 。\"【2】 ，【3】 ，【4】 。【5】 ，【6】 。【7】 。", words: [{word:"且焉置土石",note:"况且往哪里放置土石呢？且，况且。焉，哪里。置，放置、安放。"}, {word:"投诸渤海之尾，隐土之北",note:"把它扔到渤海的边上，隐土的北边。诸，相当于 “之于”。渤海之尾，渤海的边上。隐土，古地名。"}, {word:"遂率子孙荷担者三夫",note:"于是愚公率领儿孙中能挑担子的三个人。荷（hè），扛、担。夫，成年男子。"}, {word:"叩石垦壤",note:"敲石头，挖泥土。叩，敲、打。垦，挖、开垦。"}, {word:"箕畚运于渤海之尾",note:"用箕畚装土石运到渤海的边上。箕畚（jī běn），用竹篾、柳条等编织的器具，这里是用箕畚装土石的意思。"}, {word:"邻人京城氏之孀妻有遗男",note:"邻居京城氏的寡妇有个孤儿。京城，复姓。孀（shuāng）妻，寡妇。遗男，指死了父亲的男孩。"}, {word:"始龀，跳往助之",note:"刚刚换牙，蹦蹦跳跳地去帮助他们。始龀（chèn），刚刚换牙，指七八岁。"}, {word:"寒暑易节，始一反焉",note:"冬夏换季，才往返一次。易，更替。节，季节。反，同 “返”，往返。焉，语气词。"}] },
+      { text: "【0】 ：\"【1】 ！【2】 ，【3】 ？\"【4】 ：\"【5】 ，【6】 。【7】 ；【8】 ；【9】 ，而山不加增 ，何苦而不平 ？", words: [{word:"河曲智叟笑而止之曰",note:"河湾上的智叟讥笑愚公，阻止他干这件事。河曲，古地名，在今山西永济一带。叟，老年男子。"}, {word:"甚矣，汝之不惠",note:"你也太不聪明了！甚，严重。惠，同 “慧”，聪明。"}, {word:"以残年余力，曾不能毁山之一毛",note:"就凭你老迈的年纪和残余的力气，连山上的一棵草都动不了。残年，老迈的年纪。余力，剩下的力气。毛，指草木。"}, {word:"其如土石何",note:"又能把泥土石头怎么样呢？其，用在 “如…… 何” 前面加强反问语气。"}, {word:"北山愚公长息曰",note:"北山愚公长叹一声说。长息，长叹。"}, {word:"汝心之固，固不可彻",note:"你思想顽固，顽固到了不可改变的地步。固，顽固。彻，通达，这里指改变。"}, {word:"曾不若孀妻弱子",note:"连寡妇和小孩都比不上。弱子，幼儿、小孩。"}, {word:"虽我之死，有子存焉",note:"即使我死了，还有儿子在呀。虽，即使。"}, {word:"子又生孙，孙又生子",note:"儿子又生孙子，孙子又生儿子。"}, {word:"子子孙孙无穷匮也",note:"子子孙孙无穷无尽。穷匮（kuì），穷尽。"}] },
+      { text: "虽我之死，有子存焉 ；子又生孙，孙又生子 ；子子孙孙无穷匮也 ，【0】 ，【1】 ？\"【2】 。", words: [{word:"而山不加增",note:"可是山不会增高加大。加增，增高加大。"}, {word:"何苦而不平",note:"还担心挖不平吗？苦，愁苦，这里指担心。"}, {word:"河曲智叟亡以应",note:"河湾上的智叟无话可答。亡（wú），同 “无”，没有。"}] },
+      { text: "【0】 ，【1】 ，【2】 。【3】 ，【4】 ，【5】 。【6】 。", words: [{word:"操蛇之神闻之",note:"握着蛇的山神听说了这件事。操蛇之神，神话中手里握着蛇的山神。"}, {word:"惧其不已也",note:"怕他不停地干下去。已，停止。"}, {word:"告之于帝",note:"向天帝报告了这件事。"}, {word:"帝感其诚",note:"天帝被他的诚心所感动。"}, {word:"命夸娥氏二子负二山",note:"命令大力神夸娥氏的两个儿子背走了那两座山。夸娥氏，神话中力气很大的神。负，背。"}, {word:"一厝朔东，一厝雍南",note:"一座放在朔方的东部，一座放在雍州的南部。厝（cuò），放置、安放。朔东，朔方东部，今山西北部一带。雍南，雍州南部，今陕西、甘肃一带。"}, {word:"自此，冀之南，汉之阴，无陇断焉",note:"从此，冀州的南部直到汉水南岸，再也没有山冈阻隔了。陇断，即垄断，山冈阻隔。"}] },
+    ]
+  },
+
+  {
+    name: "核舟记", author: "魏学洢", book: "八年级上册",
+    groups: [
+      { text: "明有【0】 曰王叔远，能以【1】 ，为宫室、【2】 、人物，以至鸟兽、木石，【3】 【4】 ，各具情态。尝【5】 余核舟一，盖大苏【6】 赤壁云。", words: [{word:"奇巧人",note:"手艺奇妙精巧的人"}, {word:"径寸之木",note:"直径一寸的木头"}, {word:"器皿",note:"盛东西的日常用具"}, {word:"罔不",note:"无不，全都"}, {word:"因势象形",note:"顺着材料原来的样子刻成（各种事物的）形象"}, {word:"贻",note:"赠"}, {word:"泛",note:"泛舟，乘船在水上游览"}] },
+      { text: "舟首尾长约八分【0】 ，高可二【1】 许。中【2】 者为舱，【3】 覆之。旁开小窗，左右各四，共八扇。启窗而观，【4】 相望焉。闭之，则右刻\"山高月小，水落石出\"，左刻\"清风【5】 来，水波不【6】 \"，【7】 【8】 之。", words: [{word:"有奇",note:"有余，多一点"}, {word:"黍",note:"黄米，古代用其长度作度量基础"}, {word:"轩敞",note:"高起而宽敞"}, {word:"箬篷",note:"用箬竹叶做的船篷"}, {word:"雕栏",note:"雕刻着花纹的栏杆"}, {word:"徐",note:"缓缓地"}, {word:"兴",note:"起"}, {word:"石青",note:"一种青色颜料"}, {word:"糁",note:"用颜料等涂上"}] },
+      { text: "船头坐三人，中【0】 而多【1】 者为东坡，佛印居右，鲁直居左。苏、黄共阅一【2】 。东坡右手执【3】 ，左手抚鲁直背。鲁直左手执【4】 ，右手指卷，如有所语。东坡现右足，鲁直现左足，各微侧，其两膝相比者，各隐卷底【5】 中。佛印【6】 弥勒，【7】 昂视，神情与苏、黄【8】 。卧右膝，【9】 右臂支船，而竖其左膝，左臂挂念珠 倚之——珠可历历 数也。", words: [{word:"峨冠",note:"高高的帽子"}, {word:"髯",note:"两腮的胡子，也泛指胡须"}, {word:"手卷",note:"只能卷舒而不能悬挂的横幅书画长卷"}, {word:"卷端",note:"手卷的右端"}, {word:"卷末",note:"手卷的左端"}, {word:"衣褶",note:"衣服的褶皱"}, {word:"绝类",note:"极像"}, {word:"矫首",note:"抬头"}, {word:"不属",note:"不相类似"}, {word:"诎",note:"弯曲"}] },
+      { text: "卧右膝，诎 右臂支船，而竖其左膝，左臂挂【0】 倚之——珠可【1】 数也。", words: [{word:"念珠",note:"佛教徒念佛号或经咒时用以计数的串珠"}, {word:"历历",note:"分明的样子"}] },
+      { text: "舟尾横卧一【0】 。楫【0】 左右【1】 各一人。居右者【2】 仰面，左手倚一【3】 木，右手【4】 右趾，若【5】 状。居左者右手执蒲葵扇，左手抚炉，炉上有壶，其人【6】 ，若听茶声然。", words: [{word:"楫",note:"船桨"}, {word:"舟子",note:"撑船的人"}, {word:"椎髻",note:"形状像椎的发髻"}, {word:"衡",note:"同 “横”"}, {word:"攀",note:"扳着"}, {word:"啸呼",note:"大声呼喊"}, {word:"视端容寂",note:"目光正视，神色平静"}] },
+      { text: "其船背稍【0】 ，则题名其上，文曰\"天启壬戌秋日，虞山王毅叔远【1】 刻\"，细若蚊足，钩画【2】 ，其色墨。又用【3】 一，文曰\"初平山人\"，其色【4】 。\n而计其长曾不【5】 寸。盖【6】 桃核【7】 者为之。嘻，技亦【8】 矣哉！", words: [{word:"夷",note:"平"}, {word:"甫",note:"男子美称，多附于字之后"}, {word:"了了",note:"清楚明白"}, {word:"篆章",note:"篆字图章"}, {word:"丹",note:"朱红"}, {word:"盈",note:"满"}, {word:"简",note:"挑选"}, {word:"修狭",note:"长而窄"}, {word:"灵怪",note:"神奇"}] },
+    ]
+  },
+
+  {
+    name: "桃花源记", author: "陶渊明", book: "八年级上册",
+    groups: [
+      { text: "晋【0】 中，【1】 人捕鱼为业。【2】 溪行，忘路之远近。忽逢桃花林，夹岸数百步，中无杂树，芳草【3】 ，【4】 【5】 。渔人甚【6】 之，复前行，欲【7】 其林。", words: [{word:"太元",note:"东晋孝武帝的年号（376—396）。"}, {word:"武陵",note:"郡名，今湖南常德一带。"}, {word:"缘",note:"沿着，顺着。"}, {word:"鲜美",note:"新鲜美好。"}, {word:"落英",note:"落花。一说，初开的花。"}, {word:"缤纷",note:"繁多的样子。"}, {word:"异",note:"惊异，诧异。这里是 “对…… 感到惊异” 的意思。"}, {word:"穷",note:"尽。"}] },
+      { text: "林尽水源，便得一山，山有小口，【0】 若有光。便舍船，从口入。初极狭，【1】 。复行数十步，【2】 。土地平旷，屋舍【3】 ，有良田美池桑竹之【4】 。【5】 ，鸡犬相闻。其中往来种作，男女衣着，悉如外人。【6】 ，并怡然自乐。", words: [{word:"仿佛",note:"隐隐约约，形容看不真切。"}, {word:"才通人",note:"仅容一人通过。才，仅仅、只。"}, {word:"豁然开朗",note:"形容由狭窄幽暗突然变得开阔敞亮。"}, {word:"俨然",note:"整齐的样子。"}, {word:"属",note:"类。"}, {word:"阡陌交通",note:"田间小路交错相通。阡陌，田间小路。"}, {word:"黄发垂髫",note:"指老人和小孩。黄发，旧说是长寿的象征，指老人。垂髫（tiáo），垂下来的头发，指小孩。"}] },
+      { text: "【0】 还家，设酒杀鸡作食。村中闻有此人，咸来问讯。自云先世避秦时乱，率妻子邑人来此【1】 ，不复出焉，遂与外人间隔。问今是何世，乃不知有汉，【2】 魏晋。此人一一为【3】 所闻，皆【4】 。余人各复【5】 至其家，皆出酒食。停数日，辞去。此中人【6】 ：\"【7】 为外人道也。", words: [{word:"要",note:"同 “邀”，邀请。"}, {word:"绝境",note:"与人世隔绝的地方。"}, {word:"无论",note:"不要说，更不必说。"}, {word:"具言",note:"详细地说出。"}, {word:"叹惋",note:"感叹惋惜。"}, {word:"延",note:"邀请。"}, {word:"语云",note:"告诉（渔人）说。“语” 后省略 “之”，代指渔人。"}, {word:"不足",note:"不值得，不必。"}] },
+      { text: "既出，得其船，【0】 ，处处【1】 之。【2】 ，【3】 太守，说如此。太守即遣人随其往，【4】 ，【5】 迷，不复得路。\n南阳刘子骥，高尚士也，闻之，欣然【6】 往。【7】 ，【8】 病终。后遂无【9】 者。", words: [{word:"便扶向路",note:"就顺着旧路（回去）。扶，沿着、顺着。向，先前的。"}, {word:"志",note:"做记号。"}, {word:"及郡下",note:"到了郡城。及，到。"}, {word:"诣",note:"拜访。"}, {word:"寻向所志",note:"寻找以前所做的记号。"}, {word:"遂",note:"终于。"}, {word:"规",note:"打算，计划。"}, {word:"未果",note:"没有实现。"}, {word:"寻",note:"随即，不久。"}, {word:"问津",note:"询问渡口，这里是 “访求、探求” 的意思。"}] },
+    ]
+  },
+
+  {
+    name: "生于忧患，死于安乐", author: "孟子", book: "八年级上册",
+    groups: [
+      { text: "【0】 ，【1】 ，【2】 ，【3】 ，【4】 ，【5】 。【6】 ，【7】 ，【8】 ，【9】 ，空乏其身 ，行拂乱其所为 ，所以动心忍性 ，曾益其所不能 。", words: [{word:"舜发于畎亩之中",note:"舜从田野中被起用。发，兴起，指被任用。畎（quǎn）亩，田地。"}, {word:"傅说举于版筑之间",note:"傅说从筑墙的劳作中被选拔。举，选拔、任用。版筑，古人筑墙，用两块版相夹，中间填泥土，用杵捣实，叫版筑。"}, {word:"胶鬲举于鱼盐之中",note:"胶鬲从贩卖鱼盐的劳作中被选拔。"}, {word:"管夷吾举于士",note:"管夷吾（管仲）从狱官手中被释放并任用。士，狱官。"}, {word:"孙叔敖举于海",note:"孙叔敖从海滨隐居之地被选拔。"}, {word:"百里奚举于市",note:"百里奚从集市上被选拔。市，集市。"}, {word:"故天将降大任于是人也",note:"所以上天将要下达重大使命给这样的人。任，责任，使命。是，这样的。"}, {word:"必先苦其心志",note:"一定先使他的内心痛苦。苦，使…… 痛苦。"}, {word:"劳其筋骨",note:"使他的筋骨劳累。劳，使…… 劳累。"}, {word:"饿其体肤",note:"使他经受饥饿之苦，以致肌肤消瘦。饿，使…… 饥饿。"}] },
+      { text: "故天将降大任于是人也 ，必先苦其心志 ，劳其筋骨 ，饿其体肤 ，【0】 ，【1】 ，【2】 ，【3】 。", words: [{word:"空乏其身",note:"使他身处贫困之中。空乏，财资缺乏。"}, {word:"行拂乱其所为",note:"使他做事不顺。拂，违背。乱，扰乱。"}, {word:"所以动心忍性",note:"通过这些来使他的心受到震撼，使他的性格坚忍起来。动，使…… 受到震撼。忍，使…… 坚忍。"}, {word:"曾益其所不能",note:"增加他所不具备的能力。曾，同 “增”，增加。"}] },
+      { text: "【0】 ；【1】 ；【2】 。【3】 ，【4】 ，【5】 。【6】 。", words: [{word:"人恒过，然后能改",note:"人常常犯错误，然后才能改正。恒，常常。过，犯错误。"}, {word:"困于心，衡于虑，而后作",note:"内心忧困，思虑堵塞，然后才能有所作为。衡，同 “横”，梗塞、不顺。作，奋起，指有所作为。"}, {word:"征于色，发于声，而后喻",note:"表现在脸色上，流露在言谈中，才能被人们了解。征，征验、表现。发，显露、流露。喻，了解、明白。"}, {word:"入则无法家拂士",note:"在国内如果没有守法度的大臣和辅佐君王的贤士。入，指在国内。法家，守法度的大臣。拂（bì），同 “弼”，辅佐。"}, {word:"出则无敌国外患者",note:"在国外如果没有势力、地位相当的国家和外患的侵扰。出，指在国外。敌国，势力、地位相当的国家。"}, {word:"国恒亡",note:"国家常常会灭亡。"}, {word:"然后知生于忧患而死于安乐也",note:"这样以后才知道，常处忧愁祸患之中可以使人生存，常处安逸快乐之中可以使人死亡。"}] },
+    ]
+  },
+
+  {
+    name: "答谢中书书", author: "陶弘景", book: "八年级上册",
+    groups: [
+      { text: "两岸石壁，【0】 。青林翠竹，【1】 俱【1】 备。晓雾将【2】 ，猿鸟乱鸣；【3】 ，【4】 。实是【5】 。自【6】 以来，未复有能【7】 其【8】 者。", words: [{word:"五色交辉",note:"这里形容石壁色彩斑斓，交相辉映。"}, {word:"四时",note:"四季。俱：都。"}, {word:"歇",note:"消散。"}, {word:"夕日欲颓",note:"夕阳快要落山了。颓，坠落。"}, {word:"沉鳞竞跃",note:"潜游在水中的鱼争相跳出水面。沉鳞，指水中潜游的鱼。"}, {word:"欲界之仙都",note:"人间仙境。欲界，指人间。仙都，神仙居住的美好世界。"}, {word:"康乐",note:"指南朝宋山水诗人谢灵运，他继承爵位，被封为康乐公。"}, {word:"与",note:"参与，这里有 “欣赏”“领悟” 的意思。"}, {word:"奇",note:"奇丽景色。"}] },
+    ]
+  },
+
+  {
+    name: "记承天寺夜游", author: "苏轼", book: "八年级上册",
+    groups: [
+      { text: "元丰六年十月十二日夜，【0】 ，【1】 ，【2】 。【3】 ，【4】 【5】 。怀民【6】 ，【7】 。【8】 ，【9】 ，盖竹柏影也 。", words: [{word:"解衣欲睡",note:"解开；想要。"}, {word:"月色入户",note:"月光；门。户，门。"}, {word:"欣然起行",note:"高兴的样子；起身；出行。欣然，高兴的样子。"}, {word:"念无与为乐者",note:"考虑，想到；和；一起；作乐；的；人。念，考虑，想到。"}, {word:"遂至承天寺",note:"于是；到；承天寺。遂，于是。至，到。"}, {word:"寻张怀民",note:"寻找；张怀民（作者的朋友）。"}, {word:"亦未寝",note:"也；没有；睡觉。寝，睡觉。"}, {word:"相与步于中庭",note:"共同，一起；散步；在；庭院里。相与，共同，一起。中庭，庭院里。"}, {word:"庭下如积水空明",note:"庭院里；像；积水；澄澈；透明。空明，形容水的澄澈。"}, {word:"水中藻、荇交横",note:"水；中；藻、荇（均为水生植物）；交错；纵横。藻（zǎo）、荇（xìng），均为水生植物。"}] },
+      { text: "庭下如积水空明 ，水中藻、荇交横 ，【0】 。【1】 ？【2】 ？【3】 。", words: [{word:"盖竹柏影也",note:"大概；是；竹子；柏树；的；影子；了。盖，大概是。"}, {word:"何夜无月",note:"哪；一夜；没有；月亮。"}, {word:"何处无竹柏",note:"哪；一处；没有；竹子；柏树。"}, {word:"但少闲人如吾两人者耳",note:"只是；缺少；清闲；的；人；像；我们；两人；这样；的；罢了。但，只是。闲人，清闲的人。耳，罢了。"}] },
+    ]
+  },
+
+{
+    name: "岳阳楼记", author: "范仲淹", book: "九年级上册",
+    groups: [
+      { text: "庆历四年春，滕子京【0】 巴陵郡。【1】 ，【2】 ，百废【3】 兴，乃重修岳阳楼，【4】 ，刻唐贤今人诗赋于其上，【5】 予作文以记之。", words: [{word:"谪守",note:"因罪贬谪流放，出任外官。"}, {word:"越明年",note:"到了第二年。越，到。"}, {word:"政通人和",note:"政事顺利，百姓和乐。"}, {word:"具",note:"同 “俱”，全、皆。"}, {word:"增其旧制",note:"扩大它原有的规模。制，规模。"}, {word:"属",note:"同 “嘱”，嘱托。"}] },
+      { text: "予观夫巴陵【0】 ，在洞庭一湖。衔远山，吞长江，【1】 ，【2】 ，【3】 ，此则岳阳楼之【4】 也，【5】 。【6】 北通巫峡，南极【7】 潇湘，【8】 【9】 ，多会于此，览物之情，得无异乎？", words: [{word:"胜状",note:"胜景，美景。"}, {word:"浩浩汤汤",note:"水势浩大的样子。"}, {word:"横无际涯",note:"宽阔无边。际涯，边际。"}, {word:"朝晖夕阴，气象万千",note:"早晚阴晴明暗多变，景象千变万化。晖，日光。"}, {word:"大观",note:"壮丽景象。"}, {word:"前人之述备矣",note:"前人的记述很详尽了。备，详尽。"}, {word:"然则",note:"如此…… 那么。"}, {word:"南极潇湘",note:"向南面直到潇水和湘水。极，至、到达。"}, {word:"迁客",note:"被降职到外地的官员。迁，贬谪、降职。"}, {word:"骚人",note:"泛指文人。"}] },
+      { text: "若夫【0】 【1】 ，连月不【2】 ，阴风怒号，浊浪【3】 ，【4】 ，【5】 ，商旅不行，【6】 ，【7】 ，虎啸猿啼。登【8】 楼也，则有【9】 ，满目萧然，感极而悲者矣。", words: [{word:"淫雨",note:"连绵不断的雨。"}, {word:"霏霏",note:"雨雪纷纷而下的样子。"}, {word:"开",note:"指天气放晴。"}, {word:"排空",note:"冲向天空。"}, {word:"日星隐曜",note:"太阳和星星隐藏起光辉。曜，光芒。"}, {word:"山岳潜形",note:"山岳隐没在阴云中。潜，隐没。"}, {word:"樯倾楫摧",note:"桅杆倒下，船桨断折。倾，倒下。摧，折断。"}, {word:"薄暮冥冥",note:"傍晚天色昏暗。薄，迫近。冥冥，昏暗。"}, {word:"斯",note:"这。"}, {word:"去国怀乡，忧谗畏讥",note:"离开国都、怀念家乡，担心被说坏话、惧怕被批评指责。去，离开。国，国都。谗，谗言。讥，批评指责。"}] },
+      { text: "至若春和【0】 明，【1】 ，【2】 ，【3】 ，【4】 ，【5】 青青。而或【6】 ，皓月千里，【7】 ，【8】 ，【9】 ，此乐何极 ！", words: [{word:"景",note:"日光。"}, {word:"波澜不惊",note:"湖面平静，没有风浪。惊，这里有 “起”“动” 的意思。"}, {word:"上下天光，一碧万顷",note:"天色湖光相接，一片青绿，广阔无际。万顷，极言广阔。"}, {word:"沙鸥翔集，锦鳞游泳",note:"沙洲上的鸥鸟，时而飞翔，时而停歇；美丽的鱼游来游去。集，停息。锦鳞，指美丽的鱼。"}, {word:"岸芷汀兰",note:"岸上与小洲上的花草。芷，白芷。汀，小洲。"}, {word:"郁郁",note:"形容草木茂盛。"}, {word:"长烟一空",note:"大片烟雾完全消散。一，全。"}, {word:"浮光跃金",note:"浮动的光像跳动的金子。"}, {word:"静影沉璧",note:"静静的月影像沉入水中的玉璧。"}, {word:"渔歌互答",note:"渔夫的歌声互相应和。"}] },
+      { text: "而或长烟一空 ，皓月千里，浮光跃金 ，静影沉璧 ，渔歌互答 ，此乐【0】 ！登斯楼也，则有心旷神怡，【1】 ，【2】 ，其喜洋洋者矣。", words: [{word:"何极",note:"哪有尽头。"}, {word:"宠辱偕忘",note:"荣耀和屈辱一并忘掉。偕，一起。"}, {word:"把酒临风",note:"端着酒，迎着风。把，持、执。"}] },
+      { text: "予尝【0】 【1】 之【2】 ，【3】 ，何哉？【4】 ，【5】 则忧其民，【6】 则忧其君。【7】 【8】 亦忧，【9】 亦忧。", words: [{word:"求",note:"探求。"}, {word:"古仁人",note:"古代品德高尚的人。"}, {word:"心",note:"思想感情。"}, {word:"或异二者之为",note:"或许不同于以上两种表现。或，或许、也许。为，表现。"}, {word:"不以物喜，不以己悲",note:"不因外物和自己处境的变化而喜悲。"}, {word:"居庙堂之高",note:"处在高高的朝堂上，指在朝廷做官。庙堂，指朝廷。"}, {word:"处江湖之远",note:"处在僻远的江湖间，指被贬谪到边远地区做地方官。"}, {word:"是",note:"这样。"}, {word:"进",note:"指 “居庙堂之高”。"}, {word:"退",note:"指 “处江湖之远”。"}] },
+      { text: "其必曰\"【0】 \"乎！噫！【1】 ？", words: [{word:"先天下之忧而忧，后天下之乐而乐",note:"在天下人忧之前先忧，在天下人乐之后才乐。先，在…… 之前。后，在…… 之后。"}, {word:"微斯人，吾谁与归",note:"如果没有这种人，我同谁一道呢？微，如果没有。归，归依。"}] },
+    ]
+  },
+
+  {
+    name: "湖心亭看雪", author: "张岱", book: "九年级上册",
+    groups: [
+      { text: "是日【0】 矣，余拏【1】 一小舟，【2】 ，独往湖心亭看雪。【3】 ，天与云与山与水，【4】 。湖上影子，惟【5】 、【6】 、【7】 、【8】 。", words: [{word:"更定",note:"晚上八时左右。"}, {word:"拏一小舟",note:"撑（船）。拏（ná），撑。"}, {word:"拥毳衣炉火",note:"裹、围；用毛皮制成的衣服。毳（cuì），鸟兽的细毛。"}, {word:"雾凇沆砀",note:"天气寒冷时，雾冻结在树木枝叶上的白色松散冰晶；白汽弥漫的样子。沆砀（hàng dàng），白汽弥漫。"}, {word:"上下一白",note:"全。"}, {word:"长堤一痕",note:"一道痕迹。"}, {word:"湖心亭一点",note:"一个点。"}, {word:"与余舟一芥",note:"像小草一样微小的船。芥，小草，比喻轻微纤细的事物。"}, {word:"舟中人两三粒而已",note:"罢了。"}] },
+      { text: "到亭上，有两人【0】 ，一童子烧酒炉正沸。见余大喜曰：\"湖中焉得更有此人！\"【1】 。余【2】 。问其姓氏，是金陵人，【3】 。及【4】 下船，舟子【5】 曰：\"【6】 。", words: [{word:"铺毡对坐",note:"铺着毡子相对而坐。"}, {word:"拉余同饮",note:"拉着我一同饮酒。"}, {word:"强饮三大白而别",note:"尽力；古人罚酒时用的酒杯，这里代指酒。强（qiǎng），尽力。白，古人罚酒时用的酒杯。"}, {word:"客此",note:"客居此地。"}, {word:"及下船",note:"等到。"}, {word:"喃喃",note:"小声地不断念叨。"}, {word:"莫说相公痴，更有痴似相公者",note:"不要说相公您痴，还有像相公您一样痴的人呢。相公，旧时对士人的尊称。"}] },
+    ]
+  },
+
+  {
+    name: "醉翁亭记", author: "欧阳修", book: "九年级上册",
+    groups: [
+      { text: "【0】 滁皆山也。其西南诸峰，【1】 ，望之【2】 者，琅琊也。山行六七里，渐闻水声潺潺而泻出于两峰之间者，酿泉也。【3】 ，有亭【4】 者，醉翁亭也。作亭者谁？山之僧智仙也。【5】 ？【6】 也。太守与客来饮于此，饮少【7】 醉，而年又最高，故自号曰醉翁也。【8】 。山水之乐，【9】 。", words: [{word:"环",note:"环绕。"}, {word:"林壑尤美",note:"树林和山谷尤其优美。壑，山谷。"}, {word:"蔚然而深秀",note:"茂盛又幽深秀丽。蔚然，茂盛的样子。"}, {word:"峰回路转",note:"山势回环，路也跟着转弯。"}, {word:"翼然临于泉上",note:"像鸟张开翅膀一样，高踞于泉水之上。翼然，像鸟张开翅膀的样子。临，居高面下。"}, {word:"名之者谁",note:"给它命名的人是谁？名，命名。"}, {word:"太守自谓",note:"太守用自己的别号（醉翁）来命名。"}, {word:"辄",note:"就。"}, {word:"醉翁之意不在酒，在乎山水之间也",note:"醉翁的情趣不在于喝酒，而在山光水色之中。意，意趣，情趣。"}, {word:"得之心而寓之酒也",note:"领会在心里，寄托在酒上。得，领会。寓，寄托。"}] },
+      { text: "若夫日出而【0】 ，【1】 ，【2】 者，山间之朝暮也。【3】 ，【4】 ，【5】 ，【6】 者，山间之四时也。", words: [{word:"林霏开",note:"树林里的雾气散开。霏，弥漫的云气。"}, {word:"云归而岩穴暝",note:"云雾聚拢，山谷就显得昏暗了。归，聚拢。暝，昏暗。"}, {word:"晦明变化",note:"阴暗明亮交替变化。晦，昏暗。"}, {word:"野芳发而幽香",note:"野花开放，有一股清幽的香味。芳，花。发，开放。"}, {word:"佳木秀而繁阴",note:"好的树木枝叶繁茂，形成浓密的绿荫。秀，茂盛。"}, {word:"风霜高洁",note:"天高气爽，霜色洁白。"}, {word:"水落而石出",note:"水位下降，石头露出来。"}] },
+      { text: "至于【0】 歌于途，行者休于树，前者呼，后者应，【1】 ，往来而不绝者，滁人游也。【2】 ，溪深而鱼肥；【3】 为酒，泉香而酒洌【3】 ；【4】 ，【5】 者，太守宴也。【6】 ，【7】 ，【8】 ，【9】 ，起坐而喧哗者，众宾欢也。", words: [{word:"负者",note:"背着东西的人。"}, {word:"伛偻提携",note:"老年人弯着腰走，小孩子由大人领着走。伛偻，弯腰曲背，指老人。提携，牵扶，指儿童。"}, {word:"临溪而渔",note:"到溪边钓鱼。临，靠近。渔，钓鱼。"}, {word:"酿泉",note:"泉的名字。洌：清。"}, {word:"山肴野蔌",note:"野味野菜。蔌，菜蔬。"}, {word:"杂然而前陈",note:"杂乱地摆放在前面。陈，陈列，摆开。"}, {word:"宴酣之乐，非丝非竹",note:"宴中欢饮的乐趣，不在于音乐。酣，尽兴地喝酒。丝，弦乐器。竹，管乐器。"}, {word:"射者中",note:"投壶的人投中了。射，指投壶，宴饮游戏。"}, {word:"弈者胜",note:"下棋的人赢了。弈，下棋。"}, {word:"觥筹交错",note:"酒杯和酒筹交互错杂。觥，酒杯。筹，酒筹。"}] },
+      { text: "【0】 ，【1】 者，太守醉也。", words: [{word:"苍颜白发",note:"苍老的容颜，花白的头发。"}, {word:"颓然乎其间",note:"醉醺醺地坐在众人中间。颓然，倒下的样子。"}] },
+      { text: "【0】 夕阳在山，人影散乱，太守归而宾客从也。树林【1】 ，【2】 ，游人去而禽鸟乐也。然而禽鸟知山林之乐，而不知人之乐；人知从太守游而乐，而不知太守之【3】 也。【4】 ，太守也。太守【5】 谁？【6】 欧阳修也。", words: [{word:"已而",note:"不久。"}, {word:"阴翳",note:"形容枝叶茂密成荫。翳，遮盖。"}, {word:"鸣声上下",note:"禽鸟在高处低处鸣叫。"}, {word:"乐其乐",note:"以他们的快乐为快乐。第一个 “乐”，以…… 为快乐。"}, {word:"醉能同其乐，醒能述以文者",note:"醉了能够同大家一起欢乐，醒来能够用文章记述这事的人。述，记述。以，用。"}, {word:"谓",note:"是。"}, {word:"庐陵",note:"庐陵郡，今江西吉安一带"}] },
+    ]
+  },
+
+  {
+    name: "出师表", author: "诸葛亮", book: "九年级下册",
+    groups: [
+      { text: "【0】 ，【1】 ，【2】 ，【3】 。然【4】 ，【5】 ，【6】 ，【7】 。【8】 ，【9】 ，恢弘志士之气 ，不宜妄自菲薄 ，引喻失义 ，以塞忠谏之路也 。", words: [{word:"先帝创业未半而中道崩殂",note:"开创帝业；中途；指帝王之死。崩殂（cú），指帝王之死。"}, {word:"今天下三分",note:"现在天下分裂为魏、蜀、吴三国。"}, {word:"益州疲弊",note:"这里指蜀汉；人力物力匮乏。疲弊，人力物力匮乏。"}, {word:"此诚危急存亡之秋也",note:"确实，实在；时候。秋，时候。"}, {word:"侍卫之臣不懈于内",note:"宫廷里守卫的臣子；懈怠；朝廷。内，朝廷。"}, {word:"忠志之士忘身于外者",note:"忠诚有志的将士；在疆场。外，指疆场。"}, {word:"盖追先帝之殊遇",note:"大概；追念；特殊的礼遇。盖，大概。追，追念。殊遇，特殊的礼遇。"}, {word:"欲报之于陛下也",note:"想报答给陛下。陛下，对君主的尊称。"}, {word:"诚宜开张圣听",note:"确实应该；扩大；皇上的听闻，指皇上广泛听取意见。开张圣听，扩大皇上听闻的范围，意思是要后主广泛听取意见。"}, {word:"以光先帝遗德",note:"来；发扬光大；先帝遗留的美德。光，发扬光大。遗德，遗留的美德。"}] },
+      { text: "诚宜开张圣听 ，以光先帝遗德 ，【0】 ，【1】 ，【2】 ，【3】 。", words: [{word:"恢弘志士之气",note:"发扬，扩展；有远大志向的人的气概。恢弘，发扬，扩展。"}, {word:"不宜妄自菲薄",note:"不应该；随意地看轻自己。妄自菲薄，随意地看轻自己。"}, {word:"引喻失义",note:"称引、譬喻；不合道理。引喻，称引、譬喻。义，适宜、恰当。"}, {word:"以塞忠谏之路也",note:"以致；堵塞；忠诚进谏的道路。塞（sè），堵塞。"}] },
+      { text: "【0】 ，【1】 。【2】 ，【3】 ，【4】 ，【5】 ，【6】 。", words: [{word:"宫中府中，俱为一体",note:"皇宫中和丞相府中；都是；一个整体。俱，全，都。"}, {word:"陟罚臧否，不宜异同",note:"提拔、晋升；惩罚；赞扬和批评；应该不同。陟（zhì），提拔、晋升。臧否（zāng pǐ），赞扬和批评。异同，这里指不同。"}, {word:"若有作奸犯科及为忠善者",note:"如果有；做奸邪事情，触犯法律；和；做忠诚善良事情的人。作奸犯科，做奸邪事情，触犯法律。科，法律条文。"}, {word:"宜付有司论其刑赏",note:"应该；交给；主管官员；判定；他们的；惩罚和奖赏。有司，负责专职的官员。刑，罚。"}, {word:"以昭陛下平明之理",note:"来；显示；公平清明；治理。昭，显示。平明，公平清明。理，治理。"}, {word:"不宜偏私",note:"不应该；偏袒私心。"}, {word:"使内外异法也",note:"使；朝廷内外；刑赏之法不同。内外，指宫廷和丞相府。异法，刑赏之法不同。"}] },
+      { text: "【0】 ，【1】 ，【2】 ，【3】 。【4】 ，【5】 ，【6】 ，【7】 ，【8】 。【9】 ，性行淑均 ，晓畅军事 ，试用于昔日 ，先帝称之曰能 ，是以众议举宠为督 。", words: [{word:"侍中、侍郎郭攸之、费祎、董允等",note:"都是官职名，都是蜀汉的大臣。"}, {word:"此皆良实",note:"这些都是；忠良诚实的人。良实，忠良诚实的人。"}, {word:"志虑忠纯",note:"志向和心思；忠诚纯正。志虑，志向和心思。忠纯，忠诚纯正。"}, {word:"是以先帝简拔以遗陛下",note:"因此；选拔；来；给予。简拔，选拔。遗（wèi），给予。"}, {word:"愚以为宫中之事",note:"我认为；皇宫里的事情。愚，我，谦称。"}, {word:"事无大小，悉以咨之",note:"事情无论大小；都；拿来；询问。悉，都。咨（zī），询问。"}, {word:"然后施行",note:"然后；做，实施。施行，做，实施。"}, {word:"必能裨补阙漏",note:"一定能够；弥补；缺失和疏漏。裨（bì）补，弥补。阙漏，缺失和疏漏。"}, {word:"有所广益",note:"有；广泛的好处。广益，增益，益处。"}, {word:"将军向宠",note:"蜀汉的将领。"}] },
+      { text: "将军向宠 ，【0】 ，【1】 ，【2】 ，【3】 ，【4】 。【5】 ，【6】 ，【7】 ，【8】 。", words: [{word:"性行淑均",note:"性情品行；善良公正。淑，善。均，公正。"}, {word:"晓畅军事",note:"通晓，熟悉；军事。晓畅，通晓，熟悉。"}, {word:"试用于昔日",note:"在；从前。昔日，从前。"}, {word:"先帝称之曰能",note:"先帝；称赞；他；说；有才能。能，有才能。"}, {word:"是以众议举宠为督",note:"因此；大家；商议；推举；向宠；做；中部督（官职名）。举，推举。督，指中部督。"}, {word:"愚以为营中之事",note:"我认为；军营里的事情。"}, {word:"悉以咨之",note:"都拿来询问他。"}, {word:"必能使行阵和睦",note:"一定能够；使；军队；和睦。行（háng）阵，指军队。"}, {word:"优劣得所",note:"好的差的各得其所。"}] },
+      { text: "【0】 ，【1】 ；【2】 ，【3】 。【4】 ，【5】 ，【6】 。【7】 ，【8】 ，【9】 ，则汉室之隆，可计日而待也 。", words: [{word:"亲贤臣，远小人",note:"亲近；贤臣；疏远；小人。亲，亲近。远，疏远。"}, {word:"此先汉所以兴隆也",note:"这；西汉；…… 的原因；兴盛。所以，…… 的原因。兴隆，兴盛。"}, {word:"亲小人，远贤臣",note:"亲近小人，疏远贤臣。"}, {word:"此后汉所以倾颓也",note:"这；东汉；…… 的原因；倾覆衰败。倾颓，倾覆衰败。"}, {word:"先帝在时",note:"先帝在世的时候。"}, {word:"每与臣论此事",note:"每次；和；我；议论；这件事。"}, {word:"未尝不叹息痛恨于桓、灵也",note:"没有；不；叹息；痛心遗憾；对；汉桓帝、汉灵帝（东汉末年的昏君）。痛恨，痛心遗憾。"}, {word:"侍中、尚书、长史、参军",note:"都是官职名，指郭攸之、费祎、董允、陈震、张裔、蒋琬等。"}, {word:"此悉贞良死节之臣",note:"这些；都是；坚贞可靠、能够以死报国的臣子。贞良死节，坚贞可靠、能够以死报国。"}, {word:"愿陛下亲之信之",note:"希望；陛下；亲近；他们；信任；他们。"}] },
+      { text: "侍中、尚书、长史、参军 ，此悉贞良死节之臣 ，愿陛下亲之信之 ，【0】 。", words: [{word:"则汉室之隆，可计日而待也",note:"那么；汉朝的；兴盛；可以；计算着日子；等待；了。计日而待，指日可待，形容时间短。"}] },
+      { text: "【0】 ，【1】 ，【2】 ，【3】 。【4】 ，【5】 ，【6】 ，【7】 ，【8】 ，【9】 。", words: [{word:"臣本布衣",note:"我；本来；平民。布衣，平民。"}, {word:"躬耕于南阳",note:"亲自；耕种；在；南阳（今河南南阳一带）。躬，亲自。"}, {word:"苟全性命于乱世",note:"苟且；保全；性命；在；乱世。苟全，苟且保全。"}, {word:"不求闻达于诸侯",note:"不；谋求；闻名显达；在；诸侯（指当时割据一方的军阀）。闻达，闻名显达。"}, {word:"先帝不以臣卑鄙",note:"先帝；不；因为；我；身份低微，见识短浅。卑鄙，身份低微，见识短浅。"}, {word:"猥自枉屈",note:"辱，这里有降低身份的意思；自己；委屈自己。猥（wěi），辱，这里指降低身份。枉屈，委屈。"}, {word:"三顾臣于草庐之中",note:"三次；拜访；我；在；草庐；里面。顾，拜访。"}, {word:"咨臣以当世之事",note:"询问；我；用；当代；的；事情。"}, {word:"由是感激",note:"因此；感动奋发。感激，感动奋发。"}, {word:"遂许先帝以驱驰",note:"于是；答应；先帝；来；奔走效劳。驱驰，奔走效劳。"}] },
+      { text: "【0】 ，【1】 ，【2】 ，【3】 。", words: [{word:"后值倾覆",note:"后来；遇到；兵败（指刘备在长坂坡被曹操击败）。值，遇到。倾覆，指兵败。"}, {word:"受任于败军之际",note:"接受；任命；在；兵败；的时候。"}, {word:"奉命于危难之间",note:"接受；命令；在；危难；的时候。"}, {word:"尔来二十有一年矣",note:"从那时以来；二十一年；了。尔来，从那时以来。有（yòu），同 “又”，用于整数和零数之间。"}] },
+      { text: "【0】 ，【1】 。【2】 ，【3】 ，【4】 ，【5】 ，【6】 ，【7】 。【8】 ，【9】 ，当奖率三军 ，北定中原 ，庶竭驽钝 ，攘除奸凶 ，兴复汉室 ，还于旧都 。", words: [{word:"先帝知臣谨慎",note:"先帝；知道；我；谨慎。"}, {word:"故临崩寄臣以大事也",note:"所以；临近；驾崩；托付；我；用；重大；事情；了。寄，托付。大事，指兴复汉室的重任。"}, {word:"受命以来",note:"接受；命令；以来。"}, {word:"夙夜忧叹",note:"早晚；忧愁；叹息。夙（sù）夜，早晚。"}, {word:"恐托付不效",note:"恐怕；托付；的事情；没有；成效。效，成效。"}, {word:"以伤先帝之明",note:"以致；损伤；先帝；的；英明。明，英明。"}, {word:"故五月渡泸",note:"所以；五月；渡过；泸水（今金沙江）。"}, {word:"深入不毛",note:"深入；不长草木的地方（指偏远荒凉的地方）。不毛，不长草木的地方。"}, {word:"今南方已定",note:"现在；南方；已经；平定。"}, {word:"兵甲已足",note:"兵器；铠甲；已经；充足。"}] },
+      { text: "今南方已定 ，兵甲已足 ，【0】 ，【1】 ，【2】 ，【3】 ，【4】 ，【5】 。【6】 。【7】 ，【8】 ，【9】 。", words: [{word:"当奖率三军",note:"应当；鼓励；率领；全军。奖，鼓励。率，率领。三军，指全军。"}, {word:"北定中原",note:"向北；平定；中原（指曹魏统治的地区）。"}, {word:"庶竭驽钝",note:"希望；竭尽；平庸的才能（谦称）。庶，表示期望。竭，竭尽。驽（nú）钝，比喻才能平庸，这是诸葛亮自谦的话。"}, {word:"攘除奸凶",note:"排除；铲除；奸邪；凶恶；的；人（指曹魏集团）。攘（rǎng）除，排除，铲除。奸凶，指曹魏集团。"}, {word:"兴复汉室",note:"复兴；汉朝。"}, {word:"还于旧都",note:"回到；原来；的；都城（指洛阳）。"}, {word:"此臣所以报先帝而忠陛下之职分也",note:"这；我；用来；报答；先帝；并且；效忠；陛下；的；职责；本分；了。所以，用来…… 的。职分，职责本分。"}, {word:"至于斟酌损益",note:"至于；考虑；可否；增减；兴革。斟酌，考虑可否。损益，增减，兴革。"}, {word:"进尽忠言",note:"进献；全部；忠诚；的；建议。"}, {word:"则攸之、祎、允之任也",note:"那么；郭攸之、费祎、董允；的；责任；了。"}] },
+      { text: "【0】 ，【1】 ，【2】 。【3】 ，【4】 ，【5】 。【6】 ，【7】 ，【8】 ，【9】 。", words: [{word:"愿陛下托臣以讨贼兴复之效",note:"希望；陛下；托付；我；用；讨伐；奸贼；复兴；汉室；的；任务。效，这里指任务。"}, {word:"不效则治臣之罪",note:"没有；成效；就；惩治；我；的；罪过。治，惩治。"}, {word:"以告先帝之灵",note:"来；告慰；先帝；的；在天之灵。"}, {word:"若无兴德之言",note:"如果；没有；发扬；圣德；的；建议。兴德，发扬圣德。"}, {word:"则责攸之、祎、允等之慢",note:"那么；责罚；郭攸之、费祎、董允；等；的；怠慢，疏忽。慢，怠慢，疏忽。"}, {word:"以彰其咎",note:"来；表明；他们；的；过失。彰，表明，显扬。咎（jiù），过失。"}, {word:"陛下亦宜自谋",note:"陛下；也；应该；亲自；谋划。"}, {word:"以咨诹善道",note:"来；询问；好；的；方法。咨诹（zōu），询问。善道，好的方法。"}, {word:"察纳雅言",note:"明察；采纳；正确；的；言论。察纳，明察采纳。雅言，指正确的言论。"}, {word:"深追先帝遗诏",note:"深切；追念；先帝；遗留；的；诏书。遗诏，皇帝临终时所发的诏书。"}] },
+      { text: "【0】 。【1】 ，【2】 ，【3】 。", words: [{word:"臣不胜受恩感激",note:"我；不尽；承受；恩惠；感动；奋发。不胜（shēng），不尽。"}, {word:"今当远离",note:"现在；应当；远离；（陛下）。"}, {word:"临表涕零",note:"面对；表文；眼泪；落下。涕零，流泪。"}, {word:"不知所云",note:"不知道；说；些；什么（表示感激、激动而语无伦次）。"}] },
+    ]
+  },
+
+  {
+    name: "曹刿论战", author: "左丘明", book: "九年级下册",
+    groups: [
+      { text: "【0】 。【1】 ，【2】 。其乡人曰：\"【3】 ，又何间焉？\"刿曰：\"肉食者鄙，未能远谋。\"乃入见。问：\"何以战？\"公曰：\"【4】 ，弗【5】 敢专【5】 也，【6】 。\"对曰：\"【7】 ，【8】 。\"公曰：\"【9】 ，弗敢加 也，必以信 。", words: [{word:"十年春，齐师伐我",note:"军队；攻打。师，军队。伐，攻打。"}, {word:"公将战",note:"鲁庄公；将要。公，指鲁庄公。"}, {word:"曹刿请见",note:"请求拜见。"}, {word:"肉食者鄙",note:"吃肉的人，指当权者；浅陋，目光短浅。鄙，浅陋。"}, {word:"衣食所安",note:"安身。"}, {word:"弗敢专也",note:"不；独自享有。专，独自享有。"}, {word:"必以分人",note:"一定把（它）分给别人。以，把。"}, {word:"小惠未遍",note:"小恩惠；遍及，普遍。遍，遍及。"}, {word:"民弗从也",note:"百姓不会听从。"}, {word:"牺牲玉帛",note:"祭祀用的纯色全体牲畜；丝织品。牺牲，祭祀用的牛、羊、猪等。玉帛，玉器和丝织品。"}] },
+      { text: "\"公曰：\"牺牲玉帛 ，弗敢加【0】 也，【1】 。\"对曰：\"【2】 ，神弗福【3】 也。\"公曰：\"【4】 ，虽【5】 不能察【5】 ，【6】 。\"对曰：\"【7】 。【8】 。【9】 。", words: [{word:"弗敢加也",note:"虚夸，夸大。加，虚夸。"}, {word:"必以信",note:"一定用诚信（来对待神灵）。信，诚信。"}, {word:"小信未孚",note:"小信用；使信服。孚（fú），使信服。"}, {word:"神弗福也",note:"赐福，保佑。福，赐福。"}, {word:"小大之狱",note:"诉讼事件。狱，诉讼事件。"}, {word:"虽不能察",note:"即使；明察。虽，即使。察，明察。"}, {word:"必以情",note:"一定用诚心（来处理）。情，诚心。"}, {word:"忠之属也",note:"尽力做好分内的事；类。忠，尽力做好分内的事。属，类。"}, {word:"可以一战",note:"可以凭借（这个条件）打一仗。以，凭借。"}, {word:"战则请从",note:"作战就请允许（我）跟从。"}] },
+      { text: "【0】 ，【1】 。【2】 。刿曰：\"未可。\"【3】 【4】 。刿曰：\"可矣。\"【5】 【6】 。【7】 。刿曰：\"未可。\"【8】 ，【9】 ，曰：\"可矣。", words: [{word:"公与之乘",note:"鲁庄公和他共乘一辆战车。乘（chéng），乘坐战车。"}, {word:"战于长勺",note:"在长勺作战。"}, {word:"公将鼓之",note:"鲁庄公将要击鼓进军。鼓，击鼓进军。"}, {word:"刿曰",note:"“未可。”：曹刿说：“不可以。”"}, {word:"齐人三鼓",note:"齐军三次击鼓。"}, {word:"刿曰",note:"“可矣。”：曹刿说：“可以了。”"}, {word:"齐师败绩",note:"军队溃败。败绩，大败。"}, {word:"公将驰之",note:"鲁庄公将要驱车追赶。驰，驱车追赶。"}, {word:"下视其辙",note:"向下察看；车轮碾出的痕迹。辙（zhé），车轮碾出的痕迹。"}, {word:"登轼而望之",note:"登上车前的横木；远望。轼（shì），车前的横木。"}] },
+      { text: "\"【0】 。", words: [{word:"遂逐齐师",note:"于是追击齐军。遂，于是。逐，追击。"}] },
+      { text: "【0】 ，【1】 。对曰：\"【2】 。【3】 ，【4】 ，【5】 。【6】 ，【7】 。【8】 ，【9】 。", words: [{word:"既克",note:"已经战胜。克，战胜。"}, {word:"公问其故",note:"鲁庄公问其中的缘故。故，缘故。"}, {word:"夫战，勇气也",note:"作战，靠的是勇气。夫（fú），发语词，无实义。"}, {word:"一鼓作气",note:"第一次击鼓；鼓起士气。作，鼓起。"}, {word:"再而衰",note:"第二次（击鼓）；士气衰落。再，第二次。"}, {word:"三而竭",note:"第三次（击鼓）；士气穷尽。竭，穷尽。"}, {word:"彼竭我盈",note:"他们的士气穷尽；我们的士气旺盛。盈，充满，这里指士气旺盛。"}, {word:"故克之",note:"所以战胜他们。"}, {word:"夫大国，难测也",note:"大国，难以推测（情况）。测，推测，估计。"}, {word:"惧有伏焉",note:"害怕有埋伏。伏，埋伏。焉，兼词，“于之”，在那里。"}] },
+      { text: "【0】 ，【1】 ，【2】 。", words: [{word:"吾视其辙乱",note:"我看见他们的车轮痕迹混乱。"}, {word:"望其旗靡",note:"看见他们的旗帜倒下。靡（mǐ），倒下。"}, {word:"故逐之",note:"所以追击他们。"}] },
+    ]
+  },
+
+  {
+    name: "送东阳马生序", author: "宋濂", book: "九年级下册",
+    groups: [
+      { text: "余幼时即【0】 学。家贫，【1】 ，每【2】 于藏书之家，【3】 ，【4】 。天大寒，砚冰坚，手指不可屈伸，【5】 。录毕，【6】 送之，不敢稍【7】 。【8】 人多以书假余，余因得遍观群书。", words: [{word:"嗜",note:"喜欢，爱好。"}, {word:"无从致书以观",note:"没有办法；得到书。致，得到。"}, {word:"假借",note:"借。"}, {word:"手自笔录",note:"亲手用笔抄写。"}, {word:"计日以还",note:"计算着约定的日子按期归还。"}, {word:"弗之怠",note:"不懈怠，不放松抄书。弗，不。之，指抄书。"}, {word:"走",note:"跑。"}, {word:"逾约",note:"超过约定的期限。"}, {word:"以是",note:"因此。"}] },
+      { text: "【0】 ，益慕圣贤之道。又【1】 无【2】 名人与游，尝【3】 百里外，从乡之先达【4】 。先达【5】 ，【6】 ，未尝【7】 。余立侍左右，【8】 ，【9】 ；或遇其叱咄 ，色愈恭，礼愈至 ，不敢出一言以复 ；俟 其欣悦，则又请焉。", words: [{word:"既加冠",note:"加冠之后，指已成年。古代男子二十岁行加冠礼。"}, {word:"患",note:"担心。"}, {word:"硕师",note:"学问渊博的老师。硕，大。"}, {word:"趋",note:"快步走。"}, {word:"执经叩问",note:"拿着经书请教。叩问，请教。"}, {word:"德隆望尊",note:"道德声望高。"}, {word:"门人弟子填其室",note:"学生挤满屋子。填，挤满。"}, {word:"稍降辞色",note:"把言辞和脸色略变得温和一些。辞色，言辞和脸色。"}, {word:"援疑质理",note:"提出疑难，询问道理。援，引、提出。质，询问。"}, {word:"俯身倾耳以请",note:"弯下身子，侧着耳朵请教，表示恭敬。"}] },
+      { text: "余立侍左右，援疑质理 ，俯身倾耳以请 ；或遇其【0】 ，【1】 ，不敢出一言以【2】 ；【3】 其欣悦，则又请焉。故余虽愚，【4】 【5】 。", words: [{word:"叱咄",note:"训斥，呵责。"}, {word:"色愈恭，礼愈至",note:"表情更恭顺，礼节更周到。至，周到。"}, {word:"复",note:"回答，辩解。"}, {word:"俟",note:"等待。"}, {word:"卒",note:"最终。"}, {word:"获有所闻",note:"获得教益。"}] },
+      { text: "当余之从师也，【0】 行深山巨谷中。【1】 烈风，大雪深数尺，足肤【2】 而不知。至【3】 ，四【4】 僵劲不能动，【5】 持【6】 【7】 ，以【8】 【9】 覆，久而乃和。", words: [{word:"负箧曳屣",note:"背着书箱，拖着鞋子。箧（qiè），书箱。曳（yè），拖。屣（xǐ），鞋子。"}, {word:"穷冬",note:"深冬，隆冬。"}, {word:"皲裂",note:"皮肤因寒冷干燥而开裂。"}, {word:"舍",note:"学舍，书馆。"}, {word:"支",note:"同 “肢”。"}, {word:"媵人",note:"侍婢，这里指旅舍仆役。"}, {word:"汤",note:"热水。"}, {word:"沃灌",note:"浇洗。"}, {word:"衾",note:"被子。"}, {word:"拥",note:"裹、围。"}] },
+      { text: "【0】 ，主人【1】 ，无鲜肥滋味之享。同舍生皆【2】 绮绣，戴朱缨宝饰之帽，腰白玉之环，左佩刀，右备容臭，烨然若神人；余则【3】 处其间，略无【4】 意，以【5】 有足乐者，不知【6】 不若人也。", words: [{word:"寓逆旅",note:"寄居旅店。逆旅，旅店。"}, {word:"日再食",note:"每天吃两顿饭。再，两次。"}, {word:"被",note:"同 “披”，穿着。"}, {word:"缊袍敝衣",note:"破旧的衣服。缊（yùn），乱麻。敝（bì），破。"}, {word:"慕艳",note:"羡慕。"}, {word:"中",note:"内心。"}, {word:"口体之奉",note:"吃穿的供给。"}] },
+      { text: "今诸生学于太学，【0】 日有【1】 之供，父母岁有【2】 之【3】 ，无冻【4】 之患矣；坐大厦之下而诵诗书，无奔走之劳矣；有司业、博士为之师，未有问而不告，求而不得者也；凡所宜有之书，皆集于此，不必若余之手录，假诸人而后见也。", words: [{word:"县官",note:"这里指朝廷。"}, {word:"廪稍",note:"公家按时供给的粮食。"}, {word:"裘葛",note:"冬天的皮衣和夏天的葛衣，泛指四时衣服。"}, {word:"遗",note:"给予，赠送。"}, {word:"馁",note:"饥饿。"}] },
+      { text: "东阳马生君则，在太学已二年，【0】 甚称其贤。余朝京师，生以乡人子【1】 余，【2】 【3】 以为【4】 ，辞甚畅达。与之论辩，言和而色【5】 。", words: [{word:"流辈",note:"同辈。"}, {word:"谒",note:"拜见。"}, {word:"撰",note:"写，指写文章。"}, {word:"长书",note:"长信。"}, {word:"贽",note:"初次进见尊者时所持的礼物。"}, {word:"夷",note:"平易。"}] },
+    ]
+  },
+
+  {
+    name: "邹忌讽齐王纳谏", author: "刘向", book: "九年级下册",
+    groups: [
+      { text: "【0】 ，而【1】 。【2】 ，【3】 ，谓其妻曰：\"【4】 ？\"其妻曰：\"【5】 。\"城北徐公，齐国之美丽者也。忌不自信，而复问其妾曰：\"吾孰与徐公美？\"妾曰：\"徐公何能及君也？\"【6】 ，【7】 ，【8】 ，【9】 ：\"吾与徐公孰美？", words: [{word:"邹忌修八尺有余",note:"长，这里指身高；战国时一尺约合今 23.1 厘米。修，长，身高。"}, {word:"形貌昳丽",note:"光艳美丽。昳（yì）丽，光艳美丽。"}, {word:"朝服衣冠",note:"早晨；穿戴。朝（zhāo），早晨。服，穿戴。"}, {word:"窥镜",note:"照镜子。"}, {word:"我孰与城北徐公美",note:"与…… 相比怎么样，表示比较。孰与，与…… 相比怎么样。"}, {word:"君美甚，徐公何能及君也",note:"您美极了，徐公怎么能比得上您呢？及，比得上。"}, {word:"旦日",note:"第二天。"}, {word:"客从外来",note:"客人从外面来。"}, {word:"与坐谈",note:"和（他）坐着交谈。"}, {word:"问之客曰",note:"向客人问这件事说。"}] },
+      { text: "\"客曰：\"【0】 。\"【1】 【2】 ，【3】 ；【4】 ，【5】 。【6】 ，曰：\"【7】 ；【8】 ；【9】 。", words: [{word:"徐公不若君之美也",note:"徐公不如您美。不若，不如。"}, {word:"明日",note:"第二天。"}, {word:"徐公来，孰视之",note:"仔细；看。孰（shú），同 “熟”，仔细。"}, {word:"自以为不如",note:"自己认为比不上（徐公）。"}, {word:"窥镜而自视",note:"照镜子看自己。"}, {word:"又弗如远甚",note:"又远远比不上。弗如，不如。"}, {word:"暮寝而思之",note:"晚上躺着思考这件事。寝，躺着。"}, {word:"吾妻之美我者，私我也",note:"认为我美；偏爱。美，认为…… 美。私，偏爱。"}, {word:"妾之美我者，畏我也",note:"妾认为我美，是害怕我。"}, {word:"客之美我者，欲有求于我也",note:"客人认为我美，是想对我有所求。"}] },
+      { text: "【0】 ，曰：\"【1】 。【2】 ，【3】 ，【4】 ，【5】 。【6】 ，【7】 ，【8】 ，【9】 ，四境之内莫不有求于王 ：由此观之 ，王之蔽甚矣 。", words: [{word:"于是入朝见威王",note:"于是进入朝廷拜见齐威王。"}, {word:"臣诚知不如徐公美",note:"我确实知道自己不如徐公美。诚，确实。"}, {word:"臣之妻私臣",note:"我的妻子偏爱我。"}, {word:"臣之妾畏臣",note:"我的妾害怕我。"}, {word:"臣之客欲有求于臣",note:"我的客人想对我有所求。"}, {word:"皆以美于徐公",note:"都认为（我）比徐公美。以，认为。于，比。"}, {word:"今齐地方千里",note:"现在齐国的土地方圆千里。地方，土地方圆。"}, {word:"百二十城",note:"一百二十座城池。"}, {word:"宫妇左右莫不私王",note:"宫里的姬妾和身边的近臣；没有谁不。宫妇，宫里的姬妾。左右，君主身边的近臣。莫，没有谁。"}, {word:"朝廷之臣莫不畏王",note:"朝廷的大臣没有谁不害怕大王。"}] },
+      { text: "今齐地方千里 ，百二十城 ，宫妇左右莫不私王 ，朝廷之臣莫不畏王 ，【0】 ：【1】 ，【2】 。", words: [{word:"四境之内莫不有求于王",note:"全国的百姓没有谁不对大王有所求。四境之内，全国范围内。"}, {word:"由此观之",note:"由此看来。"}, {word:"王之蔽甚矣",note:"大王您受蒙蔽很深了。蔽，受蒙蔽。甚，很，深。"}] },
+      { text: "\"【0】 【1】 ：\"【2】 ，【3】 ；【4】 ，【5】 ；【6】 ，【7】 。\"【8】 ，【9】 ，门庭若市 ；数月之后 ，时时而间进 ；期年之后 ，虽欲言，无可进者 。", words: [{word:"王曰",note:"“善。”：齐威王说：“好。”"}, {word:"乃下令",note:"于是下达命令。"}, {word:"群臣吏民能面刺寡人之过者",note:"大小官吏和百姓；当面指责；我的过错。面刺，当面指责。过，过错。"}, {word:"受上赏",note:"给予上等奖赏。受，给予。"}, {word:"上书谏寡人者",note:"上奏章劝谏我的。谏，劝谏。"}, {word:"受中赏",note:"给予中等奖赏。"}, {word:"能谤讥于市朝，闻寡人之耳者",note:"在公众场所指责讥刺（寡人的）过失；使…… 听到。谤讥，指责讥刺。市朝，指集市、朝廷等公众场所。闻，使…… 听到。"}, {word:"受下赏",note:"给予下等奖赏。"}, {word:"令初下",note:"命令刚下达。"}, {word:"群臣进谏",note:"大臣们纷纷进谏。"}] },
+      { text: "\"令初下 ，群臣进谏 ，【0】 ；【1】 ，【2】 ；【3】 ，虽欲言，无可进者【4】 。【5】 ，【6】 。【7】 。", words: [{word:"门庭若市",note:"门前和院子里像集市一样，形容进谏的人多。"}, {word:"数月之后",note:"几个月以后。"}, {word:"时时而间进",note:"常常，不时；间或，偶然。间（jiàn），间或，偶然。"}, {word:"期年之后",note:"满一年以后。期（jī）年，满一年。"}, {word:"虽欲人，无可进者",note:"即使想进谏，也没有什么可说的了。虽，即使。"}, {word:"燕、赵、韩、魏闻之",note:"燕国、赵国、韩国、魏国听说这件事。"}, {word:"皆朝于齐",note:"都到齐国来朝见。朝，朝见。"}, {word:"此所谓战胜于朝廷",note:"这就是所说的在朝廷上取得胜利（指不用出兵，靠内政修明就能使别国臣服）。"}] },
+    ]
+  },
+
+  {
+    name: "陈涉世家", author: "司马迁", book: "九年级下册",
+    groups: [
+      { text: "【0】 者，【1】 人也，字涉。吴广者，【2】 人也，字叔。陈涉【3】 ，【4】 【5】 ，【6】 【7】 ，【8】 【9】 ，曰：\"苟 富贵 ，无相忘 。", words: [{word:"陈涉",note:"陈胜，字涉，秦末农民起义领袖"}, {word:"阳城",note:"古县名，今河南登封东南"}, {word:"阳夏",note:"古县名，今河南太康"}, {word:"少时",note:"年轻的时候"}, {word:"尝",note:"曾经"}, {word:"与人佣耕",note:"同别人一起被雇佣耕地（佣，被雇佣）"}, {word:"辍耕",note:"停止耕作（辍，停止）"}, {word:"之垄上",note:"走到田埂高地上（之，去、往；垄，田埂）"}, {word:"怅恨",note:"惆怅，极端不满"}, {word:"久之",note:"过了很久"}] },
+      { text: "陈涉少时 ，尝 与人佣耕 ，辍耕 之垄上 ，怅恨 久之 ，曰：\"【0】 【1】 ，【2】 。\"佣者笑而应曰：\"【3】 【4】 ，【5】 ？\"陈涉【6】 曰：\"嗟乎！【7】 【8】 知【9】 之志 哉！", words: [{word:"苟",note:"如果"}, {word:"富贵",note:"富贵了"}, {word:"无相忘",note:"不要忘记大家"}, {word:"若",note:"你"}, {word:"为佣耕",note:"被雇佣耕地"}, {word:"何富贵也",note:"哪里谈得上富贵呢"}, {word:"太息",note:"长叹"}, {word:"燕雀",note:"小鸟，比喻见识短浅的人"}, {word:"安",note:"怎么"}, {word:"鸿鹄",note:"天鹅，比喻志向远大的人"}] },
+      { text: "燕雀 安 知鸿鹄 【0】 哉！", words: [{word:"之志",note:"的志向"}] },
+      { text: "【0】 【1】 七月，【2】 【3】 【4】 渔阳，【5】 【6】 【7】 。陈胜、吴广【8】 【9】 当行 ，为 屯长 。", words: [{word:"二世",note:"秦二世皇帝胡亥，秦始皇第十八子"}, {word:"元年",note:"公元前 209 年"}, {word:"发",note:"征发"}, {word:"闾左",note:"指贫苦人民（古代二十五家为一闾，贫者居住闾左，富者居住闾右）"}, {word:"適戍",note:"强迫去守边（適，同 “谪”，被罚流放或贬职；戍，守边）"}, {word:"九百人",note:"九百人"}, {word:"屯",note:"停驻"}, {word:"大泽乡",note:"古地名，今安徽宿州东南"}, {word:"皆",note:"都"}, {word:"次",note:"编次"}] },
+      { text: "陈胜、吴广皆 次 【0】 ，【1】 【2】 。【3】 【4】 ，【5】 ，【6】 【7】 。【8】 ，【9】 皆 斩 。", words: [{word:"当行",note:"在征发之列"}, {word:"为",note:"担任"}, {word:"屯长",note:"戍守队伍的小头目"}, {word:"会",note:"适逢，恰巧遇到"}, {word:"天大雨",note:"天下大雨"}, {word:"道不通",note:"道路不通"}, {word:"度",note:"推测，估计"}, {word:"已失期",note:"已经误了期限"}, {word:"失期",note:"误期"}, {word:"法",note:"按照法律"}] },
+      { text: "失期 ，法 【0】 【1】 。【2】 【3】 【4】 【5】 ：\"【6】 【7】 【8】 【9】 ，举大计 亦死，等 死，死国 可乎？", words: [{word:"皆",note:"都"}, {word:"斩",note:"斩首"}, {word:"陈胜、吴广",note:"秦末农民起义领袖"}, {word:"乃",note:"于是，就"}, {word:"谋",note:"谋划"}, {word:"曰",note:"说"}, {word:"今",note:"现在"}, {word:"亡",note:"逃跑"}, {word:"亦",note:"也"}, {word:"死",note:"死亡"}] },
+      { text: "陈胜、吴广 乃 谋 曰 ：\"今 亡 亦 死 ，【0】 亦死，【1】 死，【2】 可乎？\"陈胜曰：\"【3】 。【4】 【5】 【6】 【7】 也，【8】 ，【9】 乃 公子扶苏 。", words: [{word:"举大计",note:"发动大事，指起义（举，发动；大计，重大的计划）"}, {word:"等",note:"同样"}, {word:"死国",note:"为国事而死"}, {word:"天下苦秦久矣",note:"天下百姓苦于秦的统治很久了（苦，苦于；秦，秦的统治）"}, {word:"吾",note:"我"}, {word:"闻",note:"听说"}, {word:"二世",note:"秦二世"}, {word:"少子",note:"小儿子"}, {word:"不当立",note:"不应当立为皇帝"}, {word:"当立者",note:"应当立为皇帝的人"}] },
+      { text: "吾 闻 二世 少子 也，不当立 ，当立者 【0】 【1】 。扶苏【2】 【3】 【4】 【5】 ，【6】 【7】 【8】 。【9】 或 闻 无罪 ，二世 杀 之 。", words: [{word:"乃",note:"是"}, {word:"公子扶苏",note:"秦始皇的长子"}, {word:"以",note:"因为"}, {word:"数",note:"屡次"}, {word:"谏",note:"古代下级对上级提意见或建议"}, {word:"故",note:"缘故"}, {word:"上",note:"皇上，指秦始皇"}, {word:"使",note:"派"}, {word:"外将兵",note:"在外面带兵（将，带领、率领）"}, {word:"今",note:"现在"}] },
+      { text: "今 【0】 【1】 【2】 ，【3】 【4】 【5】 。【6】 【7】 【8】 【9】 贤 ，未知 其 死 。", words: [{word:"或",note:"有人"}, {word:"闻",note:"听说"}, {word:"无罪",note:"没有罪过"}, {word:"二世",note:"秦二世"}, {word:"杀",note:"杀害"}, {word:"之",note:"代词，指扶苏"}, {word:"百姓",note:"百姓"}, {word:"多",note:"大多"}, {word:"闻",note:"听说"}, {word:"其",note:"他，指扶苏"}] },
+      { text: "百姓 多 闻 其 【0】 ，【1】 【2】 【3】 。【4】 【5】 【6】 ，【7】 【8】 ，【9】 ，楚人 怜 之。", words: [{word:"贤",note:"贤明"}, {word:"未知",note:"不知道"}, {word:"其",note:"他，指扶苏"}, {word:"死",note:"死亡"}, {word:"项燕",note:"楚国大将"}, {word:"为",note:"担任"}, {word:"楚将",note:"楚国的将领"}, {word:"数",note:"屡次"}, {word:"有功",note:"有功劳"}, {word:"爱士卒",note:"爱护士兵"}] },
+      { text: "项燕 为 楚将 ，数 有功 ，爱士卒 ，【0】 【1】 之。【2】 【3】 【4】 ，【5】 【6】 【7】 。【8】 【9】 以 吾 众 诈 自称 公子扶苏、项燕 ，为 天下 唱 ，宜 多应者 。", words: [{word:"楚人",note:"楚国人"}, {word:"怜",note:"爱戴"}, {word:"或",note:"有人"}, {word:"以为",note:"认为"}, {word:"死",note:"死亡"}, {word:"或",note:"有人"}, {word:"以为",note:"认为"}, {word:"亡",note:"逃跑"}, {word:"今",note:"现在"}, {word:"诚",note:"如果"}] },
+      { text: "今 诚 【0】 【1】 【2】 【3】 【4】 【5】 ，【6】 【7】 【8】 ，【9】 多应者 。", words: [{word:"以",note:"把"}, {word:"吾",note:"我们"}, {word:"众",note:"众人"}, {word:"诈",note:"假装"}, {word:"自称",note:"自己号称"}, {word:"公子扶苏、项燕",note:"公子扶苏和项燕"}, {word:"为",note:"向"}, {word:"天下",note:"天下百姓"}, {word:"唱",note:"同 “倡”，倡导、发起"}, {word:"宜",note:"应当"}] },
+      { text: "今 诚 以 吾 众 诈 自称 公子扶苏、项燕 ，为 天下 唱 ，宜 【0】 。\"【1】 【2】 【3】 。【4】 【5】 【6】 。卜【7】 【8】 【9】 指意 ，曰 ：\"足下 事 皆 成 ，有功 。", words: [{word:"多应者",note:"有很多响应的人"}, {word:"吴广",note:"秦末农民起义领袖"}, {word:"以为",note:"认为"}, {word:"然",note:"正确，对的"}, {word:"乃",note:"于是，就"}, {word:"行",note:"去"}, {word:"卜",note:"占卜（古人用龟甲、蓍草等预测吉凶）"}, {word:"者",note:"…… 的人"}, {word:"知",note:"知道"}, {word:"其",note:"他们的"}] },
+      { text: "卜者 知 其 【0】 ，【1】 ：\"【2】 【3】 【4】 【5】 ，【6】 。【7】 足下【8】 【9】 鬼乎 ？", words: [{word:"指意",note:"意图（指，同 “旨”）"}, {word:"曰",note:"说"}, {word:"足下",note:"古代对别人的敬称"}, {word:"事",note:"事情"}, {word:"皆",note:"都"}, {word:"成",note:"成功"}, {word:"有功",note:"有功劳"}, {word:"然",note:"然而"}, {word:"卜",note:"占卜"}, {word:"之",note:"代词，指这件事"}] },
+      { text: "然 足下卜 之 【0】 ？\"【1】 【2】 ，【3】 【4】 ，曰：\"【5】 【6】 【7】 【8】 【9】 耳 。", words: [{word:"鬼乎",note:"向鬼神卜问一下吧（乎，语气词，表疑问）"}, {word:"陈胜、吴广",note:"陈胜、吴广"}, {word:"喜",note:"高兴"}, {word:"念",note:"考虑、思索"}, {word:"鬼",note:"鬼神"}, {word:"此",note:"这"}, {word:"教",note:"教"}, {word:"吾",note:"我们"}, {word:"先",note:"先"}, {word:"威众",note:"威服众人（威，威服；众，众人）"}] },
+      { text: "\"陈胜、吴广 喜 ，念 鬼 ，曰：\"此 教 吾 先 威众 【0】 。\"【1】 【2】 【3】 【4】 【5】 \"【6】 \"，【7】 【8】 【9】 鱼腹 中 。", words: [{word:"耳",note:"罢了"}, {word:"乃",note:"于是，就"}, {word:"丹",note:"用丹砂"}, {word:"书",note:"写"}, {word:"帛",note:"丝织品"}, {word:"曰",note:"说"}, {word:"陈胜王",note:"陈胜称王（王，称王，名词作动词）"}, {word:"置",note:"放"}, {word:"人所",note:"别人所"}, {word:"罾",note:"鱼网，这里作动词，用网捕"}] },
+      { text: "\"乃 丹 书 帛 曰 \"陈胜王 \"，置 人所 罾 【0】 【1】 。卒买鱼烹食，【2】 【3】 【4】 【5】 ，【6】 鱼腹中【7】 【8】 ，【9】 固 以 怪 之 矣。", words: [{word:"鱼腹",note:"鱼的肚子里"}, {word:"中",note:"里面"}, {word:"得",note:"得到"}, {word:"鱼",note:"鱼"}, {word:"烹",note:"煮"}, {word:"食",note:"吃"}, {word:"得",note:"发现"}, {word:"书",note:"字条"}, {word:"帛",note:"丝织品"}, {word:"上",note:"上面"}] },
+      { text: "卒买鱼烹食，得 鱼 烹 食 ，得 鱼腹中书 帛 ，上 【0】 【1】 【2】 【3】 矣。【4】 【5】 【6】 【7】 【8】 【9】 丛祠 中 ，夜 篝火 ，狐鸣 呼 曰 ：\"大楚兴 ，陈胜王 。", words: [{word:"固",note:"本来"}, {word:"以",note:"同 “已”，已经"}, {word:"怪",note:"对…… 感到奇怪（怪，形容词的意动用法）"}, {word:"之",note:"代词，指这件事"}, {word:"又",note:"又"}, {word:"间",note:"私下"}, {word:"令",note:"派"}, {word:"吴广",note:"吴广"}, {word:"之",note:"到"}, {word:"次所旁",note:"驻地旁边"}] },
+      { text: "又 间 令 吴广 之 次所旁 【0】 【1】 ，【2】 【3】 ，【4】 【5】 【6】 ：\"【7】 ，【8】 。\"【9】 皆 夜 惊恐 。", words: [{word:"丛祠",note:"丛林中的神庙"}, {word:"中",note:"里面"}, {word:"夜",note:"在夜里"}, {word:"篝火",note:"用竹笼罩着火（篝，笼）"}, {word:"狐鸣",note:"作狐狸嗥叫的凄厉声音"}, {word:"呼",note:"呼喊"}, {word:"曰",note:"说"}, {word:"大楚兴",note:"大楚复兴"}, {word:"陈胜王",note:"陈胜称王"}, {word:"卒",note:"士兵"}] },
+      { text: "\"卒 【0】 【1】 【2】 。【3】 ，【4】 【5】 【6】 ，【7】 【8】 【9】 。", words: [{word:"皆",note:"都"}, {word:"夜",note:"在夜里"}, {word:"惊恐",note:"惊慌恐惧"}, {word:"旦日",note:"第二天"}, {word:"卒中",note:"士兵中间"}, {word:"往往",note:"到处"}, {word:"语",note:"谈论"}, {word:"皆",note:"都"}, {word:"指目",note:"指指点点，互相以目示意（指，用手指；目，用眼睛看）"}, {word:"陈胜",note:"陈胜"}] },
+      { text: "【0】 【1】 爱人，士卒多为【2】 者。【3】 【4】 ，【5】 【6】 【7】 【8】 ，【9】 尉 ，令 辱 之 ，以 激怒 其 众 。", words: [{word:"吴广",note:"吴广"}, {word:"素",note:"向来，平时"}, {word:"用",note:"所用，指愿意为他所用"}, {word:"将尉",note:"押送戍卒的军官"}, {word:"醉",note:"喝醉"}, {word:"广",note:"吴广"}, {word:"故",note:"故意"}, {word:"数",note:"屡次"}, {word:"言欲亡",note:"说想要逃跑"}, {word:"忿恚",note:"使…… 恼怒（忿恚，形容词的使动用法）"}] },
+      { text: "将尉 醉 ，广 故 数 言欲亡 ，忿恚 【0】 ，【1】 【2】 【3】 ，【4】 【5】 【6】 【7】 。【8】 【9】 广 。", words: [{word:"尉",note:"将尉"}, {word:"令",note:"使"}, {word:"辱",note:"侮辱"}, {word:"之",note:"代词，指吴广"}, {word:"以",note:"来"}, {word:"激怒",note:"激怒"}, {word:"其",note:"他，指吴广"}, {word:"众",note:"众人"}, {word:"尉果",note:"将尉果然"}, {word:"笞",note:"用鞭、杖或竹板打"}] },
+      { text: "尉果 笞 【0】 。尉剑挺，广【1】 起【2】 ，夺【3】 而【4】 杀【5】 尉【6】 。陈胜【7】 佐【8】 之【9】 ，并 杀 两 尉 。", words: [{word:"广",note:"吴广"}, {word:"起",note:"起身"}, {word:"夺",note:"夺过"}, {word:"而",note:"连词，表顺承"}, {word:"杀",note:"杀死"}, {word:"尉",note:"将尉"}, {word:"陈胜",note:"陈胜"}, {word:"佐",note:"帮助"}, {word:"之",note:"代词，指吴广"}, {word:"并",note:"一起"}] },
+      { text: "陈胜 佐 之 ，并【0】 杀【1】 两【2】 尉【3】 。召【4】 令【5】 徒属【6】 曰【7】 ：\"公等【8】 遇【9】 雨 ，皆 失期 ，失期 法 斩 。", words: [{word:"杀",note:"杀死"}, {word:"两",note:"两个"}, {word:"尉",note:"将尉"}, {word:"召",note:"召集"}, {word:"令",note:"号令"}, {word:"徒属",note:"所属的人，指部下"}, {word:"曰",note:"说"}, {word:"公等",note:"你们诸位"}, {word:"遇",note:"遇到"}, {word:"雨",note:"大雨"}] },
+      { text: "召 令 徒属 曰 ：\"公等 遇 雨【0】 ，皆【1】 【2】 ，失期【3】 法【4】 斩【5】 。藉第令毋斩【6】 ，而【7】 戍死者【8】 固【9】 十六七 。", words: [{word:"皆",note:"都"}, {word:"失期",note:"误期"}, {word:"失期",note:"误期"}, {word:"法",note:"按照法律"}, {word:"斩",note:"斩首"}, {word:"藉第令毋斩",note:"即使仅能免于斩刑（藉、第、令，都是 “即使、假若” 的意思；毋，不）"}, {word:"而",note:"连词，表转折"}, {word:"戍死者",note:"戍守边塞而死的人"}, {word:"固",note:"本来"}, {word:"十六七",note:"十分之六七"}] },
+      { text: "藉第令毋斩 ，而 戍死者 固 十六七【0】 。且【1】 壮士【2】 不死【3】 即【4】 已【5】 ，死【6】 即【7】 举【8】 大名【9】 耳，王侯将相 宁 有种 乎 ！", words: [{word:"且",note:"况且"}, {word:"壮士",note:"壮士"}, {word:"不死",note:"不死"}, {word:"即",note:"就"}, {word:"已",note:"罢了"}, {word:"死",note:"死"}, {word:"即",note:"就"}, {word:"举",note:"成就"}, {word:"大名",note:"显赫的名声"}, {word:"王侯将相",note:"王侯将相"}] },
+      { text: "且 壮士 不死 即 已 ，死 即 举 大名 耳，王侯将相【0】 宁【1】 有种【2】 乎【3】 ！\"徒属【4】 皆【5】 曰【6】 ：\"敬【7】 受【8】 命【9】 。", words: [{word:"宁",note:"难道"}, {word:"有种",note:"天生的贵种"}, {word:"乎",note:"语气词，表反问"}, {word:"徒属",note:"所属的人，指部下"}, {word:"皆",note:"都"}, {word:"曰",note:"说"}, {word:"敬",note:"恭敬地"}, {word:"受",note:"听从"}, {word:"命",note:"命令"}, {word:"乃",note:"于是，就"}] },
+      { text: "\"乃【0】 诈【1】 称【2】 公子扶苏、项燕【3】 ，从【4】 民欲【5】 也。袒【6】 右【7】 ，称【8】 大楚【9】 。", words: [{word:"诈",note:"假装"}, {word:"称",note:"号称"}, {word:"公子扶苏、项燕",note:"公子扶苏和项燕"}, {word:"从",note:"依从"}, {word:"民欲",note:"百姓的愿望"}, {word:"袒",note:"露出"}, {word:"右",note:"右臂（古代以右为尊，袒右表示拥护起义）"}, {word:"称",note:"号称"}, {word:"大楚",note:"大楚"}, {word:"为",note:"筑"}] },
+      { text: "为【0】 坛【1】 而【2】 盟【3】 ，以【4】 尉首【5】 祭【6】 天【7】 地【8】 。陈胜【9】 自立 为 将军 ，吴广 为 都尉 。", words: [{word:"坛",note:"坛"}, {word:"而",note:"连词，表目的"}, {word:"盟",note:"盟誓"}, {word:"以",note:"用"}, {word:"尉首",note:"将尉的头"}, {word:"祭",note:"祭祀"}, {word:"天",note:"上天"}, {word:"地",note:"大地"}, {word:"陈胜",note:"陈胜"}, {word:"自立",note:"自己立自己"}] },
+      { text: "陈胜 自立【0】 为【1】 将军【2】 ，吴广【3】 为【4】 都尉【5】 。", words: [{word:"为",note:"担任"}, {word:"将军",note:"将军"}, {word:"吴广",note:"吴广"}, {word:"为",note:"担任"}, {word:"都尉",note:"都尉"}, {word:"攻",note:"攻打"}] },
+      { text: "攻【0】 大泽乡【1】 ，收【2】 而【3】 攻【4】 蕲【5】 。蕲下【6】 ，乃【7】 令【8】 符离【9】 人 葛婴 将 兵 徇 蕲以东 。", words: [{word:"大泽乡",note:"大泽乡"}, {word:"收",note:"收集"}, {word:"而",note:"连词，表顺承"}, {word:"攻",note:"攻打"}, {word:"蕲",note:"蕲县，古地名，今安徽宿州南"}, {word:"下",note:"攻下，攻克"}, {word:"乃",note:"于是，就"}, {word:"令",note:"派"}, {word:"符离",note:"古地名，今安徽宿州"}, {word:"人",note:"人"}] },
+      { text: "蕲下 ，乃 令 符离 人【0】 葛婴【1】 将【2】 兵【3】 徇【4】 蕲以东【5】 。攻【6】 铚【7】 、酂【8】 、苦【9】 、柘 、谯 皆 下 之。", words: [{word:"葛婴",note:"人名，秦末农民起义军将领"}, {word:"将",note:"带领"}, {word:"兵",note:"士兵"}, {word:"徇",note:"攻占（土地）"}, {word:"蕲以东",note:"蕲县以东的地方"}, {word:"攻",note:"攻打"}, {word:"铚",note:"古县名，今安徽宿州西南"}, {word:"酂",note:"古县名，今河南永城西"}, {word:"苦",note:"古县名，今河南鹿邑东"}, {word:"柘",note:"古县名，今河南柘城北"}] },
+      { text: "攻 铚 、酂 、苦 、柘【0】 、谯【1】 皆【2】 下【3】 之。行【4】 收兵【5】 。比【6】 至【7】 陈【8】 ，车【9】 六七百乘 ，骑 千余 ，卒 数万人 。", words: [{word:"谯",note:"古县名，今安徽亳州"}, {word:"皆",note:"都"}, {word:"下",note:"攻下，攻克"}, {word:"行",note:"行军"}, {word:"收兵",note:"收集士兵"}, {word:"比",note:"等到"}, {word:"至",note:"到达"}, {word:"陈",note:"陈县，古地名，今河南淮阳"}, {word:"车",note:"战车"}, {word:"六七百乘",note:"六七百辆（乘，辆）"}] },
+      { text: "比 至 陈 ，车 六七百乘【0】 ，骑【1】 千余【2】 ，卒【3】 数万人【4】 。攻【5】 陈【6】 ，陈守令【7】 皆【8】 不在【9】 ，独 守丞 与 战 谯门中 。", words: [{word:"骑",note:"骑兵"}, {word:"千余",note:"一千多"}, {word:"卒",note:"士兵"}, {word:"数万人",note:"几万人"}, {word:"攻",note:"攻打"}, {word:"陈",note:"陈县"}, {word:"守令",note:"郡守、县令"}, {word:"皆",note:"都"}, {word:"不在",note:"不在"}, {word:"独",note:"只有"}] },
+      { text: "攻 陈 ，陈守令 皆 不在 ，独【0】 守丞【1】 与【2】 战【3】 谯门中【4】 。弗【5】 胜【6】 ，守丞【7】 死【8】 ，乃【9】 入 据 陈 。", words: [{word:"守丞",note:"守城的官员"}, {word:"与",note:"和"}, {word:"战",note:"作战"}, {word:"谯门中",note:"城门洞里"}, {word:"弗",note:"不"}, {word:"胜",note:"胜利"}, {word:"守丞",note:"守城的官员"}, {word:"死",note:"死亡"}, {word:"乃",note:"于是，就"}, {word:"入",note:"进入"}] },
+      { text: "弗 胜 ，守丞 死 ，乃 入【0】 据【1】 陈【2】 。数日【3】 ，号令【4】 召【5】 三老【6】 、豪杰【7】 与【8】 皆【9】 会 计 事 。", words: [{word:"据",note:"占据"}, {word:"陈",note:"陈县"}, {word:"数日",note:"过了几天"}, {word:"号令",note:"传令"}, {word:"召",note:"召集"}, {word:"三老",note:"掌管教化的乡官"}, {word:"豪杰",note:"当地有声望的人"}, {word:"与",note:"和"}, {word:"皆",note:"都"}, {word:"会",note:"集会"}] },
+      { text: "数日 ，号令 召 三老 、豪杰 与 皆 会【0】 计【1】 事【2】 。三老、豪杰【3】 皆【4】 曰【5】 ：\"将军【6】 身【7】 被【8】 坚【9】 ，执 锐 ，伐 无道 ，诛 暴秦 ，复 立 楚国 之社稷 ，之 功 宜 为王 。", words: [{word:"计",note:"商议"}, {word:"事",note:"事情"}, {word:"三老、豪杰",note:"三老和豪杰"}, {word:"皆",note:"都"}, {word:"曰",note:"说"}, {word:"将军",note:"将军，指陈胜"}, {word:"身",note:"亲自"}, {word:"被",note:"同 “披”，穿着"}, {word:"坚",note:"指铁甲"}, {word:"执",note:"拿着"}] },
+      { text: "三老、豪杰 皆 曰 ：\"将军 身 被 坚 ，执【0】 锐【1】 ，伐【2】 无道【3】 ，诛【4】 暴秦【5】 ，复【6】 立【7】 楚国【8】 之社稷【9】 ，之 功 宜 为王 。", words: [{word:"锐",note:"指武器"}, {word:"伐",note:"讨伐"}, {word:"无道",note:"指不行正道的暴君"}, {word:"诛",note:"诛灭"}, {word:"暴秦",note:"残暴的秦王朝"}, {word:"复",note:"恢复"}, {word:"立",note:"建立"}, {word:"楚国",note:"楚国"}, {word:"社稷",note:"国家（社，土地神；稷，谷神，古代君主都祭社稷，后用 “社稷” 代指国家）"}, {word:"之",note:"的"}] },
+      { text: "三老、豪杰 皆 曰 ：\"将军 身 被 坚 ，执 锐 ，伐 无道 ，诛 暴秦 ，复 立 楚国 之社稷 ，之【0】 功【1】 宜【2】 为王【3】 。\"陈胜【4】 乃【5】 立【6】 为【7】 王【8】 ，号【9】 张楚 。", words: [{word:"功",note:"功劳"}, {word:"宜",note:"应当"}, {word:"为王",note:"称王"}, {word:"陈胜",note:"陈胜"}, {word:"乃",note:"于是，就"}, {word:"立",note:"立"}, {word:"为",note:"担任"}, {word:"王",note:"王"}, {word:"号",note:"国号"}, {word:"张楚",note:"张大楚国（张，扩大）"}] },
+      { text: "\"陈胜 乃 立 为 王 ，号 张楚【0】 。当【1】 此时【2】 ，诸【3】 郡县【4】 苦【5】 秦吏【6】 者【7】 ，皆【8】 刑【9】 其 长吏 ，杀 之以 应 陈涉 。", words: [{word:"当",note:"在"}, {word:"此时",note:"这时"}, {word:"诸",note:"各"}, {word:"郡县",note:"郡县"}, {word:"苦",note:"苦于"}, {word:"秦吏",note:"秦朝的官吏"}, {word:"者",note:"…… 的人"}, {word:"皆",note:"都"}, {word:"刑",note:"惩罚"}, {word:"其",note:"他们的"}] },
+      { text: "当 此时 ，诸 郡县 苦 秦吏 者 ，皆 刑 其【0】 长吏【1】 ，杀【2】 之以【3】 应【4】 陈涉【5】 。", words: [{word:"长吏",note:"长官"}, {word:"杀",note:"杀死"}, {word:"以",note:"来"}, {word:"应",note:"响应"}, {word:"陈涉",note:"陈胜"}, {word:"乃",note:"于是，就"}] },
+    ]
+  },
+
+  {
+    name: "鱼我所欲也", author: "孟子", book: "九年级下册",
+    groups: [
+      { text: "鱼，我所【0】 也；【1】 ，亦我所欲也。二者不可【2】 ，【3】 鱼而取熊掌者也。", words: [{word:"欲",note:"想要的东西。"}, {word:"熊掌",note:"熊的脚掌，珍贵食品。"}, {word:"得兼",note:"同时得到。"}, {word:"舍",note:"舍弃。"}] },
+      { text: "生亦我所欲，所欲有甚于生者，故不为【0】 也；死亦我所【1】 ，所恶有甚于死者，故【2】 有所不【3】 也。【4】 人之所欲莫甚于生，则凡可以得生者【5】 ？使人之所恶莫甚于死者，则凡可以辟患者何不为也？由是则生而有不用也，由是则可以辟患而有不为也。是故所欲有甚于生者，所恶有甚于死者。非独贤者有是心也，人皆有之，贤者能【6】 耳。", words: [{word:"苟得",note:"苟且取得，指苟且偷生。"}, {word:"恶",note:"讨厌，憎恨。"}, {word:"患",note:"祸患，灾难。"}, {word:"辟",note:"同 “避”，躲避。"}, {word:"如使",note:"假如，假使。"}, {word:"何不用也",note:"什么手段不可用呢？"}, {word:"勿丧",note:"不丧失。"}] },
+      { text: "一【0】 食，一【1】 【2】 ，得之则生，弗得则死。【3】 ，行道之人弗受；【4】 而与之，乞人【5】 也。【6】 则不【7】 礼义而受之，万钟于我【8】 焉！为宫室之美，妻妾之【9】 ，所识穷乏者得我与 ？", words: [{word:"箪",note:"古代盛饭用的圆形竹器。"}, {word:"豆",note:"古代一种木制盛食物的器具。"}, {word:"羹",note:"用肉或菜做成的带汤食物。"}, {word:"呼尔而与之",note:"没有礼貌地吆喝着给他。尔，用作后缀。"}, {word:"蹴尔",note:"踩踏食物的样子。蹴（cù），踩踏。"}, {word:"不屑",note:"认为不值得，表示轻视而不肯接受。"}, {word:"万钟",note:"优厚的俸禄。钟，古代量器。"}, {word:"辩",note:"同 “辨”，辨别。"}, {word:"何加",note:"有什么益处。加，益处。"}, {word:"奉",note:"侍奉。"}] },
+      { text: "为宫室之美，妻妾之奉 ，【0】 ？乡【1】 为身死而不受，今为宫室之美为之；乡为身死而不受，今为妻妾之奉为之；乡为身死而不受，今为所识穷乏者得我而为之：是亦不可以【2】 乎？此之谓失其【3】 。", words: [{word:"所识穷乏者得我与",note:"所认识的穷困的人感激我吗？得，同 “德”，感恩、感激。与，同 “欤”，语气词。"}, {word:"乡为身死而不受",note:"先前为了 “礼义”，宁愿死也不接受施舍。乡，同 “向”，先前、从前。"}, {word:"已",note:"停止，放弃。"}, {word:"本心",note:"本性，指人的羞恶之心。"}] },
+    ]
+  },
+
+
+];;
+
+
+// ==================== 用户系统 ====================
+const USERS_KEY = 'users';
+const CURRENT_USER_KEY = 'currentUser';
+const ERROR_BOOK_KEY = 'errorBook';
+
+function getUsers() {
+  try {
+    const data = localStorage.getItem(USERS_KEY);
+    return data ? JSON.parse(data) : {};
+  } catch (e) { return {}; }
+}
+
+function saveUsers(users) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+function getCurrentUser() {
+  return localStorage.getItem(CURRENT_USER_KEY) || null;
+}
+
+function setCurrentUser(name) {
+  localStorage.setItem(CURRENT_USER_KEY, name);
+}
+
+function getUserData(name) {
+  const users = getUsers();
+  return users[name] || { lessons: {}, totalCorrect: 0 };
+}
+
+function updateUserData(name, data) {
+  const users = getUsers();
+  users[name] = data;
+  saveUsers(users);
+}
+
+function createUser(name) {
+  const users = getUsers();
+  if (!users[name]) {
+    users[name] = { lessons: {}, totalCorrect: 0 };
+    saveUsers(users);
+  }
+  return users[name];
+}
+
+function deleteUser(name) {
+  const users = getUsers();
+  delete users[name];
+  saveUsers(users);
+}
+
+// ==================== 累计掌握计算 ====================
+function calculateTotalCorrect(name) {
+  const userData = getUserData(name);
+  let sum = 0;
+  for (const lessonName in userData.lessons) {
+    sum += userData.lessons[lessonName].bestCorrect || 0;
+  }
+  return sum;
+}
+
+function updateCumulativeCount() {
+  const users = getUsers();
+  if (users[currentUser]) {
+    users[currentUser].totalCorrect = calculateTotalCorrect(currentUser);
+    saveUsers(users);
+  }
+  updateHomeDisplay(); // 更新首页显示
+}
+
+function updateHomeDisplay() {
+  if (!currentUser) return;
+  document.getElementById('totalCorrect').textContent = calculateTotalCorrect(currentUser);
+}
+
+// ==================== 错题本 ====================
+function getErrorBook(user) {
+  try {
+    const data = localStorage.getItem(ERROR_BOOK_KEY + '_' + user);
+    return data ? JSON.parse(data) : [];
+  } catch (e) { return []; }
+}
+
+function saveErrorBook(user, errors) {
+  localStorage.setItem(ERROR_BOOK_KEY + '_' + user, JSON.stringify(errors));
+}
+
+function addToErrorBook(user, lesson, wordIdx, word, note, groupText, groupIdx) {
+  const errors = getErrorBook(user);
+  // 使用 lesson_groupIdx_wordIdx 作为唯一ID
+  if (groupIdx === undefined) groupIdx = currentGroupIndex;
+  const uniqueKey = `${lesson}_${groupIdx}_${wordIdx}`;
+  if (!errors.some(e => `${e.lesson}_${e.groupIdx}_${e.wordIdx}` === uniqueKey)) {
+    errors.push({ lesson, groupIdx, wordIdx, word, note, groupText });
+    saveErrorBook(user, errors);
+  }
+  return errors;
+}
+
+function clearErrorBook(user) {
+  localStorage.removeItem(ERROR_BOOK_KEY + '_' + user);
+}
+
+// ==================== 游戏状态 ====================
+let currentUser = null;
+let currentLesson = null;
+let currentGroupIndex = 0;
+let currentWordIndex = 0;
+let matchedWords = new Set(); // 存储已作答的word索引（对/错都算，答一次消一次）
+let wrongAnsweredWords = new Set(); // 当前组内答错的word索引（用于UI红色✗标记，切换组时清空）
+let activeWordIdx = null; // 当前锚定的答题字idx（答对/答错前保持稳定；切换组时重置为null，由 getCurrentWord 从未答字中随机挑一个）
+let groupWordOrder = null; // 当前组内答题顺序（打乱后的 idx 数组，切换组时重置，进入组时重新 shuffle）
+let errorCount = 0;
+let sessionCorrect = 0; // 本局答对数（已弃用，保留兼容）
+let errorWordSet = new Set(); // 本局中至少错过一次的词idx集合
+let comboCount = 0;
+
+// ==================== 音效系统 ====================
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new AudioCtx();
+  return audioCtx;
+}
+
+function playCorrectSound() {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    // 清脆上升双音: C5 -> E5
+    osc.frequency.setValueAtTime(523, ctx.currentTime);
+    osc.frequency.setValueAtTime(659, ctx.currentTime + 0.08);
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.25);
+  } catch(e) {}
+}
+
+function playWrongSound() {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'triangle';
+    // 低沉下降音: A3 -> F3
+    osc.frequency.setValueAtTime(220, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(175, ctx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.35);
+  } catch(e) {}
+}
+let startTime = 0;
+let gameActive = false;
+let sessionErrors = [];
+let errorModeActive = false;
+let errorModeGroups = [];
+let errorModeCurrentGroupIndex = 0;
+let errorModeMatchedWords = new Set(); // 存储已作答的word索引（对/错都算）
+let errorModeWrongAnsweredWords = new Set(); // 错题模式当前组内答错的word索引
+
+// ==================== DOM ====================
+const welcomeScreen = document.getElementById('welcomeScreen');
+const homeScreen = document.getElementById('homeScreen');
+const lessonScreen = document.getElementById('lessonScreen');
+const gameScreen = document.getElementById('gameScreen');
+const resultScreen = document.getElementById('resultScreen');
+const errorBookScreen = document.getElementById('errorBookScreen');
+const leaderboardScreen = document.getElementById('leaderboardScreen');
+
+// ==================== 工具函数 ====================
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return mins > 0 ? `${mins}分${secs}秒` : `${secs}秒`;
+}
+
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showHint(message, type = 'error') {
+  const hintText = document.getElementById('hintText');
+  hintText.textContent = message;
+  hintText.className = 'hint-text show ' + type;
+  setTimeout(() => hintText.className = 'hint-text', 2500);
+}
+
+function showCombo(count) {
+  if (count < 2) return;
+  const popup = document.getElementById('comboPopup');
+  popup.textContent = `🔥 连击 ×${count}`;
+  popup.classList.add('show');
+  setTimeout(() => popup.classList.remove('show'), 1000);
+}
+
+function createParticles(x, y, count = 8) {
+  const container = document.getElementById('particlesContainer');
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const angle = (Math.PI * 2 / count) * i;
+    const distance = 30 + Math.random() * 50;
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    particle.style.width = (4 + Math.random() * 6) + 'px';
+    particle.style.height = particle.style.width;
+    particle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+    particle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+    particle.style.background = ['#c0392b', '#e74c3c', '#27ae60', '#2c2c2c'][Math.floor(Math.random() * 4)];
+    container.appendChild(particle);
+    setTimeout(() => particle.remove(), 1000);
+  }
+}
+
+function showTransition(text, sub = '', callback) {
+  const overlay = document.getElementById('transitionOverlay');
+  document.getElementById('transitionText').textContent = text;
+  document.getElementById('transitionSub').textContent = sub;
+  overlay.classList.add('show');
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    if (callback) callback();
+  }, 1200);
+}
+
+// ==================== 欢迎页 ====================
+function renderWelcomeScreen() {
+  const users = getUsers();
+  const userList = document.getElementById('userList');
+  
+  if (Object.keys(users).length === 0) {
+    userList.innerHTML = '';
+    return;
+  }
+  
+  let html = '<h3>或选择已有用户：</h3>';
+  for (const name in users) {
+    const data = users[name];
+    const total = data.totalCorrect || 0;
+    html += `<div class="user-item" data-name="${name}">
+      <div class="user-avatar">${name[0]}</div>
+      <div class="user-name">${name}</div>
+      <div class="user-stats">${total}词</div>
+    </div>`;
+  }
+  userList.innerHTML = html;
+  
+  userList.querySelectorAll('.user-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const name = item.dataset.name;
+      setCurrentUser(name);
+      currentUser = name;
+      initHomeScreen();
+      showScreen('homeScreen');
+    });
+  });
+}
+
+document.getElementById('startGameBtn').addEventListener('click', () => {
+  // 云端登录（拦截）
+  const cloudInfo = cloudLoginStudent();
+  if (!cloudInfo) return;
+  
+  // 用学号作为用户标识
+  const name = cloudInfo.name;
+  if (!name) {
+    alert('请输入姓名');
+    return;
+  }
+  createUser(name);
+  setCurrentUser(name);
+  currentUser = name;
+  initHomeScreen();
+  showScreen('homeScreen');
+});
+
+// ==================== 首页 ====================
+function initHomeScreen() {
+  if (!currentUser) return;
+  
+  document.getElementById('welcomeName').textContent = currentUser;
+  document.getElementById('userAvatar').textContent = currentUser[0];
+  
+  // 使用calculateTotalCorrect实时计算累计掌握数
+  document.getElementById('totalCorrect').textContent = calculateTotalCorrect(currentUser);
+  
+  // 错题本角标
+  const errors = getErrorBook(currentUser);
+  const badge = document.getElementById('errorBadge');
+  if (errors.length > 0) {
+    badge.style.display = 'flex';
+    badge.textContent = errors.length;
+  } else {
+    badge.style.display = 'none';
+  }
+  
+  // 迷你排行榜
+  renderMiniLeaderboard();
+}
+
+function renderMiniLeaderboard() {
+  const users = getUsers();
+  const sorted = Object.entries(users).sort((a, b) => (b[1].totalCorrect || 0) - (a[1].totalCorrect || 0));
+  const top3 = sorted.slice(0, 3);
+  
+  const container = document.getElementById('miniLeaderboard');
+  if (top3.length === 0) {
+    container.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">暂无数据</p>';
+    return;
+  }
+  
+  let html = '';
+  top3.forEach(([name, data], i) => {
+    const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+    html += `<div class="leaderboard-item">
+      <span class="rank ${rankClass}">${i + 1}</span>
+      <span class="leaderboard-name">${name}</span>
+      <span class="leaderboard-score">${data.totalCorrect || 0}词</span>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+document.getElementById('navLessons').addEventListener('click', () => {
+  initLessonScreen();
+  showScreen('lessonScreen');
+});
+
+document.getElementById('navErrorBook').addEventListener('click', () => {
+  renderErrorBook();
+  showScreen('errorBookScreen');
+});
+
+document.getElementById('navLeaderboard').addEventListener('click', () => {
+  renderFullLeaderboard();
+  showScreen('leaderboardScreen');
+});
+
+document.getElementById('navSwitchUser').addEventListener('click', () => {
+  currentUser = null;
+  setCurrentUser(null);
+  showScreen('welcomeScreen');
+  renderWelcomeScreen();
+});
+
+// ==================== 篇目选择页 ====================
+function initLessonScreen() {
+  const userData = getUserData(currentUser);
+  const container = document.getElementById('lessonList');
+  
+  // 按册分组
+  const books = {};
+  ALL_LESSONS.forEach(lesson => {
+    if (!books[lesson.book]) books[lesson.book] = [];
+    books[lesson.book].push(lesson);
+  });
+  
+  let html = '';
+  for (const book in books) {
+    html += `<div class="book-section">
+      <div class="book-title">📚 ${book}</div>
+      <div class="lesson-grid">`;
+    
+    books[book].forEach(lesson => {
+      const lessonData = userData.lessons[lesson.name] || {};
+      const played = lessonData.played;
+      const stars = lessonData.stars || 0;
+      const rate = lessonData.bestRate || 0;
+      
+      let statusHtml = '';
+      if (played) {
+        const starsStr = '⭐'.repeat(stars);
+        statusHtml = `<span class="lesson-stars">${starsStr}</span><span class="lesson-rate">${Math.round(rate * 100)}%</span>`;
+      } else {
+        statusHtml = `<span class="lesson-unplayed">未挑战</span>`;
+      }
+      
+      html += `<div class="lesson-card ${played ? 'played' : ''}" data-name="${lesson.name}">
+        <div class="lesson-name">${lesson.name}</div>
+        <div class="lesson-author">${lesson.author}</div>
+        <div class="lesson-status">${statusHtml}</div>
+      </div>`;
+    });
+    
+    html += '</div></div>';
+  }
+  
+  container.innerHTML = html;
+  
+  container.querySelectorAll('.lesson-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const name = card.dataset.name;
+      startLesson(name);
+    });
+  });
+}
+
+document.getElementById('backToHome').addEventListener('click', () => showScreen('homeScreen'));
+
+// ==================== 游戏核心 ====================
+function startLesson(lessonName) {
+  const lesson = ALL_LESSONS.find(l => l.name === lessonName);
+  if (!lesson) return;
+  
+  currentLesson = lesson;
+  currentGroupIndex = 0;
+  currentWordIndex = 0;
+  matchedWords = new Set();
+  wrongAnsweredWords = new Set();
+  activeWordIdx = null;
+  groupWordOrder = null;
+  renderGroup._lastGroupKey = null;
+  errorCount = 0;
+  sessionCorrect = 0; // 重置本局答对数
+  comboCount = 0;
+  sessionErrors = [];
+  startTime = Date.now();
+  gameActive = true;
+  errorModeActive = false;
+  errorModeMatchedWords = new Set();
+  errorModeWrongAnsweredWords = new Set();
+  errorWordSet = new Set();
+  
+  showScreen('gameScreen');
+  renderGroup();
+  
+  // 云端：记录本局开始
+  if (typeof cloudOnGameStart === 'function') {
+    const totalWords = lesson.groups.reduce((sum, g) => sum + g.words.length, 0);
+    cloudOnGameStart(lesson.name, totalWords);
+  }
+}
+
+function getCurrentGroup() {
+  if (errorModeActive) {
+    return errorModeGroups[errorModeCurrentGroupIndex];
+  }
+  return currentLesson.groups[currentGroupIndex];
+}
+
+function getCurrentWord() {
+  const group = getCurrentGroup();
+  const matchedSet = errorModeActive ? errorModeMatchedWords : matchedWords;
+  // 正文字词按 idx 顺序依次出题；底下答案卡片仍由 renderGroup 里的 shuffleArray 乱序
+  for (let i = 0; i < group.words.length; i++) {
+    if (!matchedSet.has(String(i))) {
+      activeWordIdx = i;
+      return { idx: i, word: group.words[i].word, note: group.words[i].note };
+    }
+  }
+  activeWordIdx = null;
+  return null;
+}
+
+function renderGroup() {
+  const group = getCurrentGroup();
+  // 组切换检测：若当前 group 与上次渲染不是同一个，重置锚定字与答题顺序，让 getCurrentWord 重新 shuffle
+  const groupKey = errorModeActive ? `err_${errorModeCurrentGroupIndex}` : `norm_${currentGroupIndex}`;
+  if (renderGroup._lastGroupKey !== groupKey) {
+    activeWordIdx = null;
+    groupWordOrder = null;
+    renderGroup._lastGroupKey = groupKey;
+  }
+  const currentWord = getCurrentWord();
+  
+  // 更新进度
+  if (errorModeActive) {
+    const totalGroups = errorModeGroups.length;
+    const progress = (errorModeCurrentGroupIndex / totalGroups) * 100;
+    document.getElementById('progressText').textContent = `第 ${errorModeCurrentGroupIndex + 1} 篇 / 共 ${totalGroups} 篇`;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+  } else {
+    const totalGroups = currentLesson.groups.length;
+    const progress = (currentGroupIndex / totalGroups) * 100;
+    document.getElementById('progressText').textContent = `第 ${currentGroupIndex + 1} 组 / 共 ${totalGroups} 组`;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+  }
+  
+  // 渲染诗句 - 使用序号标记替换
+  let html = group.text || '';
+  // 先替换换行符
+  html = html.replace(/\n/g, '<br>');
+  // 按序号替换
+  group.words.forEach((w, idx) => {
+    const markerIdx = (errorModeActive && w.origIdx !== undefined) ? w.origIdx : idx;
+    const marker = `【${markerIdx}】`;
+    if (html.indexOf(marker) === -1) return; // 跳过不存在的标记
+    const isMatched = errorModeActive ? errorModeMatchedWords.has(String(idx)) : matchedWords.has(String(idx));
+    const isCurrent = currentWord && currentWord.idx === idx;
+    let className = 'marked-word ';
+    if (isMatched) className += 'matched';
+    else if (isCurrent) className += 'current';
+    else className += 'normal';
+    html = html.split(marker).join(`<span class="${className}" data-word-idx="${idx}">${w.word}</span>`);
+  });
+  
+  // 错题模式下：剩余未在错题列表中的 【N】 用原字回填（这些字用户没错过）
+  if (errorModeActive) {
+    const origWords = group._origWords || [];
+    html = html.replace(/【(\d+)】/g, (m, n) => {
+      const w = origWords[Number(n)];
+      return (w && w.word) ? `<span class="marked-word non-error">${w.word}</span>` : '<span class="placeholder-word">▢</span>';
+    });
+  }
+  
+  document.getElementById('poemText').innerHTML = html;
+  
+  // 渲染卡片
+  let wordsToShow = [];
+  group.words.forEach((w, idx) => {
+    const isMatched = errorModeActive ? errorModeMatchedWords.has(String(idx)) : matchedWords.has(String(idx));
+    if (!isMatched) {
+      wordsToShow.push({ idx, word: w.word, note: w.note });
+    }
+  });
+  
+  const shuffled = shuffleArray([...wordsToShow]);
+  document.getElementById('cardsContainer').innerHTML = shuffled.map(item => 
+    `<div class="note-card" data-note="${item.note}" data-word-idx="${item.idx}">${item.note}</div>`
+  ).join('');
+  
+  // 提示
+  if (currentWord) {
+    showHint(`请为"${currentWord.word}"选择正确注释`, 'success');
+  }
+  
+  // 绑定点击
+  document.querySelectorAll('.note-card').forEach(card => {
+    card.onclick = () => handleCardClick(card);
+  });
+}
+
+function handleCardClick(cardEl) {
+  if (!gameActive) return;
+  const currentWord = getCurrentWord();
+  if (!currentWord) return;
+  
+  const clickedIdx = cardEl.dataset.wordIdx;
+  
+  if (clickedIdx === String(currentWord.idx)) {
+    handleCorrect(cardEl, currentWord);
+  } else {
+    handleWrong(cardEl, currentWord, cardEl.dataset.note);
+  }
+}
+
+function handleCorrect(cardEl, wordData) {
+  playCorrectSound();
+  if (errorModeActive) {
+    errorModeMatchedWords.add(String(wordData.idx));
+  } else {
+    matchedWords.add(String(wordData.idx));
+    // 不再实时更新累计掌握数，等endGame统一计算
+  }
+  comboCount++;
+  
+  const wordEl = document.querySelector('.marked-word.current');
+  if (wordEl) {
+    const rect = wordEl.getBoundingClientRect();
+    createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  }
+  
+  cardEl.classList.add('correct');
+  setTimeout(() => cardEl.remove(), 500);
+  
+  showCombo(comboCount);
+  document.getElementById('errorCount').textContent = errorCount;
+  document.getElementById('comboCount').textContent = comboCount;
+  
+  setTimeout(() => {
+    const group = getCurrentGroup();
+    let allMatched = true;
+    for (let i = 0; i < group.words.length; i++) {
+      const isMatched = errorModeActive ? errorModeMatchedWords.has(String(i)) : matchedWords.has(String(i));
+      if (!isMatched) {
+        allMatched = false;
+        break;
+      }
+    }
+    
+    if (allMatched) {
+      if (errorModeActive) {
+        if (errorModeCurrentGroupIndex < errorModeGroups.length - 1) {
+          showTransition(`第 ${errorModeCurrentGroupIndex + 1} 篇 完成！`, '', () => {
+            errorModeCurrentGroupIndex++;
+            errorModeMatchedWords = new Set(); // 切换篇章时清空已作答记录
+            errorModeWrongAnsweredWords = new Set(); // 切换篇章时清空答错标记
+            renderGroup();
+          });
+        } else {
+          endGame();
+        }
+      } else {
+        if (currentGroupIndex < currentLesson.groups.length - 1) {
+          showTransition(`第 ${currentGroupIndex + 1} 组 完成！`, '', () => {
+            currentGroupIndex++;
+            currentWordIndex = 0;
+            matchedWords = new Set(); // 切换组时清空已配对记录
+            wrongAnsweredWords = new Set(); // 切换组时清空答错标记
+            renderGroup();
+          });
+        } else {
+          endGame();
+        }
+      }
+    } else {
+      renderGroup();
+    }
+  }, 400);
+}
+
+// 更新当前课进度
+function updateCurrentLessonProgress() {
+  const users = getUsers();
+  if (!users[currentUser]) return;
+  const lessonData = users[currentUser].lessons[currentLesson.name] || {};
+  lessonData.currentCorrect = lessonData.currentCorrect || 0;
+  lessonData.currentCorrect++;
+  users[currentUser].lessons[currentLesson.name] = lessonData;
+  saveUsers(users);
+}
+
+function handleWrong(cardEl, wordData, clickedNote) {
+  playWrongSound();
+  errorCount++;
+  comboCount = 0;
+  errorWordSet.add(String(wordData.idx)); // 标记这个词错过至少一次
+  document.getElementById('errorCount').textContent = errorCount;
+  document.getElementById('comboCount').textContent = comboCount;
+  
+  // 记录错题
+  if (!errorModeActive && currentLesson) {
+    addToErrorBook(currentUser, currentLesson.name, wordData.idx, wordData.word, wordData.note, getCurrentGroupText());
+  }
+  
+  // 云端：记录错词
+  if (typeof cloudRecordError === 'function') {
+    cloudRecordError(wordData.word, wordData.note);
+  }
+  
+  // 答错也算已作答：卡片彻底消失，原文里的字标为红色✗，推进到下一个字
+  if (errorModeActive) {
+    errorModeMatchedWords.add(String(wordData.idx));
+    errorModeWrongAnsweredWords.add(String(wordData.idx));
+  } else {
+    matchedWords.add(String(wordData.idx));
+    wrongAnsweredWords.add(String(wordData.idx));
+  }
+  
+  cardEl.classList.add('wrong');
+  setTimeout(() => cardEl.remove(), 500);
+  
+  const wordEl = document.querySelector('.marked-word.current');
+  if (wordEl) {
+    wordEl.classList.add('wrong');
+    setTimeout(() => wordEl.classList.remove('wrong'), 500);
+  }
+  
+  showHint(`❌ "${wordData.word}"的正确注释是"${wordData.note}"`, 'error');
+  
+  // 推进到下一个字（与 handleCorrect 一致），稍晚一点让错误动画播完
+  setTimeout(() => {
+    const group = getCurrentGroup();
+    let allMatched = true;
+    for (let i = 0; i < group.words.length; i++) {
+      const isMatched = errorModeActive ? errorModeMatchedWords.has(String(i)) : matchedWords.has(String(i));
+      if (!isMatched) {
+        allMatched = false;
+        break;
+      }
+    }
+    
+    if (allMatched) {
+      if (errorModeActive) {
+        if (errorModeCurrentGroupIndex < errorModeGroups.length - 1) {
+          showTransition(`第 ${errorModeCurrentGroupIndex + 1} 篇 完成！`, '', () => {
+            errorModeCurrentGroupIndex++;
+            errorModeMatchedWords = new Set();
+            errorModeWrongAnsweredWords = new Set();
+            renderGroup();
+          });
+        } else {
+          endGame();
+        }
+      } else {
+        if (currentGroupIndex < currentLesson.groups.length - 1) {
+          showTransition(`第 ${currentGroupIndex + 1} 组 完成！`, '', () => {
+            currentGroupIndex++;
+            currentWordIndex = 0;
+            matchedWords = new Set();
+            wrongAnsweredWords = new Set();
+            renderGroup();
+          });
+        } else {
+          endGame();
+        }
+      }
+    } else {
+      renderGroup();
+    }
+  }, 2500);
+}
+
+// 获取当前组原文
+function getCurrentGroupText() {
+  const group = getCurrentGroup();
+  return group.text || '';
+}
+
+function endGame() {
+  gameActive = false;
+  // 清理正文里最后一字残留的 current 高亮：所有 current 都变成 matched（绿色✓），避免卡片全消完后正文还有红色字
+  document.querySelectorAll('.marked-word.current').forEach(el => {
+    el.classList.remove('current');
+    el.classList.add('matched');
+  });
+  const timeTaken = Math.round((Date.now() - startTime) / 1000);
+  
+  if (errorModeActive) {
+    // 错题模式结束：先清理状态和横幅
+    errorModeActive = false;
+    const banner = document.querySelector('.error-mode-banner');
+    if (banner) banner.remove();
+    
+    const totalWords = errorModeGroups.reduce((sum, g) => sum + g.words.length, 0);
+    const correctWords = Math.max(0, totalWords - errorWordSet.size);
+    const rate = totalWords > 0 ? correctWords / totalWords : 0;
+    
+    document.querySelector('#resultScreen .result-title').textContent = '🎉 错题复习完成！';
+    document.getElementById('resultTime').textContent = formatTime(timeTaken);
+    document.getElementById('resultRate').textContent = Math.round(rate * 100);
+    document.getElementById('resultCorrect').textContent = correctWords;
+    document.getElementById('resultTotal').textContent = totalWords;
+    document.getElementById('errorCollected').style.display = errorCount > 0 ? 'block' : 'none';
+    document.getElementById('bestRecord').style.display = 'none';
+    
+    showTransition('完成！', '', () => {
+      showScreen('resultScreen');
+      const starsContainer = document.getElementById('starsContainer');
+      starsContainer.querySelectorAll('.star').forEach((star, i) => {
+        setTimeout(() => star.classList.toggle('earned', i < 3), i * 300);
+      });
+    });
+    return;
+  }
+  
+  // 正常闯关模式
+  const group = currentLesson.groups;
+  let totalWords = 0;
+  group.forEach(g => {
+    totalWords += g.words.length;
+  });
+  // 一次就对的词数 = 总词数 - 有过错误的词数
+  const correctWords = Math.max(0, totalWords - errorWordSet.size);
+  const rate = totalWords > 0 ? correctWords / totalWords : 0;
+  const stars = errorCount === 0 ? 3 : errorCount <= 2 ? 2 : 1;
+  
+  document.querySelector('#resultScreen .result-title').textContent = '🎉 闯关完成！';
+  
+  // 保存成绩
+  const userData = getUserData(currentUser);
+  const lessonData = userData.lessons[currentLesson.name] || {};
+  
+  const currentBestCorrect = lessonData.bestCorrect || 0;
+  const isBetter = correctWords > currentBestCorrect;
+  
+  userData.lessons[currentLesson.name] = {
+    correct: correctWords,
+    total: totalWords,
+    bestCorrect: isBetter ? correctWords : currentBestCorrect,
+    bestRate: isBetter ? rate : (lessonData.bestRate || rate),
+    stars: isBetter ? Math.max(stars, lessonData.stars || 0) : (lessonData.stars || 0),
+    played: true
+  };
+  
+  updateUserData(currentUser, userData);
+  updateCumulativeCount(); // 更新累计掌握数
+  
+  // 云端：上报本局数据
+  if (typeof cloudOnGameEnd === 'function') {
+    cloudOnGameEnd();
+  }
+  
+  document.getElementById('resultTime').textContent = formatTime(timeTaken);
+  document.getElementById('resultRate').textContent = Math.round(rate * 100);
+  document.getElementById('resultCorrect').textContent = correctWords;
+  document.getElementById('resultTotal').textContent = totalWords;
+  
+  document.getElementById('errorCollected').style.display = errorCount > 0 ? 'block' : 'none';
+  
+  if (isBetter) {
+    document.getElementById('bestRecord').textContent = '🏆 新纪录！';
+    document.getElementById('bestRecord').style.display = 'block';
+  } else {
+    document.getElementById('bestRecord').style.display = 'none';
+  }
+  
+  showTransition('完成！', '', () => {
+    showScreen('resultScreen');
+    
+    const stars = errorModeActive ? 3 : (errorCount === 0 ? 3 : errorCount <= 2 ? 2 : 1);
+    const starsContainer = document.getElementById('starsContainer');
+    starsContainer.querySelectorAll('.star').forEach((star, i) => {
+      setTimeout(() => star.classList.toggle('earned', i < stars), i * 300);
+    });
+  });
+}
+
+// 退出按钮
+document.getElementById('exitBtn').addEventListener('click', () => {
+  // 计算本次正确数和累计掌握数
+  let thisCorrect = sessionCorrect;
+  let thisTotal = 0;
+  if (errorModeActive) {
+    thisTotal = errorModeGroups.reduce((sum, g) => sum + g.words.length, 0);
+  } else if (currentLesson) {
+    thisTotal = currentLesson.groups.reduce((sum, g) => sum + g.words.length, 0);
+  }
+  thisCorrect = Math.max(0, thisTotal - errorWordSet.size);
+  const totalCorrect = calculateTotalCorrect(currentUser);
+  const confirmed = confirm(`确定退出？\n本次答对 ${thisCorrect} 个词语（共${thisTotal}个）\n累计掌握 ${totalCorrect} 个`);
+  if (confirmed) {
+    // 保存当前进度（正常模式才保存成绩）
+    if (!errorModeActive && currentLesson && thisCorrect > 0) {
+      const userData = getUserData(currentUser);
+      const lessonData = userData.lessons[currentLesson.name] || {};
+      const currentBestCorrect = lessonData.bestCorrect || 0;
+      if (thisCorrect > currentBestCorrect) {
+        const totalWords = thisTotal;
+        const rate = totalWords > 0 ? thisCorrect / totalWords : 0;
+        const stars = errorCount === 0 ? 3 : errorCount <= 2 ? 2 : 1;
+        userData.lessons[currentLesson.name] = {
+          ...lessonData,
+          correct: thisCorrect,
+          bestCorrect: thisCorrect,
+          total: totalWords,
+          bestRate: rate,
+          stars: Math.max(stars, lessonData.stars || 0),
+          played: true
+        };
+        updateUserData(currentUser, userData);
+      }
+    }
+    gameActive = false;
+    errorModeActive = false;
+    const banner = document.querySelector('.error-mode-banner');
+    if (banner) banner.remove();
+    updateCumulativeCount(); // 更新首页显示
+    showScreen('homeScreen');
+  }
+});
+
+// ==================== 结算页按钮 ====================
+document.getElementById('replayBtn').addEventListener('click', () => {
+  document.getElementById('starsContainer').querySelectorAll('.star').forEach(s => s.classList.remove('earned'));
+  if (currentLesson) {
+    showScreen('gameScreen');
+    startLesson(currentLesson.name);
+  }
+});
+
+document.getElementById('resultErrorBookBtn').addEventListener('click', () => {
+  renderErrorBook();
+  showScreen('errorBookScreen');
+});
+
+document.getElementById('homeBtn').addEventListener('click', () => {
+  document.getElementById('starsContainer').querySelectorAll('.star').forEach(s => s.classList.remove('earned'));
+  initHomeScreen();
+  showScreen('homeScreen');
+});
+
+// ==================== 错题本页 ====================
+function renderErrorBook() {
+  const errors = getErrorBook(currentUser);
+  const container = document.getElementById('errorBookList');
+  
+  if (errors.length === 0) {
+    container.innerHTML = '<div class="error-book-empty">暂无错题记录<br>继续努力吧！</div>';
+    document.getElementById('startErrorModeBtn').disabled = true;
+    document.getElementById('errorModeHint').style.display = 'block';
+    return;
+  }
+  
+  // 按篇目分组
+  const grouped = {};
+  errors.forEach(e => {
+    if (!grouped[e.lesson]) grouped[e.lesson] = [];
+    grouped[e.lesson].push(e);
+  });
+  
+  let html = '';
+  for (const lessonName in grouped) {
+    html += `<div class="error-lesson-group">
+      <div class="error-lesson-name">
+        ${lessonName}
+        <span class="error-lesson-stats">${grouped[lessonName].length}个错词</span>
+      </div>`;
+    grouped[lessonName].forEach(e => {
+      html += `<div class="error-item">
+        <span class="error-word">${e.word}</span>
+        <span class="error-arrow">→</span>
+        <span class="error-note">${e.note}</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
+  
+  container.innerHTML = html;
+  
+  document.getElementById('startErrorModeBtn').disabled = errors.length < 2;
+  document.getElementById('errorModeHint').style.display = errors.length < 2 ? 'block' : 'none';
+}
+
+document.getElementById('backFromError').addEventListener('click', () => showScreen('homeScreen'));
+
+document.getElementById('startErrorModeBtn').addEventListener('click', () => {
+  const errors = getErrorBook(currentUser);
+  if (errors.length < 1) return;
+  
+  errorModeActive = true;
+  errorModeMatchedWords = new Set();
+  errorWordSet = new Set();
+  activeWordIdx = null;
+  groupWordOrder = null;
+  renderGroup._lastGroupKey = null;
+  
+  // 按 lesson + groupText 分组，保留原文上下文
+  errorModeGroups = [];
+  errors.forEach(e => {
+    const groupText = e.groupText || '';
+    let existing = errorModeGroups.find(g => g._lesson === e.lesson && g._text === groupText);
+    if (!existing) {
+      // 查回原始 lesson 里对应 group 的 words，用于在原文中还原答对（未错过）字的原字
+      let origWords = [];
+      const origLesson = ALL_LESSONS.find(l => l.name === e.lesson);
+      if (origLesson) {
+        const origGroup = origLesson.groups.find(g => (g.text || '') === groupText);
+        if (origGroup) origWords = origGroup.words;
+      }
+      existing = {
+        _lesson: e.lesson,
+        _text: groupText,
+        _origWords: origWords,
+        name: e.lesson,
+        text: groupText,
+        words: []
+      };
+      errorModeGroups.push(existing);
+    }
+    existing.words.push({ word: e.word, note: e.note, origIdx: e.wordIdx });
+  });
+  
+  // 兜底：没有 groupText 的旧数据用纯词列表展示
+  errorModeGroups.forEach(g => {
+    if (!g.text) {
+      g.text = g.words.map((w, i) => `【${i}】`).join('');
+      g.words.forEach((w, i) => { w.origIdx = i; });
+    }
+  });
+  
+  errorModeCurrentGroupIndex = 0;
+  comboCount = 0;
+  errorCount = 0;
+  startTime = Date.now();
+  gameActive = true;
+  
+  showScreen('gameScreen');
+  
+  // 添加红色横幅
+  const existingBanner = document.querySelector('.error-mode-banner');
+  if (existingBanner) existingBanner.remove();
+  const banner = document.createElement('div');
+  banner.className = 'error-mode-banner';
+  banner.textContent = '🚨 错题消消乐模式';
+  gameScreen.insertBefore(banner, gameScreen.firstChild);
+  
+  document.getElementById('errorCount').textContent = '0';
+  document.getElementById('comboCount').textContent = '0';
+  renderGroup();
+});
+
+document.getElementById('clearErrorBookBtn').addEventListener('click', () => {
+  if (confirm('确定要清空错题本吗？此操作不可恢复。')) {
+    clearErrorBook(currentUser);
+    renderErrorBook();
+  }
+});
+
+// ==================== 排行榜页 ====================
+function renderFullLeaderboard() {
+  const users = getUsers();
+  const sorted = Object.entries(users).sort((a, b) => (b[1].totalCorrect || 0) - (a[1].totalCorrect || 0));
+  
+  const container = document.getElementById('fullLeaderboard');
+  
+  if (sorted.length === 0) {
+    container.innerHTML = '<p style="color:#888;text-align:center;padding:40px;">暂无数据</p>';
+    return;
+  }
+  
+  let html = '';
+  sorted.forEach(([name, data], i) => {
+    const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+    html += `<div class="leaderboard-row ${i === 0 ? 'top-1' : ''}">
+      <span class="lb-rank ${rankClass}">${i + 1}</span>
+      <div class="lb-avatar">${name[0]}</div>
+      <div class="lb-info">
+        <div class="lb-name">${name}</div>
+        <div class="lb-detail">${Object.keys(data.lessons || {}).length}篇已学习</div>
+      </div>
+      <div class="lb-score">
+        <div class="number">${data.totalCorrect || 0}</div>
+        <div class="label">掌握词语</div>
+      </div>
+    </div>`;
+  });
+  
+  container.innerHTML = html;
+}
+
+document.getElementById('backFromLeaderboard').addEventListener('click', () => showScreen('homeScreen'));
+
+// ==================== 初始化 ====================
+function init() {
+  renderWelcomeScreen();
+  showScreen('welcomeScreen');
+}
+
+// ==================== 双人对战模式 ====================
+let battleActive = false;
+let battleLesson = null;
+let battleP1 = { name: '', score: 0 };
+let battleP2 = { name: '', score: 0 };
+let battleGroups = []; // 展平的所有words
+let battleGroupIdx = 0;
+let battleWordIdx = 0;
+let battleCurrentWord = null;
+let battleResolved = false; // 当前题是否已有人答对
+let battleP1Locked = false;
+let battleP2Locked = false;
+let battleAnsweredKeys = new Set(); // 双人对战已答过的字 key: `${_groupIdx}_${wordIdx}`，用于从卡池过滤
+
+function initBattleSetup() {
+  const sel = document.getElementById('battleLessonSelect');
+  sel.innerHTML = '';
+  const books = {};
+  ALL_LESSONS.forEach(l => {
+    if (!books[l.book]) books[l.book] = [];
+    books[l.book].push(l);
+  });
+  for (const book in books) {
+    const group = document.createElement('optgroup');
+    group.label = '📚 ' + book;
+    books[book].forEach(l => {
+      const opt = document.createElement('option');
+      opt.value = l.name;
+      opt.textContent = l.name + '（' + l.author + '）';
+      group.appendChild(opt);
+    });
+    sel.appendChild(group);
+  }
+}
+
+function startBattle() {
+  const p1Name = document.getElementById('battleP1Name').value.trim();
+  const p2Name = document.getElementById('battleP2Name').value.trim();
+  const lessonName = document.getElementById('battleLessonSelect').value;
+  
+  if (!p1Name || !p2Name) { alert('请输入两位选手的昵称！'); return; }
+  if (p1Name === p2Name) { alert('两位选手昵称不能相同！'); return; }
+  
+  const lesson = ALL_LESSONS.find(l => l.name === lessonName);
+  if (!lesson) return;
+  
+  battleLesson = lesson;
+  battleP1 = { name: p1Name, score: 0, errors: [] };
+  battleP2 = { name: p2Name, score: 0, errors: [] };
+  
+  // 自动注册选手昵称为用户（已存在则复用，错题会并入该用户的错题本）
+  createUser(p1Name);
+  createUser(p2Name);
+  
+  // 展平所有组的words为一维列表，保留 _groupIdx / _wordIdx 用于错题归档
+  battleGroups = [];
+  lesson.groups.forEach((g, gi) => {
+    g.words.forEach((w, wi) => {
+      battleGroups.push({ ...w, text: g.text, groupWords: g.words, _groupIdx: gi, _wordIdx: wi });
+    });
+  });
+  
+  battleGroupIdx = 0;
+  battleWordIdx = 0;
+  battleP1Locked = false;
+  battleP2Locked = false;
+  battleAnsweredKeys = new Set();
+  battleActive = true;
+  
+  document.getElementById('battleP1Label').textContent = p1Name;
+  document.getElementById('battleP2Label').textContent = p2Name;
+  document.getElementById('battleLessonName').textContent = lesson.name;
+  document.getElementById('battleP1Score').textContent = '0';
+  document.getElementById('battleP2Score').textContent = '0';
+  
+  showScreen('battleScreen');
+  renderBattleWord();
+}
+
+function getBattleCurrentGroup() {
+  // 找到当前word所在的group
+  const word = battleGroups[battleWordIdx];
+  if (!word) return null;
+  return { text: word.text, words: word.groupWords };
+}
+
+function renderBattleWord() {
+  if (battleWordIdx >= battleGroups.length) {
+    endBattle();
+    return;
+  }
+  
+  battleResolved = false;
+  battleP1Locked = false;
+  battleP2Locked = false;
+  
+  const currentWordData = battleGroups[battleWordIdx];
+  const group = { text: currentWordData.text, words: currentWordData.groupWords };
+  
+  // 找当前word在group中的idx
+  const wordIdx = group.words.findIndex(w => w.word === currentWordData.word && w.note === currentWordData.note);
+  if (wordIdx === -1) { battleWordIdx++; renderBattleWord(); return; }
+  
+  battleCurrentWord = { idx: wordIdx, word: currentWordData.word, note: currentWordData.note };
+  
+  // 更新进度
+  document.getElementById('battleWordCount').textContent = `${battleWordIdx + 1}/${battleGroups.length}`;
+  
+  // 渲染两侧诗句（相同内容）
+  ['1', '2'].forEach(side => {
+    let html = group.text || '';
+    html = html.replace(/\n/g, '<br>');
+    
+    // 标记加点字
+    group.words.forEach((w, i) => {
+      const marker = `【${i}】`;
+      if (html.indexOf(marker) === -1) return;
+      let className = 'marked-word ';
+      if (i === wordIdx) className += 'current';
+      else className += 'normal';
+      html = html.split(marker).join(`<span class="${className}">${w.word}</span>`);
+    });
+    
+    document.getElementById('battlePoem' + side).innerHTML = html;
+    document.getElementById('battleHint' + side).innerHTML = '';
+  });
+  
+  // 渲染两侧卡片（各自独立打乱）——过滤掉本组已答过的字，实现"答完即消"
+  const currentGroupIdx = currentWordData._groupIdx;
+  const unmatchedWords = group.words
+    .map((w, i) => ({ idx: i, word: w.word, note: w.note }))
+    .filter(item => item.idx === wordIdx || !battleAnsweredKeys.has(`${currentGroupIdx}_${item.idx}`));
+  
+  const shuffled1 = shuffleArray([...unmatchedWords]);
+  document.getElementById('battleCards1').innerHTML = shuffled1.map(item =>
+    `<div class="battle-card" data-note="${item.note}" data-word-idx="${item.idx}">${item.note}</div>`
+  ).join('');
+  
+  const shuffled2 = shuffleArray([...unmatchedWords]);
+  document.getElementById('battleCards2').innerHTML = shuffled2.map(item =>
+    `<div class="battle-card" data-note="${item.note}" data-word-idx="${item.idx}">${item.note}</div>`
+  ).join('');
+  
+  // 绑定点击事件
+  document.getElementById('battleCards1').querySelectorAll('.battle-card').forEach(card => {
+    card.addEventListener('click', () => handleBattleClick('p1', card));
+  });
+  document.getElementById('battleCards2').querySelectorAll('.battle-card').forEach(card => {
+    card.addEventListener('click', () => handleBattleClick('p2', card));
+  });
+  
+  // 解锁两侧
+  document.getElementById('battleSide1').classList.remove('locked');
+  document.getElementById('battleSide2').classList.remove('locked');
+}
+
+function handleBattleClick(player, cardEl) {
+  if (!battleActive || battleResolved) return;
+  if (player === 'p1' && battleP1Locked) return;
+  if (player === 'p2' && battleP2Locked) return;
+  
+  const clickedNote = cardEl.dataset.note;
+  const correctNote = battleCurrentWord.note;
+  
+  if (clickedNote === correctNote) {
+    // 答对！
+    battleResolved = true;
+    playCorrectSound();
+    
+    if (player === 'p1') {
+      battleP1.score++;
+      document.getElementById('battleP1Score').textContent = battleP1.score;
+      cardEl.classList.add('p1-correct');
+      document.getElementById('battleSide1').classList.add('winner-flash');
+    } else {
+      battleP2.score++;
+      document.getElementById('battleP2Score').textContent = battleP2.score;
+      cardEl.classList.add('p2-correct');
+      document.getElementById('battleSide2').classList.add('winner-flash');
+    }
+    
+    // 显示正确提示
+    const hintHtml = `✅ ${player === 'p1' ? battleP1.name : battleP2.name} 抢答正确！`;
+    document.getElementById('battleHint1').innerHTML = hintHtml;
+    document.getElementById('battleHint2').innerHTML = hintHtml;
+    
+    // 下一题
+    setTimeout(() => {
+      document.getElementById('battleSide1').classList.remove('winner-flash');
+      document.getElementById('battleSide2').classList.remove('winner-flash');
+      // 记录本字已答过，下题渲染时从卡池过滤
+      const cwd = battleGroups[battleWordIdx];
+      battleAnsweredKeys.add(`${cwd._groupIdx}_${cwd._wordIdx}`);
+      battleWordIdx++;
+      renderBattleWord();
+    }, 1000);
+    
+  } else {
+    // 答错，锁住该选手
+    playWrongSound();
+    cardEl.classList.add('wrong');
+    cardEl.style.pointerEvents = 'none';
+    
+    // 记录错题到该选手昵称对应的错题本 + 本局错题列表
+    const cwd = battleGroups[battleWordIdx];
+    const playerName = player === 'p1' ? battleP1.name : battleP2.name;
+    const playerErrors = player === 'p1' ? battleP1.errors : battleP2.errors;
+    addToErrorBook(playerName, battleLesson.name, cwd._wordIdx, cwd.word, cwd.note, cwd.text, cwd._groupIdx);
+    playerErrors.push({ word: cwd.word, note: cwd.note });
+    
+    if (player === 'p1') {
+      battleP1Locked = true;
+      document.getElementById('battleHint1').innerHTML = '❌ 答错了，等待对手作答...';
+      document.getElementById('battleSide1').classList.add('locked');
+    } else {
+      battleP2Locked = true;
+      document.getElementById('battleHint2').innerHTML = '❌ 答错了，等待对手作答...';
+      document.getElementById('battleSide2').classList.add('locked');
+    }
+    
+    // 如果两人都答错了
+    if (battleP1Locked && battleP2Locked) {
+      // 解锁两侧让提示可见
+      document.getElementById('battleSide1').classList.remove('locked');
+      document.getElementById('battleSide2').classList.remove('locked');
+      const hintHtml = `❌ 都答错了！正确答案：<strong>${battleCurrentWord.word} → ${battleCurrentWord.note}</strong>`;
+      document.getElementById('battleHint1').innerHTML = hintHtml;
+      document.getElementById('battleHint2').innerHTML = hintHtml;
+      
+      setTimeout(() => {
+        // 两人都答错也算本字已答过，从卡池过滤
+        const cwd = battleGroups[battleWordIdx];
+        battleAnsweredKeys.add(`${cwd._groupIdx}_${cwd._wordIdx}`);
+        battleWordIdx++;
+        renderBattleWord();
+      }, 2500);
+    }
+  }
+}
+
+function endBattle(earlyExit) {
+  battleActive = false;
+  // 清理正文里最后一字残留的 current 高亮（双人对战两侧都要清）
+  document.querySelectorAll('#battlePoem1 .marked-word.current, #battlePoem2 .marked-word.current').forEach(el => {
+    el.classList.remove('current');
+    el.classList.add('matched');
+  });
+  const total = battleGroups.length;
+  const answeredCount = (earlyExit && battleWordIdx < total) ? battleWordIdx : total;
+  
+  // 星级计算：基于已答题数。中途退出按已答题数算分；全错0星，<1/2一星，>=1/2两星，>2/3三星
+  function battleStars(score) {
+    const base = earlyExit ? Math.max(1, answeredCount) : total;
+    if (score === 0) return 0;
+    if (score > base * 2 / 3) return 3;
+    if (score >= base / 2) return 2;
+    return 1;
+  }
+  
+  function starsHtml(count) {
+    return '⭐'.repeat(count) + '☆'.repeat(3 - count);
+  }
+  
+  function renderBattleErrors(elId, errs) {
+    const el = document.getElementById(elId);
+    if (!errs || errs.length === 0) {
+      el.innerHTML = '<div class="errors-title">本局错词</div><div class="err-empty">✨ 全部答对</div>';
+      return;
+    }
+    const limit = 6;
+    let html = '<div class="errors-title">本局错词（' + errs.length + '）</div>';
+    errs.slice(0, limit).forEach(e => {
+      html += `<div class="err-line"><span class="err-w">${e.word}</span> → ${e.note}</div>`;
+    });
+    if (errs.length > limit) {
+      html += `<div class="err-more">还有 ${errs.length - limit} 个，已存入错题本</div>`;
+    } else {
+      html += `<div class="err-more">已存入错题本</div>`;
+    }
+    el.innerHTML = html;
+  }
+  
+  document.getElementById('battleResultP1Name').textContent = battleP1.name;
+  document.getElementById('battleResultP2Name').textContent = battleP2.name;
+  document.getElementById('battleResultP1Score').textContent = battleP1.score;
+  document.getElementById('battleResultP2Score').textContent = battleP2.score;
+  document.getElementById('battleResultP1Stars').textContent = starsHtml(battleStars(battleP1.score));
+  document.getElementById('battleResultP2Stars').textContent = starsHtml(battleStars(battleP2.score));
+  renderBattleErrors('battleResultP1Errors', battleP1.errors);
+  renderBattleErrors('battleResultP2Errors', battleP2.errors);
+  
+  const p1El = document.getElementById('battleResultP1');
+  const p2El = document.getElementById('battleResultP2');
+  p1El.classList.remove('winner');
+  p2El.classList.remove('winner');
+  
+  const exitPrefix = earlyExit ? '⏸ 中途退出 · ' : '🎉 ';
+  if (battleP1.score > battleP2.score) {
+    document.getElementById('battleResultTitle').textContent = exitPrefix + battleP1.name + ' 暂时领先！';
+    if (!earlyExit) document.getElementById('battleResultTitle').textContent = '🎉 ' + battleP1.name + ' 获胜！';
+    p1El.classList.add('winner');
+  } else if (battleP2.score > battleP1.score) {
+    document.getElementById('battleResultTitle').textContent = exitPrefix + battleP2.name + ' 暂时领先！';
+    if (!earlyExit) document.getElementById('battleResultTitle').textContent = '🎉 ' + battleP2.name + ' 获胜！';
+    p2El.classList.add('winner');
+  } else {
+    document.getElementById('battleResultTitle').textContent = earlyExit ? '⏸ 中途退出 · 当前平局' : '🤝 势均力敌！平局！';
+  }
+  
+  showScreen('battleResultScreen');
+}
+
+// 对战模式事件绑定
+document.getElementById('navBattle').addEventListener('click', () => {
+  initBattleSetup();
+  showScreen('battleSetupScreen');
+});
+
+document.getElementById('backFromBattleSetup').addEventListener('click', () => showScreen('homeScreen'));
+
+document.getElementById('battleExitBtn').addEventListener('click', () => {
+  if (!battleActive) return;
+  if (!confirm('确定中途退出对战吗？\n当前比分会进入结算，已答错的词已实时存入对应选手的错题本。')) return;
+  endBattle(true);
+});
+
+document.getElementById('startBattleBtn').addEventListener('click', startBattle);
+
+document.getElementById('battleReplayBtn').addEventListener('click', () => {
+  showScreen('battleSetupScreen');
+});
+
+document.getElementById('battleHomeBtn').addEventListener('click', () => showScreen('homeScreen'));
+
+init();
+</script>
+
+
+</body></html>
